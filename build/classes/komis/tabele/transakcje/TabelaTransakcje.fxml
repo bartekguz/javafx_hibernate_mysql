@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="283.0" prefWidth="815.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="komis.tabele.transakcje.TabelaTransakcjeController">
+   <children>
+      <VBox layoutX="15.0" layoutY="24.0" spacing="15.0">
+         <children>
+            <Label text="id_transakcji">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="id_klienta">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="nr_vin">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="id_pracownika">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="data_transakcji">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="10.0" layoutY="150.0" text="rodzaj_transakcji">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <VBox layoutX="133.0" layoutY="22.0" prefHeight="130.0" prefWidth="115.0" spacing="10.0">
+         <children>
+            <TextField fx:id="transakcjeIdTransakcjiField" />
+            <TextField fx:id="transakcjeIdKlientaField" />
+            <TextField fx:id="transakcjeNrVinField" />
+            <TextField fx:id="transakcjeIdPracownikaField" />
+            <TextField fx:id="transakcjeDataTransakcjiField" />
+            <ComboBox fx:id="transakcjeRodzajTransakcjiField" prefWidth="150.0" />
+           
+         </children>
+      </VBox>
+      <HBox layoutX="32.0" layoutY="238.0" spacing="10.0">
+         <children>
+            <Button fx:id="transakcjeInsertButton" mnemonicParsing="false" onAction="#insertButton" prefHeight="30.0" prefWidth="60.0" text="Insert" />
+            <Button fx:id="transakcjeUpdateButton" mnemonicParsing="false" onAction="#updateButton" prefHeight="30.0" prefWidth="60.0" text="Update" />
+            <Button fx:id="transakcjeDeleteButton" mnemonicParsing="false" onAction="#deleteButton" prefHeight="30.0" prefWidth="60.0" text="Delete" />
+         </children>
+      </HBox>
+      <TableView fx:id="transakcjeTv" layoutX="266.0" layoutY="21.0" prefHeight="200.0" prefWidth="531.0">
+        <columns>
+          <TableColumn fx:id="transakcjeColIdTransakcji" prefWidth="85.0" text="id_transakcji" />
+          <TableColumn fx:id="transakcjeColIdKlienta" prefWidth="65.0" text="id_klienta" />
+            <TableColumn fx:id="transakcjeColNrVin" text="nr_vin" />
+            <TableColumn fx:id="transakcjeColIdPracownika" prefWidth="95.0" text="id_pracownika" />
+            <TableColumn fx:id="transakcjeColDataTransakcji" prefWidth="100.0" text="data_transakcji" />
+            <TableColumn fx:id="transakcjeColRodzajTransakcji" prefWidth="105.0" text="rodzaj_transakcji" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

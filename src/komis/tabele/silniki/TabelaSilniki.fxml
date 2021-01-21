@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="292.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="komis.tabele.silniki.TabelaSilnikiController">
+   <children>
+      <VBox layoutX="15.0" layoutY="51.0" spacing="56.0">
+         <children>
+            <Label text="id_silnika">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="pojemnosc_silnika">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="rodzaj_paliwa">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <VBox layoutX="142.0" layoutY="49.0" prefHeight="130.0" prefWidth="115.0" spacing="50.0">
+         <children>
+            <TextField fx:id="silnikIdSilnikaField" />
+            <TextField fx:id="silnikPojemnoscSilnikaField" />
+            <TextField fx:id="silnikRodzajPaliwaField" />
+           
+         </children>
+      </VBox>
+      <HBox layoutX="37.0" layoutY="245.0" spacing="10.0">
+         <children>
+            <Button fx:id="silnikInsertButton" mnemonicParsing="false" onAction="#insertButton" prefHeight="30.0" prefWidth="60.0" text="Insert" />
+            <Button fx:id="silnikUpdateButton" mnemonicParsing="false" onAction="#updateButton" prefHeight="30.0" prefWidth="60.0" text="Update" />
+            <Button fx:id="silnikDeleteButton" mnemonicParsing="false" onAction="#deleteButton" prefHeight="30.0" prefWidth="60.0" text="Delete" />
+         </children>
+      </HBox>
+      <TableView fx:id="silnikTv" layoutX="275.0" layoutY="31.0" prefHeight="204.0" prefWidth="296.0">
+        <columns>
+          <TableColumn fx:id="silnikColIdSilnika" prefWidth="85.0" text="id_silnika" />
+          <TableColumn fx:id="silnikColPojemnoscSilnika" prefWidth="115.0" text="pojemnosc_silnika" />
+            <TableColumn fx:id="silnikColRodzajPaliwa" prefWidth="95.0" text="rodzaj_paliwa" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

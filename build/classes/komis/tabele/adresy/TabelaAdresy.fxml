@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="283.0" prefWidth="881.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="komis.tabele.adresy.TabelaAdresyController">
+   <children>
+      <VBox layoutX="15.0" layoutY="24.0" spacing="15.0">
+         <children>
+            <Label text="id_adresu">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="nazwa_miejscowosci">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="kod_pocztowy">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="nazwa_wojewodztwa">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="nazwa_ulicy">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="10.0" layoutY="150.0" text="numer_domu">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <VBox layoutX="150.0" layoutY="22.0" prefHeight="130.0" prefWidth="115.0" spacing="10.0">
+         <children>
+            <TextField fx:id="adresIdAdresuField" />
+            <TextField fx:id="adresNazwaMiejscowosciField" />
+            <TextField fx:id="adresKodPocztowyField" />
+            <TextField fx:id="adresNazwaWojewodztwaField" />
+            <TextField fx:id="adresNazwaUlicyField" />
+            <TextField fx:id="adresNumerDomuField" layoutX="10.0" layoutY="150.0" />
+           
+         </children>
+      </VBox>
+      <HBox layoutX="40.0" layoutY="238.0" spacing="10.0">
+         <children>
+            <Button fx:id="adresInsertButton" mnemonicParsing="false" onAction="#insertButton" prefHeight="30.0" prefWidth="60.0" text="Insert" />
+            <Button fx:id="adresUpdateButton" mnemonicParsing="false" onAction="#updateButton" prefHeight="30.0" prefWidth="60.0" text="Update" />
+            <Button fx:id="adresDeleteButton" mnemonicParsing="false" onAction="#deleteButton" prefHeight="30.0" prefWidth="60.0" text="Delete" />
+         </children>
+      </HBox>
+      <TableView fx:id="adresTv" layoutX="285.0" layoutY="22.0" prefHeight="200.0" prefWidth="580.0">
+        <columns>
+          <TableColumn fx:id="adresColIdAdresu" prefWidth="65.0" text="id_adresu" />
+          <TableColumn fx:id="adresColNazwaMiejscowosci" prefWidth="124.0" text="nazwa_miejscowosci" />
+            <TableColumn fx:id="adresColKodPocztowy" prefWidth="93.0" text="kod_pocztowy" />
+            <TableColumn fx:id="adresColNazwaWojewodztwa" prefWidth="135.0" text="nazwa_wojewodztwa" />
+            <TableColumn fx:id="adresColNazwaUlicy" prefWidth="76.0" text="nazwa_ulicy" />
+            <TableColumn fx:id="adresColNumerDomu" prefWidth="86.0" text="numer_domu" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="430.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="komis.StronaGlownaController">
+   <children>
+      <ImageView fitHeight="430.0" fitWidth="800.0">
+         <image>
+            <Image url="@../zdjecia/background.jpg" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutX="35.0" layoutY="47.0" opacity="0.95" prefHeight="330.0" prefWidth="500.0" style="-fx-background-color: #212121; -fx-background-radius: 5;">
+         <children>
+            <Text fill="WHITE" layoutX="31.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="KOMIS SAMOCHODOWY">
+               <font>
+                  <Font name="Tahoma Bold" size="36.0" />
+               </font>
+            </Text>
+            <Button alignment="CENTER" contentDisplay="TOP" graphicTextGap="0.0" layoutX="40.0" layoutY="195.0" mnemonicParsing="false" onAction="#goSilniki" prefHeight="92.0" prefWidth="120.0" style="-fx-background-color: #eeeeee; -fx-background-radius: 4;" text="Silniki">
+               <font>
+                  <Font name="Tahoma Bold" size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="64.0" fitWidth="64.0">
+                     <image>
+                        <Image url="@../zdjecia/engine.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button alignment="CENTER" contentDisplay="TOP" graphicTextGap="0.0" layoutX="190.0" layoutY="85.0" mnemonicParsing="false" onAction="#goPracownicy" prefHeight="50.0" prefWidth="120.0" style="-fx-background-color: #eeeeee; -fx-background-radius: 4;" text="Pracownicy">
+               <font>
+                  <Font name="Tahoma Bold" size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@../zdjecia/emplyee.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button alignment="CENTER" contentDisplay="TOP" graphicTextGap="0.0" layoutX="190.0" layoutY="195.0" mnemonicParsing="false" onAction="#goTransakcje" prefHeight="50.0" prefWidth="120.0" style="-fx-background-color: #eeeeee; -fx-background-radius: 4;" text="Transakcje">
+               <font>
+                  <Font name="Tahoma Bold" size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@../zdjecia/transaction.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button alignment="CENTER" contentDisplay="TOP" graphicTextGap="0.0" layoutX="40.0" layoutY="85.0" mnemonicParsing="false" onAction="#goSamochody" prefHeight="92.0" prefWidth="120.0" style="-fx-background-color: #eeeeee; -fx-background-radius: 4;" text="Samochody" textAlignment="CENTER">
+               <font>
+                  <Font name="Tahoma Bold" size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@../zdjecia/car.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button alignment="CENTER" contentDisplay="TOP" graphicTextGap="0.0" layoutX="340.0" layoutY="85.0" mnemonicParsing="false" onAction="#goKlienci" prefHeight="50.0" prefWidth="120.0" style="-fx-background-color: #eeeeee; -fx-background-radius: 4;" text="Klienci">
+               <font>
+                  <Font name="Tahoma Bold" size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@../zdjecia/customer.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button alignment="CENTER" contentDisplay="TOP" graphicTextGap="0.0" layoutX="340.0" layoutY="195.0" mnemonicParsing="false" onAction="#goAdresy" prefHeight="50.0" prefWidth="120.0" style="-fx-background-color: #eeeeee; -fx-background-radius: 4;" text="Adresy">
+               <font>
+                  <Font name="Tahoma Bold" size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@../zdjecia/adress.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
