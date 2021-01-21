@@ -1,17 +1,17 @@
-package tworzenie_bazy_danych;
+package BazaDanych;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-@Table(name = "Adresy")
+@Table(name = "adresy")
 public class Adresy implements Serializable {
 
     private static final long serialVersionUID = -300035L;
 
-    @Column(name = "id_adresu", unique = true, nullable = false, columnDefinition = "bigint(6)")
     @Id
+    @Column(name = "id_adresu", unique = true, nullable = false, columnDefinition = "bigint(6)")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_adresu;
 

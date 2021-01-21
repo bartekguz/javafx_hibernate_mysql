@@ -47,11 +47,11 @@ Contributor(s):
         <property name="connection.username">root</property>
         <property name="connection.password"/>
         <property name="hbm2ddl.auto">update</property>
-        <mapping class="komis.tworzenie_bazy_danych.Adresy" />
-        <mapping class="komis.tworzenie_bazy_danych.Klienci" />
-        <mapping class="komis.tworzenie_bazy_danych.Transakcje" />
-        <mapping class="komis.tworzenie_bazy_danych.Pracownicy" />
-        <mapping class="komis.tworzenie_bazy_danych.Samochody" />
-        <mapping class="komis.tworzenie_bazy_danych.Silniki" />
+<!--        <mapping class="BazaDanych.Adresy" />
+        <mapping class="BazaDanych.Klienci" />
+        <mapping class="BazaDanych.Transakcje" />
+        <mapping class="BazaDanych.Pracownicy" />
+        <mapping class="BazaDanych.Samochody" />
+        <mapping class="BazaDanych.Silniki" />-->
   </session-factory>
 </hibernate-configuration>

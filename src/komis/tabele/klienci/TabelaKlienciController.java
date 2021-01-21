@@ -7,10 +7,8 @@ package komis.tabele.klienci;
 
 import java.net.URL;
 
-import org.hibernate.Transaction;
-import tworzenie_bazy_danych.Klienci;
-import tworzenie_bazy_danych.Transakcje;
-import tworzenie_bazy_danych.Adresy;
+import BazaDanych.Klienci;
+import BazaDanychDao.KlienciDao;
 
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -21,13 +19,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
-import org.hibernate.service.ServiceRegistry;
 
 /**
  * FXML Controller class
@@ -67,6 +58,8 @@ public class TabelaKlienciController implements Initializable {
     @FXML
     private TableColumn<Klienci, Long> klienciColIdAdresu;
 
+    KlienciDao klienciDao = new KlienciDao();
+    
     /**
      * Initializes the controller class.
      */
@@ -75,34 +68,8 @@ public class TabelaKlienciController implements Initializable {
         showKlienci();
     }    
     
-    public ObservableList<Klienci> getKlienciList() {
-  
-        Configuration configuration =
-            new Configuration().configure("hibernate.cfg.xml");
-            configuration.addAnnotatedClass(Klienci.class)
-            .addAnnotatedClass(Adresy.class)
-            .addAnnotatedClass(Transakcje.class);
-   			
-            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-   		.applySettings(configuration.getProperties()).build();
-                SessionFactory factory = configuration.buildSessionFactory(serviceRegistry);
-                Session session = factory.openSession();
-                Transaction transaction = session.beginTransaction();
-                
-                Query query = session.createQuery("FROM klienci");
-                ObservableList<Klienci> listaKlientow;
-                listaKlientow = FXCollections.observableArrayList(query.list());
-
-                System.out.println("TO JEST LISTA KLIENTOW: " + listaKlientow);
-                transaction.commit();
-                session.close();
-                factory.close();
-                
-                return listaKlientow;
-    }
-    
     public void showKlienci() {
-        ObservableList<Klienci> list = getKlienciList();
+        ObservableList<Klienci> list = FXCollections.observableArrayList(klienciDao.getKlienci());
     	
     	klienciColIdKlienta.setCellValueFactory(new PropertyValueFactory<>("id_klienta"));
     	klienciColImie.setCellValueFactory(new PropertyValueFactory<>("imie"));

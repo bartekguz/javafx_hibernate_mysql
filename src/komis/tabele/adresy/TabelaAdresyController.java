@@ -7,9 +7,8 @@ package komis.tabele.adresy;
 
 import java.net.URL;
 
-import org.hibernate.Transaction;
-import tworzenie_bazy_danych.Klienci;
-import tworzenie_bazy_danych.Adresy;
+import BazaDanych.Adresy;
+import BazaDanychDao.AdresyDao;
 
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -20,14 +19,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
-import org.hibernate.service.ServiceRegistry;
-
 
 /**
  * FXML Controller class
@@ -63,6 +54,8 @@ public class TabelaAdresyController implements Initializable {
     @FXML
     private TableColumn<Adresy, String> adresColNumerDomu;
 
+    AdresyDao adresyDao = new AdresyDao();
+    
     /**
      * Initializes the controller class.
      */
@@ -71,33 +64,8 @@ public class TabelaAdresyController implements Initializable {
         showAdresy();
     }    
     
-
-    public ObservableList<Adresy> getAdresyList() {
-    	Configuration configuration =
-            new Configuration().configure("hibernate.cfg.xml");
-            configuration.addAnnotatedClass(Klienci.class)
-            .addAnnotatedClass(Adresy.class);
-   			
-            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-   		.applySettings(configuration.getProperties()).build();
-                SessionFactory factory = configuration.buildSessionFactory(serviceRegistry);
-                Session session = factory.openSession();
-                Transaction transaction = session.beginTransaction();
-                
-                Query query = session.createQuery("FROM adresy");
-                ObservableList<Adresy> listaAdresow;
-                listaAdresow = FXCollections.observableArrayList(query.list());
-
-                System.out.println("TO JEST LISTA Adresow: " + listaAdresow);
-                transaction.commit();
-                session.close();
-                factory.close();
-                
-                return listaAdresow;
-    }
-    
     public void showAdresy() {
-        ObservableList<Adresy> list = getAdresyList();
+        ObservableList<Adresy> list = FXCollections.observableArrayList(adresyDao.getAdresy());
         
     	adresColIdAdresu.setCellValueFactory(new PropertyValueFactory<>("id_adresu"));
         adresColKodPocztowy.setCellValueFactory(new PropertyValueFactory<>("kod_pocztowy"));

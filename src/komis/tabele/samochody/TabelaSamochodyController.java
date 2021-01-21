@@ -8,9 +8,9 @@ package komis.tabele.samochody;
 import java.net.URL;
 
 import org.hibernate.Transaction;
-import tworzenie_bazy_danych.Silniki;
-import tworzenie_bazy_danych.Transakcje;
-import tworzenie_bazy_danych.Samochody;
+import BazaDanych.Silniki;
+import BazaDanych.Transakcje;
+import BazaDanych.Samochody;
 
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;

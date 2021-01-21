@@ -7,9 +7,9 @@ package komis.tabele.pracownicy;
 
 import java.net.URL;
 
-import org.hibernate.Transaction;
-import tworzenie_bazy_danych.Pracownicy;
-import tworzenie_bazy_danych.Transakcje;
+import BazaDanych.Pracownicy;
+
+import BazaDanychDao.PracownicyDao;
 
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -21,12 +21,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
-import org.hibernate.service.ServiceRegistry;
 
 /**
  * FXML Controller class
@@ -62,6 +56,7 @@ public class TabelaPracownicyController implements Initializable {
     @FXML
     private TableColumn<Pracownicy, Long> pracownicyColZarobki;
     
+    PracownicyDao pracownicyDao = new PracownicyDao();
     
     /**
      * Initializes the controller class.
@@ -71,34 +66,9 @@ public class TabelaPracownicyController implements Initializable {
         showPracownicy();
     }    
     
-    
-    
-    public ObservableList<Pracownicy> getPracownicyList() {
-    	Configuration configuration =
-            new Configuration().configure("hibernate.cfg.xml");
-            configuration.addAnnotatedClass(Pracownicy.class)
-            .addAnnotatedClass(Transakcje.class);
-   			
-            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-   		.applySettings(configuration.getProperties()).build();
-                SessionFactory factory = configuration.buildSessionFactory(serviceRegistry);
-                Session session = factory.openSession();
-                Transaction transaction = session.beginTransaction();
-                
-                Query query = session.createQuery("FROM pracownicy");
-                ObservableList<Pracownicy> listaPracownikow;
-                listaPracownikow = FXCollections.observableArrayList(query.list());
-
-                System.out.println("TO JEST LISTA Pracownikow: " + listaPracownikow);
-                transaction.commit();
-                session.close();
-                factory.close();
-                
-                return listaPracownikow;
-    }
-    
     public void showPracownicy() {
-        ObservableList<Pracownicy> list = getPracownicyList();
+        
+        ObservableList<Pracownicy> list = FXCollections.observableArrayList(pracownicyDao.getPracownicy());
     	
     	pracownicyColIdPracownika.setCellValueFactory(new PropertyValueFactory<>("id_pracownika"));
         pracownicyColImie.setCellValueFactory(new PropertyValueFactory<>("imie"));

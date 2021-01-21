@@ -9,10 +9,10 @@ package komis.tabele.transakcje;
 import java.net.URL;
 
 import org.hibernate.Transaction;
-import tworzenie_bazy_danych.Klienci;
-import tworzenie_bazy_danych.Samochody;
-import tworzenie_bazy_danych.Transakcje;
-import tworzenie_bazy_danych.Pracownicy;
+import BazaDanych.Klienci;
+import BazaDanych.Samochody;
+import BazaDanych.Transakcje;
+import BazaDanych.Pracownicy;
 
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;

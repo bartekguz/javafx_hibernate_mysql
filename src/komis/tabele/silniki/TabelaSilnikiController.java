@@ -7,9 +7,8 @@ package komis.tabele.silniki;
 
 import java.net.URL;
 
-import org.hibernate.Transaction;
-import tworzenie_bazy_danych.Silniki;
-import tworzenie_bazy_danych.Samochody;
+import BazaDanych.Silniki;
+import BazaDanychDao.SilnikiDao;
 
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -20,13 +19,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
-import org.hibernate.service.ServiceRegistry;
 
 /**
  * FXML Controller class
@@ -50,6 +42,8 @@ public class TabelaSilnikiController implements Initializable {
     @FXML
     private TableColumn<Silniki, String> silnikColRodzajPaliwa;
 
+    SilnikiDao silnikiDao = new SilnikiDao();
+    
     /**
      * Initializes the controller class.
      */
@@ -57,40 +51,14 @@ public class TabelaSilnikiController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         showSilniki();
     }    
-
-    
-    public ObservableList<Silniki> getSilnikiList() {
-    	Configuration configuration =
-            new Configuration().configure("hibernate.cfg.xml");
-            configuration.addAnnotatedClass(Silniki.class)
-            .addAnnotatedClass(Samochody.class);
-   			
-            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-   		.applySettings(configuration.getProperties()).build();
-                SessionFactory factory = configuration.buildSessionFactory(serviceRegistry);
-                Session session = factory.openSession();
-                Transaction transaction = session.beginTransaction();
-                
-                Query query = session.createQuery("FROM silniki");
-                ObservableList<Silniki> listaSilnikow;
-                listaSilnikow = FXCollections.observableArrayList(query.list());
-
-                System.out.println("TO JEST LISTA Silnikow: " + listaSilnikow);
-                transaction.commit();
-                session.close();
-                factory.close();
-                
-                return listaSilnikow;
-    }
     
     public void showSilniki() {
-        ObservableList<Silniki> list = getSilnikiList();
+        ObservableList<Silniki> list = FXCollections.observableArrayList(silnikiDao.getSilniki());
     	
     	silnikColIdSilnika.setCellValueFactory(new PropertyValueFactory<>("id_silnika"));
     	silnikColPojemnoscSilnika.setCellValueFactory(new PropertyValueFactory<>("pojemnosc_silnika"));
     	silnikColRodzajPaliwa.setCellValueFactory(new PropertyValueFactory<>("rodzaj_paliwa"));
 
-    	
     	silnikTv.setItems(list);
     }
     

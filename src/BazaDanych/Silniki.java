@@ -1,11 +1,11 @@
-package tworzenie_bazy_danych;
+package BazaDanych;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-@Table(name = "Silniki")
+@Table(name = "silniki")
 public class Silniki implements Serializable {
 
     private static final long serialVersionUID = -300015L;
