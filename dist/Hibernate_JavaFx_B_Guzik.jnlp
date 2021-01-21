@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Hibernate_JavaFx_B_Guzik.jar" size="194998" download="eager" />
+    <jar href="Hibernate_JavaFx_B_Guzik.jar" size="193840" download="eager" />
     <jar href="lib\FastInfoset-1.2.15.jar" size="311876" download="eager" />
     <jar href="lib\antlr-2.7.7.jar" size="445288" download="eager" />
     <jar href="lib\byte-buddy-1.10.17.jar" size="3490233" download="eager" />
@@ -29,6 +29,6 @@
     <jar href="lib\stax-ex-1.8.jar" size="36073" download="eager" />
     <jar href="lib\txw2-2.3.1.jar" size="70288" download="eager" />
   </resources>
-  <jfx:javafx-desc  width="800" height="600" main-class="komis.Main"  name="Hibernate_JavaFx_B_Guzik" />
+  <jfx:javafx-desc  width="800" height="600" main-class="komis.App"  name="Hibernate_JavaFx_B_Guzik" />
   <update check="always"/>
 </jnlp>

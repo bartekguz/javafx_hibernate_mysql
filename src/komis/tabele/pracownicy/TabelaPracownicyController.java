@@ -8,7 +8,6 @@ package komis.tabele.pracownicy;
 import java.net.URL;
 
 import BazaDanych.Pracownicy;
-
 import BazaDanychDao.PracownicyDao;
 
 import java.util.ResourceBundle;

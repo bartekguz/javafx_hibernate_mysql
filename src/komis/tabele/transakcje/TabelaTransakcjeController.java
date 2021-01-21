@@ -8,11 +8,8 @@ package komis.tabele.transakcje;
 
 import java.net.URL;
 
-import org.hibernate.Transaction;
-import BazaDanych.Klienci;
-import BazaDanych.Samochody;
 import BazaDanych.Transakcje;
-import BazaDanych.Pracownicy;
+import BazaDanychDao.TransakcjeDao;
 
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -24,13 +21,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
-import org.hibernate.service.ServiceRegistry;
 
 /**
  * FXML Controller class
@@ -66,6 +56,8 @@ public class TabelaTransakcjeController implements Initializable {
     @FXML
     private TableColumn<Transakcje, String> transakcjeColRodzajTransakcji;
    
+    TransakcjeDao transakcjeDao = new TransakcjeDao();
+    
     /**
      * Initializes the controller class.
      */
@@ -77,36 +69,8 @@ public class TabelaTransakcjeController implements Initializable {
         showTransakcje();
     }    
     
-    
-    
-    public ObservableList<Transakcje> getTransakcjeList() {
-    	Configuration configuration =
-            new Configuration().configure("hibernate.cfg.xml");
-            configuration.addAnnotatedClass(Klienci.class)
-            .addAnnotatedClass(Samochody.class)
-            .addAnnotatedClass(Pracownicy.class)
-            .addAnnotatedClass(Transakcje.class);
-   			
-            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-   		.applySettings(configuration.getProperties()).build();
-                SessionFactory factory = configuration.buildSessionFactory(serviceRegistry);
-                Session session = factory.openSession();
-                Transaction transaction = session.beginTransaction();
-                
-                Query query = session.createQuery("FROM transakcje");
-                ObservableList<Transakcje> listaTransakcji;
-                listaTransakcji = FXCollections.observableArrayList(query.list());
-
-                System.out.println("TO JEST LISTA Transakcji: " + listaTransakcji);
-                transaction.commit();
-                session.close();
-                factory.close();
-                
-                return listaTransakcji;
-    }
-    
     public void showTransakcje() {
-        ObservableList<Transakcje> list = getTransakcjeList();
+        ObservableList<Transakcje> list = FXCollections.observableArrayList(transakcjeDao.getTransakcje());
     	
     	transakcjeColIdTransakcji.setCellValueFactory(new PropertyValueFactory<>("id_transakcji"));
     	transakcjeColDataTransakcji.setCellValueFactory(new PropertyValueFactory<>("data_transakcji"));
