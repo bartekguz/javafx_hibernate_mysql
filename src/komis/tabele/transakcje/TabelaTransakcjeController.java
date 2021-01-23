@@ -21,6 +21,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -87,8 +88,6 @@ public class TabelaTransakcjeController implements Initializable {
        
     }
     
-    
-    
     @FXML 
     private void updateButton() {
 
@@ -97,6 +96,17 @@ public class TabelaTransakcjeController implements Initializable {
     @FXML
     private void deleteButton() {
 
+    }
+    
+    @FXML
+    private void handleMouseAction(MouseEvent event) {
+        Transakcje transakcja = transakcjeTv.getSelectionModel().getSelectedItem();
+        transakcjeIdTransakcjiField.setText("" + transakcja.getId_transakcji());
+        transakcjeDataTransakcjiField.setText("" + transakcja.getData_transakcji());
+        transakcjeRodzajTransakcjiField.getSelectionModel().select(transakcja.getRodzaj_transakcji());
+        transakcjeIdKlientaField.setText("" + transakcja.getKlienci());
+        transakcjeIdPracownikaField.setText("" + transakcja.getPracownicy());
+        transakcjeNrVinField.setText("" + transakcja.getVin());
     }
 
 }

@@ -5,12 +5,12 @@
  */
 package BazaDanychDao;
 
+import BazaDanych.Adresy;
 import BazaDanych.Klienci;
 import java.util.List;
 import komis.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
 /**
  *
  * @author Bartek
@@ -28,11 +28,29 @@ public class KlienciDao {
            }
            System.out.println("ERROR in KlienciDao [saveKlienci]: " + e);
        }
-   }
+    }
     
     public List<Klienci> getKlienci() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("from Klienci", Klienci.class).list();
+            List<Klienci> selectAll = session.createQuery("from Klienci", Klienci.class).list();
+            
+            return selectAll;
         }
-    }            
+    }     
+        
+    public Klienci addKlienci(String imie, String nazwisko, Long pesel, Long nip, Long numerTelefonu) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            
+            Klienci klient = new Klienci();
+            
+            klient.setImie(imie);
+            klient.setNazwisko(nazwisko);
+            klient.setPesel(pesel);
+            klient.setNip(nip);
+            klient.setNumer_telefonu(numerTelefonu);
+            
+            return klient;
+        }
+    }
 }

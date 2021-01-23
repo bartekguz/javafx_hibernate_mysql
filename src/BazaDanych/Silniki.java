@@ -13,45 +13,53 @@ public class Silniki implements Serializable {
     @Column(name = "id_silnika", unique = true, nullable = false, columnDefinition = "bigint(6)")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idSilnika;
+    private long id_silnika;
 
     @Column(name = "pojemnosc_silnika", nullable = false, columnDefinition = "varchar(100)")
-    private String pojemnoscSilnika;
+    private String pojemnosc_silnika;
 
     @Column(name = "rodzaj_paliwa", nullable = false, columnDefinition = "varchar(100)")
-    private String rodzajPaliwa;
+    private String rodzaj_paliwa;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "silniki")
+    @OneToMany(cascade={CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "silniki")
     private Set<Samochody> samochody;
 
     public Silniki() { }
 
-    public Silniki(String pojemnoscSilnika, String rodzajPaliwa) {
-        this.pojemnoscSilnika = pojemnoscSilnika;
-        this.rodzajPaliwa = rodzajPaliwa;
+    public Silniki(String pojemnosc_silnika, String rodzaj_paliwa) {
+        this.pojemnosc_silnika = pojemnosc_silnika;
+        this.rodzaj_paliwa = rodzaj_paliwa;
     }
 
-    public Silniki(String pojemnoscSilnika, String rodzajPaliwa, Set<Samochody> samochody) {
-        this.pojemnoscSilnika = pojemnoscSilnika;
-        this.rodzajPaliwa = rodzajPaliwa;
+    public Silniki(String pojemnosc_silnika, String rodzaj_paliwa, Set<Samochody> samochody) {
+        this.pojemnosc_silnika = pojemnosc_silnika;
+        this.rodzaj_paliwa = rodzaj_paliwa;
         this.samochody = samochody;
     }
 
-    public String getPojemnoscSilnika() {
-        return pojemnoscSilnika;
+    public long getId_silnika() {
+        return id_silnika;
     }
 
-    public void setPojemnoscSilnika(String pojemnoscSilnika) {
-        this.pojemnoscSilnika = pojemnoscSilnika;
+    public void setId_silnika(long id_silnika) {
+        this.id_silnika = id_silnika;
     }
 
-    public String getRodzajPaliwa() {
-        return rodzajPaliwa;
+    public String getPojemnosc_silnika() {
+        return pojemnosc_silnika;
     }
 
-    public void setRodzajPaliwa(String rodzajPaliwa) {
-        this.rodzajPaliwa = rodzajPaliwa;
+    public void setPojemnosc_silnika(String pojemnosc_silnika) {
+        this.pojemnosc_silnika = pojemnosc_silnika;
     }
+
+    public String getRodzaj_paliwa() {
+        return rodzaj_paliwa;
+    }
+
+    public void setRodzaj_paliwa(String rodzaj_paliwa) {
+        this.rodzaj_paliwa = rodzaj_paliwa;
+    }  
 
     public Set<Samochody> getSamochody() {
         return samochody;
@@ -64,9 +72,9 @@ public class Silniki implements Serializable {
     @Override
     public String toString() {
         return "Silniki{" +
-                "idSilnika=" + idSilnika +
-                ", pojemnoscSilnika='" + pojemnoscSilnika + '\'' +
-                ", rodzajPaliwa='" + rodzajPaliwa + '\'' +
+                "id_silnika=" + id_silnika +
+                ", pojemnosc_silnika='" + pojemnosc_silnika + '\'' +
+                ", rodzaj_paliwa='" + rodzaj_paliwa + '\'' +
                 '}';
     }
 }

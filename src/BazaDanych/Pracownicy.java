@@ -30,7 +30,7 @@ public class Pracownicy implements Serializable {
     @Column(name = "numer_telefonu", nullable = false, columnDefinition = "bigint(100)")
     private long numer_telefonu;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pracownicy")
+    @OneToMany(cascade={CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "pracownicy")
     private Set<Transakcje> transakcje;
 
     public Pracownicy() {

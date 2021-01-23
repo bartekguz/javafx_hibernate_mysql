@@ -6,8 +6,11 @@
 package komis;
 
 import BazaDanych.Adresy;
+import BazaDanych.Klienci;
 import BazaDanychDao.AdresyDao;
-import java.util.List;
+import BazaDanychDao.KlienciDao;
+import java.util.Arrays;
+
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -34,12 +37,33 @@ public class App extends Application {
     
     public static void main(String[] args) {
         
-        AdresyDao adresyDao = new AdresyDao();
-        Adresy adres = new Adresy("Krosno", "38-400", "Podkarpackie", "Podkarpacka", "2");
-        adresyDao.saveAdresy(adres);
+        Adresy adres1 = new Adresy();
+        Klienci klient1 = new Klienci();
         
-        List<Adresy> adresy = adresyDao.getAdresy();
-        adresy.forEach(s -> System.out.println(s.getNazwa_miejscowosci()));
+        AdresyDao adresyDao = new AdresyDao();
+        KlienciDao klienciDao = new KlienciDao();
+        
+        
+        
+        adres1 = adresyDao.addAdresy("Krosno", "38-400", "Podkarpackie", "Podkarpacka", "2");
+        System.out.println("ADRES1: " + adres1);
+        
+        klient1 = klienciDao.addKlienci("Bartosz", "Guzik", 99012213213L, 9221039281923L, 732839120L);
+        klient1.setAdresy(adres1);
+        adres1.setKlienci(Arrays.asList(klient1));
+        
+//        System.out.println("KLIENT1: " + klient1.getAdresy());
+        
+//        adresyDao.saveAdresy(adres1);
+        adresyDao.saveAdresy(adres1);
+        klienciDao.saveKlienci(klient1);
+        
+        System.out.println("ADRES1 getKlienci(): " + adres1.getKlienci());
+        System.out.println("KLIENT1 getAdresy(): " + klient1.getAdresy());
+//        List<Adresy> adresy = adresyDao.getAdresy();
+//        adresy.forEach(s -> System.out.println(s.getNazwa_miejscowosci()));
+
+        
         
         HibernateUtil.getSessionFactory().openSession().close();
         launch(args);

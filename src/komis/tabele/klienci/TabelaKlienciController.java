@@ -19,6 +19,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -84,7 +85,17 @@ public class TabelaKlienciController implements Initializable {
     
     @FXML
     private void insertButton() {
-    	
+    	KlienciDao klienciDao = new KlienciDao();
+        klienciDao.addKlienci(
+                klienciImieField.getText(), 
+                klienciNazwiskoField.getText(), 
+                Long.parseLong(klienciPeselField.getText()), 
+                Long.parseLong(klienciNipField.getText()), 
+                Long.parseLong(klienciNrTelefonuField.getText())
+        );
+        
+        
+        showKlienci();
     }
     
     
@@ -98,4 +109,15 @@ public class TabelaKlienciController implements Initializable {
     	
     }
 
+    @FXML
+    private void handleMouseAction(MouseEvent event) {
+        Klienci klient = klienciTv.getSelectionModel().getSelectedItem();
+        klienciIdKlientaField.setText("" + klient.getId_klienta());
+        klienciImieField.setText(klient.getImie());
+        klienciNazwiskoField.setText(klient.getNazwisko());
+        klienciNipField.setText("" + klient.getNip());
+        klienciNrTelefonuField.setText("" + klient.getNumer_telefonu());
+        klienciPeselField.setText("" + klient.getPesel());
+        klienciIdAdresuField.setText("" + klient.getAdresy());
+    }
 }

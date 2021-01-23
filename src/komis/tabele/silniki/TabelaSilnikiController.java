@@ -19,6 +19,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -76,6 +77,14 @@ public class TabelaSilnikiController implements Initializable {
     @FXML
     private void deleteButton() {
 
+    }
+    
+    @FXML
+    private void handleMouseAction(MouseEvent event) {
+        Silniki silnik = silnikTv.getSelectionModel().getSelectedItem();
+        silnikIdSilnikaField.setText("" + silnik.getId_silnika());
+        silnikIdSilnikaField.setText(silnik.getPojemnosc_silnika());
+        silnikIdSilnikaField.setText(silnik.getRodzaj_paliwa());
     }
 
 }

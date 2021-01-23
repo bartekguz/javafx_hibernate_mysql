@@ -46,7 +46,7 @@
             <Button fx:id="silnikDeleteButton" mnemonicParsing="false" onAction="#deleteButton" prefHeight="30.0" prefWidth="60.0" text="Delete" />
          </children>
       </HBox>
-      <TableView fx:id="silnikTv" layoutX="275.0" layoutY="31.0" prefHeight="204.0" prefWidth="296.0">
+      <TableView fx:id="silnikTv" layoutX="275.0" layoutY="31.0" onMouseClicked="#handleMouseAction" prefHeight="204.0" prefWidth="296.0">
         <columns>
           <TableColumn fx:id="silnikColIdSilnika" prefWidth="85.0" text="id_silnika" />
           <TableColumn fx:id="silnikColPojemnoscSilnika" prefWidth="115.0" text="pojemnosc_silnika" />

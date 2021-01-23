@@ -76,7 +76,7 @@
             <Button fx:id="samochodyDeleteButton" mnemonicParsing="false" onAction="#deleteButton" prefHeight="30.0" prefWidth="60.0" text="Delete" />
          </children>
       </HBox>
-      <TableView fx:id="samochodyTv" layoutX="236.0" layoutY="20.0" prefHeight="269.0" prefWidth="681.0">
+      <TableView fx:id="samochodyTv" layoutX="236.0" layoutY="20.0" onMouseClicked="#handleMouseAction" prefHeight="269.0" prefWidth="681.0">
         <columns>
           <TableColumn fx:id="samochodyColNrVin" prefWidth="90.0" text="nr_vin" />
           <TableColumn fx:id="samochodyColMarka" prefWidth="85.0" text="marka" />

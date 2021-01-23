@@ -17,6 +17,7 @@ import org.hibernate.Transaction;
  * @author Bartek
  */
 public class AdresyDao {
+    
     public void saveAdresy(Adresy adresy) {
        Transaction transaction = null;
        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -35,5 +36,21 @@ public class AdresyDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("from Adresy", Adresy.class).list();
         }
-    }            
+    }
+    
+    public Adresy addAdresy(String nazwaMiejscowosci, String kodPocztowy, String nazwaWojewodztwa, String nazwaUlicy, String numerDomu) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            
+            Adresy adres = new Adresy();
+            
+            adres.setNazwa_miejscowosci(nazwaMiejscowosci);
+            adres.setKod_pocztowy(kodPocztowy);
+            adres.setNazwa_wojewodztwa(nazwaWojewodztwa);
+            adres.setNazwa_ulicy(nazwaUlicy);
+            adres.setNumer_domu(numerDomu);
+            
+            return adres;
+        }
+    }
 }

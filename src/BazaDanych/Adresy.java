@@ -2,6 +2,7 @@ package BazaDanych;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -30,8 +31,8 @@ public class Adresy implements Serializable {
     @Column(name = "numer_domu", nullable = false, columnDefinition = "varchar(100)")
     private String numer_domu;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "adresy") 
-    private Set<Klienci> klienci;
+    @OneToMany(cascade={CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "adresy") 
+    private List<Klienci> klienci;
 
     public Adresy() {
     }
@@ -44,7 +45,7 @@ public class Adresy implements Serializable {
         this.numer_domu = numer_domu;
     }
 
-    public Adresy(String nazwa_miejscowosci, String kod_pocztowy, String nazwa_wojewodztwa, String nazwa_ulicy, String numer_domu, Set<Klienci> klienci) {
+    public Adresy(String nazwa_miejscowosci, String kod_pocztowy, String nazwa_wojewodztwa, String nazwa_ulicy, String numer_domu, List<Klienci> klienci) {
         this.nazwa_miejscowosci = nazwa_miejscowosci;
         this.kod_pocztowy = kod_pocztowy;
         this.nazwa_wojewodztwa = nazwa_wojewodztwa;
@@ -102,11 +103,11 @@ public class Adresy implements Serializable {
         this.numer_domu = numer_domu;
     }
 
-    public Set<Klienci> getKlienci() {
+    public List<Klienci> getKlienci() {
         return klienci;
     }
 
-    public void setKlienci(Set<Klienci> klienci) {
+    public void setKlienci(List<Klienci> klienci) {
         this.klienci = klienci;
     }
 

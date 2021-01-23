@@ -12,7 +12,7 @@ public class Samochody implements Serializable {
 
     @Column(name = "nr_vin", unique = true, nullable = false, columnDefinition = "varchar(100)")
     @Id
-    private String nrVin;
+    private String nr_vin;
 
     @Column(name = "marka", nullable = true, columnDefinition = "varchar(100) default ' '")
     private String marka;
@@ -24,7 +24,7 @@ public class Samochody implements Serializable {
     private String typ;
 
     @Column(name = "rok_produkcji", nullable = true, columnDefinition = "int(100) default '0'")
-    private long rokProdukcji;
+    private long rok_produkcji;
 
     @Column(name = "kolor", nullable = true, columnDefinition = "varchar(100) default ' '")
     private String kolor;
@@ -36,26 +36,26 @@ public class Samochody implements Serializable {
     @JoinColumn(name = "id_silnika", nullable = true)
     private Silniki silniki;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "vin")
+    @OneToMany(cascade={CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "vin")
     private Set<Transakcje> transakcje;
 
     public Samochody() { }
 
-    public Samochody(String marka, String model, String typ, long rokProdukcji, String kolor, long cena, Silniki silniki) {
+    public Samochody(String marka, String model, String typ, long rok_produkcji, String kolor, long cena, Silniki silniki) {
         this.marka = marka;
         this.model = model;
         this.typ = typ;
-        this.rokProdukcji = rokProdukcji;
+        this.rok_produkcji = rok_produkcji;
         this.kolor = kolor;
         this.cena = cena;
         this.silniki = silniki;
     }
 
-    public Samochody(String marka, String model, String typ, long rokProdukcji, String kolor, long cena, Silniki silniki, Set<Transakcje> transakcje) {
+    public Samochody(String marka, String model, String typ, long rok_produkcji, String kolor, long cena, Silniki silniki, Set<Transakcje> transakcje) {
         this.marka = marka;
         this.model = model;
         this.typ = typ;
-        this.rokProdukcji = rokProdukcji;
+        this.rok_produkcji = rok_produkcji;
         this.kolor = kolor;
         this.cena = cena;
         this.silniki = silniki;
@@ -64,12 +64,12 @@ public class Samochody implements Serializable {
     
     
 
-    public String getNrVin() {
-        return nrVin;
+    public String getNr_vin() {
+        return nr_vin;
     }
 
-    public void setNrVin(String nrVin) {
-        this.nrVin = nrVin;
+    public void setNr_vin(String nr_vin) {
+        this.nr_vin = nr_vin;
     }
 
     public String getMarka() {
@@ -96,12 +96,12 @@ public class Samochody implements Serializable {
         this.typ = typ;
     }
 
-    public long getRokProdukcji() {
-        return rokProdukcji;
+    public long getRok_produkcji() {
+        return rok_produkcji;
     }
 
-    public void setRokProdukcji(long rokProdukcji) {
-        this.rokProdukcji = rokProdukcji;
+    public void setRokProdukcji(long rok_produkcji) {
+        this.rok_produkcji = rok_produkcji;
     }
 
     public String getKolor() {
@@ -141,11 +141,11 @@ public class Samochody implements Serializable {
     @Override
     public String toString() {
         return "Samochody{" +
-                "nrVin=" + nrVin +
+                "nr_vin=" + nr_vin +
                 ", marka='" + marka + '\'' +
                 ", model='" + model + '\'' +
                 ", typ='" + typ + '\'' +
-                ", rokProdukcji=" + rokProdukcji +
+                ", rok_produkcji=" + rok_produkcji +
                 ", kolor='" + kolor + '\'' +
                 ", cena='" + cena + '\'' +
                 ", silniki=" + silniki +

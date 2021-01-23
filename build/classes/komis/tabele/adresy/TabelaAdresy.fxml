@@ -64,7 +64,7 @@
             <Button fx:id="adresDeleteButton" mnemonicParsing="false" onAction="#deleteButton" prefHeight="30.0" prefWidth="60.0" text="Delete" />
          </children>
       </HBox>
-      <TableView fx:id="adresTv" layoutX="285.0" layoutY="22.0" prefHeight="200.0" prefWidth="580.0">
+      <TableView fx:id="adresTv" layoutX="285.0" layoutY="22.0" onMouseClicked="#handleMouseAction" prefHeight="200.0" prefWidth="580.0">
         <columns>
           <TableColumn fx:id="adresColIdAdresu" prefWidth="65.0" text="id_adresu" />
           <TableColumn fx:id="adresColNazwaMiejscowosci" prefWidth="124.0" text="nazwa_miejscowosci" />

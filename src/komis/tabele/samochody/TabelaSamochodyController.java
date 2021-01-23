@@ -19,6 +19,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -101,5 +102,18 @@ public class TabelaSamochodyController implements Initializable {
     @FXML
     private void deleteButton() {
 
+    }
+    
+    @FXML
+    private void handleMouseAction(MouseEvent event) {
+        Samochody samochod = samochodyTv.getSelectionModel().getSelectedItem();
+        samochodyNrVinField.setText(samochod.getNr_vin());
+        samochodyCenaField.setText("" + samochod.getCena());
+        samochodyKolorField.setText(samochod.getKolor());
+        samochodyMarkaField.setText(samochod.getMarka());
+        samochodyModelField.setText(samochod.getModel());
+        samochodyRokProdukcjiField.setText("" + samochod.getRok_produkcji());
+        samochodyTypField.setText(samochod.getTyp());
+        samochodyIdSilnikaField.setText("" + samochod.getSilniki());
     }
 }

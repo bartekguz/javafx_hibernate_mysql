@@ -19,6 +19,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -79,7 +80,17 @@ public class TabelaAdresyController implements Initializable {
     
     @FXML
     private void insertButton() {
-
+        AdresyDao adresyDao = new AdresyDao();
+        
+        adresyDao.addAdresy(
+                adresNazwaMiejscowosciField.getText(), 
+                adresKodPocztowyField.getText(), 
+                adresNazwaWojewodztwaField.getText(), 
+                adresNazwaUlicyField.getText(), 
+                adresNumerDomuField.getText()
+        );
+        
+        showAdresy();
     }
     
     @FXML 
@@ -90,5 +101,16 @@ public class TabelaAdresyController implements Initializable {
     @FXML
     private void deleteButton() {
 
+    }
+
+    @FXML
+    private void handleMouseAction(MouseEvent event) {
+        Adresy adres = adresTv.getSelectionModel().getSelectedItem();
+        adresIdAdresuField.setText("" + adres.getId_adresu());
+        adresKodPocztowyField.setText(adres.getKod_pocztowy());
+        adresNazwaMiejscowosciField.setText("" + adres.getNazwa_miejscowosci());
+        adresNazwaUlicyField.setText(adres.getNazwa_ulicy());
+        adresNazwaWojewodztwaField.setText("" + adres.getNazwa_wojewodztwa());
+        adresNumerDomuField.setText(adres.getNumer_domu());
     }
 }

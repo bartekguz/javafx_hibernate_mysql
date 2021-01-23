@@ -2,6 +2,7 @@ package BazaDanych;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -13,7 +14,7 @@ public class Klienci implements Serializable {
     @Column(name = "id_klienta", unique = true, nullable = false, columnDefinition = "bigint(6)")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idKlienta;
+    private long id_klienta;
 
     @Column(name = "imie", nullable = false, columnDefinition = "varchar(100)")
     private String imie;
@@ -28,44 +29,52 @@ public class Klienci implements Serializable {
     private long nip;
 
     @Column(name = "numer_telefonu", nullable = false, columnDefinition = "bigint(100)")
-    private long numerTelefonu;
+    private long numer_telefonu;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_adresu", nullable = false)
     private Adresy adresy;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "klienci")
-    private Set<Transakcje> transakcje;
+    private List<Transakcje> transakcje;
     
     public Klienci() {
     }
 
-    public Klienci(String imie, String nazwisko, long pesel, long nip, long numerTelefonu, Adresy adresy) {
+    public Klienci(String imie, String nazwisko, long pesel, long nip, long numer_telefonu, Adresy adresy, List<Transakcje> transakcje) {
         this.imie = imie;
         this.nazwisko = nazwisko;
         this.pesel = pesel;
         this.nip = nip;
-        this.numerTelefonu = numerTelefonu;
-        this.adresy = adresy;
-    }
-
-    public Klienci(String imie, String nazwisko, long pesel, long nip, long numerTelefonu, Adresy adresy, Set<Transakcje> transakcje) {
-        this.imie = imie;
-        this.nazwisko = nazwisko;
-        this.pesel = pesel;
-        this.nip = nip;
-        this.numerTelefonu = numerTelefonu;
+        this.numer_telefonu = numer_telefonu;
         this.adresy = adresy;
         this.transakcje = transakcje;
     }
     
-
-    public long getIdKlienta() {
-        return idKlienta;
+    public Klienci(String imie, String nazwisko, long pesel, long nip, long numer_telefonu, Adresy adresy) {
+        this.imie = imie;
+        this.nazwisko = nazwisko;
+        this.pesel = pesel;
+        this.nip = nip;
+        this.numer_telefonu = numer_telefonu;
+        this.adresy = adresy;
     }
 
-    public void setIdKlienta(long idKlienta) {
-        this.idKlienta = idKlienta;
+    public Klienci(String imie, String nazwisko, long pesel, long nip, long numer_telefonu) {
+        this.imie = imie;
+        this.nazwisko = nazwisko;
+        this.pesel = pesel;
+        this.nip = nip;
+        this.numer_telefonu = numer_telefonu;
+    }
+
+
+    public long getId_klienta() {
+        return id_klienta;
+    }
+
+    public void setId_klienta(long id_klienta) {
+        this.id_klienta = id_klienta;
     }
 
     public String getImie() {
@@ -100,12 +109,12 @@ public class Klienci implements Serializable {
         this.nip = nip;
     }
 
-    public long getNumerTelefonu() {
-        return numerTelefonu;
+    public long getNumer_telefonu() {
+        return numer_telefonu;
     }
 
-    public void setNumerTelefonu(long numerTelefonu) {
-        this.numerTelefonu = numerTelefonu;
+    public void setNumer_telefonu(long numer_telefonu) {
+        this.numer_telefonu = numer_telefonu;
     }
 
     public Adresy getAdresy() {
@@ -116,11 +125,11 @@ public class Klienci implements Serializable {
         this.adresy = adresy;
     }
 
-    public Set<Transakcje> getTransakcje() {
+    public List<Transakcje> getTransakcje() {
         return transakcje;
     }
 
-    public void setTransakcje(Set<Transakcje> transakcje) {
+    public void setTransakcje(List<Transakcje> transakcje) {
         this.transakcje = transakcje;
     }
 
@@ -129,12 +138,12 @@ public class Klienci implements Serializable {
     @Override
     public String toString() {
         return "Klienci{" 
-                + "idKlienta=" + idKlienta 
+                + "id_klienta=" + id_klienta 
                 + ", imie=" + imie 
                 + ", nazwisko=" + nazwisko 
                 + ", pesel=" + pesel 
                 + ", nip=" + nip 
-                + ", numerTelefonu=" + numerTelefonu 
+                + ", numer_telefonu=" + numer_telefonu 
                 + ", adresy=" + adresy 
                 + ", transakcje=" + transakcje + '}';
     }

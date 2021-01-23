@@ -12,7 +12,7 @@ public class Transakcje implements Serializable {
     @Column(name = "id_transakcji", unique = true, nullable = false, columnDefinition = "bigint(6)")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idTransakcji;
+    private long id_transakcji;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_klienta", nullable = false)
@@ -27,29 +27,28 @@ public class Transakcje implements Serializable {
     private Pracownicy pracownicy;
 
     @Column(name = "data_transakcji", nullable = false, columnDefinition = "varchar(100)")
-    private String dataTransakcji;
+    private String data_transakcji;
 
     @Column(name = "rodzaj_transakcji", nullable = false, columnDefinition = "varchar(100)")
-    private String rodzajTransakcji;
+    private String rodzaj_transakcji;
 
     public Transakcje() {
     }
 
-    public Transakcje(long idTransakcji, Klienci klienci, Samochody vin, Pracownicy pracownicy, String dataTransakcji, String rodzajTransakcji) {
-        this.idTransakcji = idTransakcji;
+    public Transakcje(Klienci klienci, Samochody vin, Pracownicy pracownicy, String data_transakcji, String rodzaj_transakcji) {
         this.klienci = klienci;
         this.vin = vin;
         this.pracownicy = pracownicy;
-        this.dataTransakcji = dataTransakcji;
-        this.rodzajTransakcji = rodzajTransakcji;
+        this.data_transakcji = data_transakcji;
+        this.rodzaj_transakcji = rodzaj_transakcji;
     }
 
-    public long getIdTransakcji() {
-        return idTransakcji;
+    public long getId_transakcji() {
+        return id_transakcji;
     }
 
-    public void setIdTransakcji(long idTransakcji) {
-        this.idTransakcji = idTransakcji;
+    public void setId_transakcji(long id_transakcji) {
+        this.id_transakcji = id_transakcji;
     }
 
     public Klienci getKlienci() {
@@ -76,33 +75,31 @@ public class Transakcje implements Serializable {
         this.pracownicy = pracownicy;
     }
 
-    public String getDataTransakcji() {
-        return dataTransakcji;
+    public String getData_transakcji() {
+        return data_transakcji;
     }
 
-    public void setDataTransakcji(String dataTransakcji) {
-        this.dataTransakcji = dataTransakcji;
+    public void setData_transakcji(String data_transakcji) {
+        this.data_transakcji = data_transakcji;
     }
 
-    public String getRodzajTransakcji() {
-        return rodzajTransakcji;
+    public String getRodzaj_transakcji() {
+        return rodzaj_transakcji;
     }
 
-    public void setRodzajTransakcji(String rodzajTransakcji) {
-        this.rodzajTransakcji = rodzajTransakcji;
+    public void setRodzaj_transakcji(String rodzaj_transakcji) {
+        this.rodzaj_transakcji = rodzaj_transakcji;
     }
-
-    
 
     @Override
     public String toString() {
         return "Transakcje{" +
-                "idTransakcji=" + idTransakcji +
+                "id_transakcji=" + id_transakcji +
                 ", klienci=" + klienci +
                 ", vin=" + vin +
                 ", pracownicy=" + pracownicy +
-                ", dataTransakcji=" + dataTransakcji +
-                ", rodzajTransakcji='" + rodzajTransakcji + '\'' +
+                ", data_transakcji=" + data_transakcji +
+                ", rodzaj_transakcji='" + rodzaj_transakcji + '\'' +
                 '}';
     }
 }

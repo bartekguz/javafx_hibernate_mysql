@@ -19,6 +19,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 
 /**
@@ -95,6 +96,15 @@ public class TabelaPracownicyController implements Initializable {
  
     }
 
- 
+    @FXML
+    private void handleMouseAction(MouseEvent event) {
+        Pracownicy pracownik = pracownicyTv.getSelectionModel().getSelectedItem();
+        pracownicyIdPracownikaField.setText("" + pracownik.getId_pracownika());
+        pracownicyImieField.setText(pracownik.getImie());
+        pracownicyNazwiskoField.setText(pracownik.getNazwisko());
+        pracownicyDataZatrudnieniaField.setText(pracownik.getData_zatrudnienia());
+        pracownicyZarobkiField.setText("" + pracownik.getZarobki());
+        pracownicyNumerTelefonuField.setText("" + pracownik.getNumer_telefonu());
+    }
     
 }
