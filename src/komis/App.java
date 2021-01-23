@@ -37,29 +37,24 @@ public class App extends Application {
     
     public static void main(String[] args) {
         
-        Adresy adres1 = new Adresy();
-        Klienci klient1 = new Klienci();
+//        Adresy adres1 = new Adresy();
+//        Klienci klient1 = new Klienci();
+//        
+//        KlienciDao klienciDao = new KlienciDao();
+//        
+//        
+//        
+//        adres1 = new Adresy("City", "Code", "Idk", "Beutiful", "2");
+//        System.out.println("ADRES1: " + adres1);
+//        
+//        klient1 = new Klienci("John", "Doe", 99012213213L, 9221039281923L, 732839120L);
+//        klient1.setAdresy(adres1);
+//        
+//        klienciDao.saveKlienci(klient1);
+//        
+//        System.out.println("KLIENT1 getAdresy(): " + klient1.getAdresy());
         
-        AdresyDao adresyDao = new AdresyDao();
-        KlienciDao klienciDao = new KlienciDao();
         
-        
-        
-        adres1 = adresyDao.addAdresy("Krosno", "38-400", "Podkarpackie", "Podkarpacka", "2");
-        System.out.println("ADRES1: " + adres1);
-        
-        klient1 = klienciDao.addKlienci("Bartosz", "Guzik", 99012213213L, 9221039281923L, 732839120L);
-        klient1.setAdresy(adres1);
-        adres1.setKlienci(Arrays.asList(klient1));
-        
-//        System.out.println("KLIENT1: " + klient1.getAdresy());
-        
-//        adresyDao.saveAdresy(adres1);
-        adresyDao.saveAdresy(adres1);
-        klienciDao.saveKlienci(klient1);
-        
-        System.out.println("ADRES1 getKlienci(): " + adres1.getKlienci());
-        System.out.println("KLIENT1 getAdresy(): " + klient1.getAdresy());
 //        List<Adresy> adresy = adresyDao.getAdresy();
 //        adresy.forEach(s -> System.out.println(s.getNazwa_miejscowosci()));
 

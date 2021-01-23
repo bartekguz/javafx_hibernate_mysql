@@ -20,7 +20,7 @@ public class KlienciDao {
        Transaction transaction = null;
        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
            transaction = session.beginTransaction();
-           session.save(klienci);
+           session.persist(klienci);
            transaction.commit();
        } catch (Exception e) {
            if (transaction != null) {
@@ -33,7 +33,7 @@ public class KlienciDao {
     public List<Klienci> getKlienci() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             List<Klienci> selectAll = session.createQuery("from Klienci", Klienci.class).list();
-            
+            System.out.println(selectAll);
             return selectAll;
         }
     }     

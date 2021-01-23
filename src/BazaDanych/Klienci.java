@@ -31,7 +31,7 @@ public class Klienci implements Serializable {
     @Column(name = "numer_telefonu", nullable = false, columnDefinition = "bigint(100)")
     private long numer_telefonu;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_adresu", nullable = false)
     private Adresy adresy;
 
@@ -144,7 +144,7 @@ public class Klienci implements Serializable {
                 + ", pesel=" + pesel 
                 + ", nip=" + nip 
                 + ", numer_telefonu=" + numer_telefonu 
-                + ", adresy=" + adresy 
+//                + ", adresy=" + adresy 
                 + ", transakcje=" + transakcje + '}';
     }
 
