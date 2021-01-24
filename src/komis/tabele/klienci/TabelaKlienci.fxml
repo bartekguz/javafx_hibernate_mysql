@@ -11,10 +11,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="900.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="komis.tabele.klienci.TabelaKlienciController">
+<AnchorPane prefHeight="697.0" prefWidth="1009.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="komis.tabele.klienci.TabelaKlienciController">
    <children>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="313.0" prefWidth="941.0">
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="313.0" prefWidth="1013.0">
          <children>
             <VBox layoutX="15.0" layoutY="24.0" spacing="15.0">
                <children>
@@ -55,9 +54,9 @@
                   </Label>
                </children>
             </VBox>
-            <VBox layoutX="123.0" layoutY="22.0" prefHeight="130.0" prefWidth="115.0" spacing="10.0">
+            <VBox layoutX="153.0" layoutY="24.0" prefHeight="130.0" prefWidth="115.0" spacing="10.0">
                <children>
-                  <TextField fx:id="klienciIdKlientaField" />
+                  <TextField fx:id="klienciIdKlientaField" disable="true" editable="false" />
                   <TextField fx:id="klienciImieField" />
                   <TextField fx:id="klienciNazwiskoField" />
                   <TextField fx:id="klienciPeselField" />
@@ -67,27 +66,28 @@
                  
                </children>
             </VBox>
-            <HBox layoutX="26.0" layoutY="270.0" spacing="10.0">
+            <HBox layoutX="46.0" layoutY="276.0" spacing="10.0">
                <children>
-                  <Button fx:id="klienciInsertButton" mnemonicParsing="false" onAction="#insertButton" prefHeight="30.0" prefWidth="60.0" text="Insert" />
-                  <Button fx:id="klienciUpdateButton" mnemonicParsing="false" onAction="#updateButton" prefHeight="30.0" prefWidth="60.0" text="Update" />
-                  <Button fx:id="klienciDeleteButton" mnemonicParsing="false" onAction="#deleteButton" prefHeight="30.0" prefWidth="60.0" text="Delete" />
+                  <Button fx:id="klienciInsertButton" mnemonicParsing="false" onAction="#insertButtonKlienci" prefHeight="30.0" prefWidth="60.0" text="Insert" />
+                  <Button fx:id="klienciUpdateButton" mnemonicParsing="false" onAction="#updateButtonKlienci" prefHeight="30.0" prefWidth="60.0" text="Update" />
+                  <Button fx:id="klienciDeleteButton" mnemonicParsing="false" onAction="#deleteButtonKlienci" prefHeight="30.0" prefWidth="60.0" text="Delete" />
                </children>
             </HBox>
-            <TableView fx:id="klienciTv" layoutX="257.0" layoutY="22.0" onMouseClicked="#handleMouseAction" prefHeight="234.0" prefWidth="657.0">
+            <TableView fx:id="klienciTv" layoutX="308.0" layoutY="22.0" onMouseClicked="#handleMouseActionKlienci" prefHeight="234.0" prefWidth="684.0">
               <columns>
                 <TableColumn fx:id="klienciColIdKlienta" prefWidth="70.0" text="id_klienta" />
                 <TableColumn fx:id="klienciColImie" prefWidth="100.0" text="imie" />
                   <TableColumn fx:id="klienciColNazwisko" prefWidth="100.0" text="nazwisko" />
                   <TableColumn fx:id="klienciColPesel" prefWidth="110.0" text="PESEL" />
-                  <TableColumn fx:id="klienciColNip" prefWidth="110.0" text="NIP" />
-                  <TableColumn fx:id="klienciColNrTelefonu" prefWidth="100.0" text="numer_telefonu" />
-                  <TableColumn fx:id="klienciColIdAdresu" prefWidth="66.0" text="id_adresu" />
+                  <TableColumn fx:id="klienciColNip" prefWidth="123.0" text="NIP" />
+                  <TableColumn fx:id="klienciColNrTelefonu" prefWidth="104.0" text="numer_telefonu" />
+                  <TableColumn fx:id="klienciColIdAdresu" prefWidth="75.0" text="id_adresu" />
               </columns>
             </TableView>
+            <TextArea fx:id="klienciTextArea" editable="false" layoutX="308.0" layoutY="257.0" prefHeight="115.0" prefWidth="330.0" wrapText="true" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutY="617.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="283.0" prefWidth="881.0">
+      <AnchorPane layoutY="410.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="287.0" prefWidth="905.0">
          <children>
             <VBox layoutX="15.0" layoutY="24.0" spacing="15.0">
                <children>
@@ -125,7 +125,7 @@
             </VBox>
             <VBox layoutX="150.0" layoutY="22.0" prefHeight="130.0" prefWidth="115.0" spacing="10.0">
                <children>
-                  <TextField fx:id="adresIdAdresuField" />
+                  <TextField fx:id="adresIdAdresuField" disable="true" editable="false" />
                   <TextField fx:id="adresNazwaMiejscowosciField" />
                   <TextField fx:id="adresKodPocztowyField" />
                   <TextField fx:id="adresNazwaWojewodztwaField" />
@@ -133,14 +133,13 @@
                   <TextField fx:id="adresNumerDomuField" layoutX="10.0" layoutY="150.0" />
                </children>
             </VBox>
-            <HBox layoutX="40.0" layoutY="238.0" spacing="10.0">
+            <HBox layoutX="79.0" layoutY="236.0" spacing="10.0">
                <children>
-                  <Button fx:id="adresInsertButton" mnemonicParsing="false" onAction="#insertButton" prefHeight="30.0" prefWidth="60.0" text="Insert" />
-                  <Button fx:id="adresUpdateButton" mnemonicParsing="false" onAction="#updateButton" prefHeight="30.0" prefWidth="60.0" text="Update" />
-                  <Button fx:id="adresDeleteButton" mnemonicParsing="false" onAction="#deleteButton" prefHeight="30.0" prefWidth="60.0" text="Delete" />
+                  <Button fx:id="adresUpdateButton" mnemonicParsing="false" onAction="#updateButtonAdresy" prefHeight="30.0" prefWidth="60.0" text="Update" />
+                  <Button fx:id="adresDeleteButton" mnemonicParsing="false" onAction="#deleteButtonAdresy" prefHeight="30.0" prefWidth="60.0" text="Delete" />
                </children>
             </HBox>
-            <TableView fx:id="adresTv" layoutX="285.0" layoutY="22.0" onMouseClicked="#handleMouseAction" prefHeight="200.0" prefWidth="580.0">
+            <TableView fx:id="adresTv" layoutX="308.0" layoutY="22.0" onMouseClicked="#handleMouseActionAdresy" prefHeight="200.0" prefWidth="580.0">
                <columns>
                   <TableColumn fx:id="adresColIdAdresu" prefWidth="65.0" text="id_adresu" />
                   <TableColumn fx:id="adresColNazwaMiejscowosci" prefWidth="124.0" text="nazwa_miejscowosci" />
@@ -152,6 +151,5 @@
             </TableView>
          </children>
       </AnchorPane>
-      <TextArea fx:id="klienciTextArea" layoutX="406.0" layoutY="339.0" prefHeight="200.0" prefWidth="200.0" />
    </children>
 </AnchorPane>

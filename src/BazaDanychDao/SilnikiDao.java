@@ -16,7 +16,7 @@ import org.hibernate.Transaction;
  * @author Bartek
  */
 public class SilnikiDao {
-    public void saveKlienci(Silniki silniki) {
+    public void saveSilniki(Silniki silniki) {
        Transaction transaction = null;
        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
            transaction = session.beginTransaction();

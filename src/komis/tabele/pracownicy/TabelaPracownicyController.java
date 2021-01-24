@@ -64,10 +64,12 @@ public class TabelaPracownicyController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         showPracownicy();
+        
+
+            
     }    
     
     public void showPracownicy() {
-        
         ObservableList<Pracownicy> list = FXCollections.observableArrayList(pracownicyDao.getPracownicy());
     	
     	pracownicyColIdPracownika.setCellValueFactory(new PropertyValueFactory<>("id_pracownika"));

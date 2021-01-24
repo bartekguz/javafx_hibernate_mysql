@@ -2,7 +2,7 @@ package BazaDanych;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "silniki")
@@ -22,7 +22,7 @@ public class Silniki implements Serializable {
     private String rodzaj_paliwa;
 
     @OneToMany(cascade={CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "silniki")
-    private Set<Samochody> samochody;
+    private List<Samochody> samochody;
 
     public Silniki() { }
 
@@ -31,7 +31,7 @@ public class Silniki implements Serializable {
         this.rodzaj_paliwa = rodzaj_paliwa;
     }
 
-    public Silniki(String pojemnosc_silnika, String rodzaj_paliwa, Set<Samochody> samochody) {
+    public Silniki(String pojemnosc_silnika, String rodzaj_paliwa, List<Samochody> samochody) {
         this.pojemnosc_silnika = pojemnosc_silnika;
         this.rodzaj_paliwa = rodzaj_paliwa;
         this.samochody = samochody;
@@ -61,11 +61,11 @@ public class Silniki implements Serializable {
         this.rodzaj_paliwa = rodzaj_paliwa;
     }  
 
-    public Set<Samochody> getSamochody() {
+    public List<Samochody> getSamochody() {
         return samochody;
     }
 
-    public void setSamochody(Set<Samochody> samochody) {
+    public void setSamochody(List<Samochody> samochody) {
         this.samochody = samochody;
     }
 

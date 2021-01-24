@@ -2,6 +2,7 @@ package BazaDanych;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -31,7 +32,7 @@ public class Pracownicy implements Serializable {
     private long numer_telefonu;
 
     @OneToMany(cascade={CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "pracownicy")
-    private Set<Transakcje> transakcje;
+    private List<Transakcje> transakcje;
 
     public Pracownicy() {
     }
@@ -44,7 +45,7 @@ public class Pracownicy implements Serializable {
         this.numer_telefonu = numer_telefonu;
     }
 
-    public Pracownicy(String imie, String nazwisko, String data_zatrudnienia, long zarobki, long numer_telefonu, Set<Transakcje> transakcje) {
+    public Pracownicy(String imie, String nazwisko, String data_zatrudnienia, long zarobki, long numer_telefonu, List<Transakcje> transakcje) {
         this.imie = imie;
         this.nazwisko = nazwisko;
         this.data_zatrudnienia = data_zatrudnienia;
@@ -101,11 +102,11 @@ public class Pracownicy implements Serializable {
         this.numer_telefonu = numer_telefonu;
     }
 
-    public Set<Transakcje> getTransakcje() {
+    public List<Transakcje> getTransakcje() {
         return transakcje;
     }
 
-    public void setTransakcje(Set<Transakcje> transakcje) {
+    public void setTransakcje(List<Transakcje> transakcje) {
         this.transakcje = transakcje;
     }
 

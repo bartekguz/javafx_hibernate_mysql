@@ -3,7 +3,6 @@ package BazaDanych;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "klienci")
@@ -144,7 +143,6 @@ public class Klienci implements Serializable {
                 + ", pesel=" + pesel 
                 + ", nip=" + nip 
                 + ", numer_telefonu=" + numer_telefonu 
-//                + ", adresy=" + adresy 
                 + ", transakcje=" + transakcje + '}';
     }
 

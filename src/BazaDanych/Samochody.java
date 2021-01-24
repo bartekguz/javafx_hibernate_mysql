@@ -2,7 +2,7 @@ package BazaDanych;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "samochody")
@@ -32,16 +32,29 @@ public class Samochody implements Serializable {
     @Column(name = "cena", nullable = true, columnDefinition = "bigint(100) default '0'")
     private long cena;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_silnika", nullable = true)
     private Silniki silniki;
 
     @OneToMany(cascade={CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "vin")
-    private Set<Transakcje> transakcje;
+    private List<Transakcje> transakcje;
 
     public Samochody() { }
 
-    public Samochody(String marka, String model, String typ, long rok_produkcji, String kolor, long cena, Silniki silniki) {
+    public Samochody(String nr_vin, String marka, String model, String typ, long rok_produkcji, String kolor, long cena, Silniki silniki, List<Transakcje> transakcje) {
+        this.nr_vin = nr_vin;
+        this.marka = marka;
+        this.model = model;
+        this.typ = typ;
+        this.rok_produkcji = rok_produkcji;
+        this.kolor = kolor;
+        this.cena = cena;
+        this.silniki = silniki;
+        this.transakcje = transakcje;
+    }
+    
+    public Samochody(String nr_vin, String marka, String model, String typ, long rok_produkcji, String kolor, long cena, Silniki silniki) {
+        this.nr_vin = nr_vin;
         this.marka = marka;
         this.model = model;
         this.typ = typ;
@@ -51,15 +64,14 @@ public class Samochody implements Serializable {
         this.silniki = silniki;
     }
 
-    public Samochody(String marka, String model, String typ, long rok_produkcji, String kolor, long cena, Silniki silniki, Set<Transakcje> transakcje) {
+    public Samochody(String nr_vin, String marka, String model, String typ, long rok_produkcji, String kolor, long cena) {
+        this.nr_vin = nr_vin;
         this.marka = marka;
         this.model = model;
         this.typ = typ;
         this.rok_produkcji = rok_produkcji;
         this.kolor = kolor;
         this.cena = cena;
-        this.silniki = silniki;
-        this.transakcje = transakcje;
     }
     
     
@@ -100,7 +112,7 @@ public class Samochody implements Serializable {
         return rok_produkcji;
     }
 
-    public void setRokProdukcji(long rok_produkcji) {
+    public void setRok_produkcji(long rok_produkcji) {
         this.rok_produkcji = rok_produkcji;
     }
 
@@ -128,15 +140,14 @@ public class Samochody implements Serializable {
         this.silniki = silniki;
     }
 
-    public Set<Transakcje> getTransakcje() {
+    public List<Transakcje> getTransakcje() {
         return transakcje;
     }
 
-    public void setTransakcje(Set<Transakcje> transakcje) {
+    public void setTransakcje(List<Transakcje> transakcje) {
         this.transakcje = transakcje;
     }
 
-    
 
     @Override
     public String toString() {

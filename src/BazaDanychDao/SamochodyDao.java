@@ -16,7 +16,7 @@ import org.hibernate.Transaction;
  * @author Bartek
  */
 public class SamochodyDao {
-    public void saveAdresy(Samochody samochody) {
+    public void saveSamochody(Samochody samochody) {
        Transaction transaction = null;
        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
            transaction = session.beginTransaction();
@@ -32,6 +32,7 @@ public class SamochodyDao {
     
     public List<Samochody> getSamochody() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            System.out.println("WYNIK: " + session.createQuery("from Samochody", Samochody.class).list());
             return session.createQuery("from Samochody", Samochody.class).list();
         }
     }         

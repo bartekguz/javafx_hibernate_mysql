@@ -38,19 +38,13 @@ public class AdresyDao {
         }
     }
     
-    public Adresy addAdresy(String nazwaMiejscowosci, String kodPocztowy, String nazwaWojewodztwa, String nazwaUlicy, String numerDomu) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            session.beginTransaction();
-            
-            Adresy adres = new Adresy();
-            
-            adres.setNazwa_miejscowosci(nazwaMiejscowosci);
-            adres.setKod_pocztowy(kodPocztowy);
-            adres.setNazwa_wojewodztwa(nazwaWojewodztwa);
-            adres.setNazwa_ulicy(nazwaUlicy);
-            adres.setNumer_domu(numerDomu);
-            
-            return adres;
+    public List<Adresy> getAdresyById(Long id) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {        
+            return session.createQuery("FROM Adresy E WHERE E.id_adresu = " + id).list();
+        } catch (Exception e) {
+            System.out.println("ERROR [getAdresyById]: " + e);
+            return null;
         }
     }
+
 }

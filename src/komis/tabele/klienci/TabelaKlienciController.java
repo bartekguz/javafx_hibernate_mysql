@@ -11,19 +11,22 @@ import java.net.URL;
 import BazaDanych.Klienci;
 import BazaDanychDao.AdresyDao;
 import BazaDanychDao.KlienciDao;
+import java.util.List;
 
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import komis.HibernateUtil;
+import org.hibernate.Session;
 
 /**
  * FXML Controller class
@@ -32,6 +35,7 @@ import javafx.scene.input.MouseEvent;
  */
 public class TabelaKlienciController implements Initializable {
 
+    // KLIENCI
     @FXML
     private TextField klienciIdKlientaField;
     @FXML
@@ -61,9 +65,14 @@ public class TabelaKlienciController implements Initializable {
     @FXML
     private TableColumn<Klienci, Long> klienciColNrTelefonu;
     @FXML
-    private TableColumn<Klienci, Long> klienciColIdAdresu;
+    private TableColumn<Klienci, String> klienciColIdAdresu;
 
     KlienciDao klienciDao = new KlienciDao();
+    
+    @FXML
+    private TextArea klienciTextArea;
+            
+    // ADRESY
     
     @FXML
     private TextField adresIdAdresuField;
@@ -93,14 +102,13 @@ public class TabelaKlienciController implements Initializable {
     private TableColumn<Adresy, String> adresColNumerDomu;
 
     AdresyDao adresyDao = new AdresyDao();
-    @FXML
-    private TextArea klienciTextArea;
     
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb) {   
+
         showKlienci();
         showAdresy();
     }    
@@ -114,7 +122,10 @@ public class TabelaKlienciController implements Initializable {
     	klienciColNip.setCellValueFactory(new PropertyValueFactory<>("nip"));
     	klienciColNrTelefonu.setCellValueFactory(new PropertyValueFactory<>("numer_telefonu"));
         klienciColPesel.setCellValueFactory(new PropertyValueFactory<>("pesel"));
-        klienciColIdAdresu.setCellValueFactory(new PropertyValueFactory<>("Adresy.id_adresu"));
+        klienciColIdAdresu.setCellValueFactory((cell) -> {
+            SimpleStringProperty id = new SimpleStringProperty(Long.toString(cell.getValue().getAdresy().getId_adresu()));
+            return id;
+        });
     	
     	klienciTv.setItems(list);
     }
@@ -132,34 +143,9 @@ public class TabelaKlienciController implements Initializable {
     	adresTv.setItems(list);
     }
     
-    @FXML
-    private void insertButton() {
-    	KlienciDao klienciDao = new KlienciDao();
-        klienciDao.addKlienci(
-                klienciImieField.getText(), 
-                klienciNazwiskoField.getText(), 
-                Long.parseLong(klienciPeselField.getText()), 
-                Long.parseLong(klienciNipField.getText()), 
-                Long.parseLong(klienciNrTelefonuField.getText())
-        );
-        
-        
-        showKlienci();
-    }
-    
-    
-    @FXML 
-    private void updateButton() {
-        
-    }
-    
-    @FXML
-    private void deleteButton() {
-    	
-    }
 
     @FXML
-    private void handleMouseAction(MouseEvent event) {
+    private void handleMouseActionKlienci(MouseEvent event) {
         Klienci klient = klienciTv.getSelectionModel().getSelectedItem();
         klienciIdKlientaField.setText("" + klient.getId_klienta());
         klienciImieField.setText(klient.getImie());
@@ -167,8 +153,144 @@ public class TabelaKlienciController implements Initializable {
         klienciNipField.setText("" + klient.getNip());
         klienciNrTelefonuField.setText("" + klient.getNumer_telefonu());
         klienciPeselField.setText("" + klient.getPesel());
-        klienciIdAdresuField.setText("" + klient.getAdresy());
+        klienciIdAdresuField.setText("" + klient.getAdresy().getId_adresu());
         
-        klienciTextArea.setText("" + klient.getAdresy());
+        klienciTextArea.setText("" + klient.getAdresy().toString());
+    }
+    
+    @FXML
+    private void handleMouseActionAdresy(MouseEvent event) {
+        Adresy adres = adresTv.getSelectionModel().getSelectedItem();
+        adresIdAdresuField.setText("" + adres.getId_adresu());
+        adresKodPocztowyField.setText(adres.getKod_pocztowy());
+        adresNazwaMiejscowosciField.setText("" + adres.getNazwa_miejscowosci());
+        adresNazwaUlicyField.setText(adres.getNazwa_ulicy());
+        adresNazwaWojewodztwaField.setText("" + adres.getNazwa_wojewodztwa());
+        adresNumerDomuField.setText(adres.getNumer_domu());
+    }
+    
+    
+    @FXML
+    private void insertButtonKlienci() throws Exception {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+        
+            Klienci klient = new Klienci(
+                klienciImieField.getText(), 
+                klienciNazwiskoField.getText(), 
+                Long.parseLong(klienciPeselField.getText()), 
+                Long.parseLong(klienciNipField.getText()), 
+                Long.parseLong(klienciNrTelefonuField.getText())
+            );
+
+            Adresy adres = new Adresy(
+                adresNazwaMiejscowosciField.getText(), 
+                adresKodPocztowyField.getText(), 
+                adresNazwaWojewodztwaField.getText(), 
+                adresNazwaUlicyField.getText(), 
+                adresNumerDomuField.getText()
+            );
+            
+            klient.setAdresy(adres);
+            klienciDao.saveKlienci(klient);
+        }
+        showKlienci();
+        showAdresy();
+    }
+    
+    
+    @FXML 
+    private void updateButtonKlienci() {
+        
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            
+            Klienci klient = session.get(Klienci.class, Long.parseLong(klienciIdKlientaField.getText()));
+            
+            klient.setImie(klienciImieField.getText());
+            klient.setNazwisko(klienciNazwiskoField.getText());
+            klient.setPesel(Long.parseLong(klienciPeselField.getText()));
+            klient.setNip(Long.parseLong(klienciNipField.getText()));
+            klient.setNumer_telefonu(Long.parseLong(klienciNrTelefonuField.getText()));
+            
+            List adres = session.createQuery("FROM Adresy E WHERE E.id_adresu = " + klienciIdAdresuField.getText()).list();
+            ObservableList<Adresy> adresy = FXCollections.observableArrayList(adres);
+            
+            long oldIdAdress = klient.getAdresy().getId_adresu();
+            klient.setAdresy(adresy.get(0));
+            
+            session.save(klient);
+            
+            //NIE DZIALA USUWANIE ADRESU KTORY NIE NALEZY DO ZADNEGO KLIENTA
+//            if (oldIdAdress != Long.parseLong(klienciIdAdresuField.getText())) {
+//                List listAdres = session.createQuery("FROM Adresy E WHERE E.id_adresu = " + oldIdAdress).list();
+//                ObservableList<Adresy> obsAdres = FXCollections.observableArrayList(listAdres);
+//                    
+//                System.out.println("TEGO SZUKASZ: " + obsAdres);
+//                System.out.println("TEGO SZUKASZ: " + obsAdres.get(0));
+//                System.out.println("TEGO SZUKASZ: " + obsAdres.get(0).getKlienci());
+//                System.out.println("TEGO SZUKASZ: " + obsAdres.get(0).getKlienci().size());
+//                
+//                if (obsAdres.get(0).getKlienci().size() == 0) {
+//                    Adresy adresToDelete = session.load(Adresy.class, oldIdAdress);  
+//                    session.delete(adresToDelete);
+//                }
+//            }
+
+            session.getTransaction().commit();
+            
+            showKlienci();
+            showAdresy();
+        }
+    }
+    
+    @FXML
+    private void deleteButtonKlienci() {
+    	try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            
+            Klienci klient = session.load(Klienci.class, Long.parseLong(klienciIdKlientaField.getText()));  
+            session.delete(klient);
+            
+            session.getTransaction().commit();
+            
+            showAdresy();
+            showKlienci();
+        }
+    }
+    
+    @FXML 
+    private void updateButtonAdresy() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            
+            Adresy adres = session.get(Adresy.class, Long.parseLong(adresIdAdresuField.getText()));  
+            
+            adres.setNazwa_miejscowosci(adresNazwaMiejscowosciField.getText());
+            adres.setKod_pocztowy(adresKodPocztowyField.getText());
+            adres.setNazwa_wojewodztwa(adresNazwaWojewodztwaField.getText());
+            adres.setNazwa_ulicy(adresNazwaUlicyField.getText());
+            adres.setNumer_domu(adresNumerDomuField.getText());
+            
+            session.getTransaction().commit();
+            
+            showAdresy();
+            showKlienci();
+        }
+    }
+    
+    @FXML
+    private void deleteButtonAdresy() {
+    	try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            
+            Adresy adres = session.load(Adresy.class, Long.parseLong(adresIdAdresuField.getText()));  
+            session.delete(adres);
+            
+            session.getTransaction().commit();
+            
+            showAdresy();
+            showKlienci();
+        }
     }
 }

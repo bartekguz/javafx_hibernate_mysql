@@ -3,7 +3,6 @@ package BazaDanych;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "adresy")
@@ -31,7 +30,7 @@ public class Adresy implements Serializable {
     @Column(name = "numer_domu", nullable = false, columnDefinition = "varchar(100)")
     private String numer_domu;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "adresy") 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "adresy") 
     private List<Klienci> klienci;
 
     public Adresy() {
@@ -113,15 +112,12 @@ public class Adresy implements Serializable {
 
     @Override
     public String toString() {
-        return "Adresy{" 
-                + "id_adresu=" + id_adresu 
-                + ", nazwa_miejscowosci=" + nazwa_miejscowosci 
-                + ", kod_pocztowy=" + kod_pocztowy 
-                + ", nazwa_wojewodztwa=" + nazwa_wojewodztwa 
-                + ", nazwa_ulicy=" + nazwa_ulicy 
-                + ", numer_domu=" + numer_domu 
-//                + ", klienci=" + klienci 
-                + '}';
+        return    " id_adresu=" + id_adresu 
+                + "\n nazwa_miejscowosci=" + nazwa_miejscowosci 
+                + "\n kod_pocztowy=" + kod_pocztowy 
+                + "\n nazwa_wojewodztwa=" + nazwa_wojewodztwa 
+                + "\n nazwa_ulicy=" + nazwa_ulicy 
+                + "\n numer_domu=" + numer_domu;
     }
     
     

@@ -83,8 +83,8 @@ public class TabelaSilnikiController implements Initializable {
     private void handleMouseAction(MouseEvent event) {
         Silniki silnik = silnikTv.getSelectionModel().getSelectedItem();
         silnikIdSilnikaField.setText("" + silnik.getId_silnika());
-        silnikIdSilnikaField.setText(silnik.getPojemnosc_silnika());
-        silnikIdSilnikaField.setText(silnik.getRodzaj_paliwa());
+        silnikPojemnoscSilnikaField.setText(silnik.getPojemnosc_silnika());
+        silnikRodzajPaliwaField.setText(silnik.getRodzaj_paliwa());
     }
 
 }

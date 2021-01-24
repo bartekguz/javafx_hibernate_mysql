@@ -4,89 +4,132 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="348.0" prefWidth="935.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="komis.tabele.samochody.TabelaSamochodyController">
+<AnchorPane prefHeight="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="komis.tabele.samochody.TabelaSamochodyController">
    <children>
-      <VBox layoutX="15.0" layoutY="24.0" spacing="15.0">
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="348.0" prefWidth="935.0">
          <children>
-            <Label text="nr_vin">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label text="marka">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label text="model">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label text="typ">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label text="rok_produkcji">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="10.0" layoutY="150.0" text="kolor">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label text="cena">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label text="id_silnika">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
+            <VBox layoutX="15.0" layoutY="24.0" spacing="15.0">
+               <children>
+                  <Label text="nr_vin">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="marka">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="model">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="typ">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="rok_produkcji">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="150.0" text="kolor">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="cena">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox layoutX="109.0" layoutY="20.0" prefHeight="130.0" prefWidth="115.0" spacing="10.0">
+               <children>
+                  <TextField fx:id="samochodyNrVinField" />
+                  <TextField fx:id="samochodyMarkaField" />
+                  <TextField fx:id="samochodyModelField" />
+                  <TextField fx:id="samochodyTypField" />
+                  <TextField fx:id="samochodyRokProdukcjiField" />
+                  <TextField fx:id="samochodyKolorField" layoutX="10.0" layoutY="150.0" />
+                  <TextField fx:id="samochodyCenaField" />
+                 
+               </children>
+            </VBox>
+            <HBox layoutX="20.0" layoutY="304.0" spacing="10.0">
+               <children>
+                  <Button fx:id="samochodyInsertButton" mnemonicParsing="false" onAction="#insertButtonSamochody" prefHeight="30.0" prefWidth="60.0" text="Insert" />
+                  <Button fx:id="samochodyUpdateButton" mnemonicParsing="false" onAction="#updateButtonSamochody" prefHeight="30.0" prefWidth="60.0" text="Update" />
+                  <Button fx:id="samochodyDeleteButton" mnemonicParsing="false" onAction="#deleteButtonSamochody" prefHeight="30.0" prefWidth="60.0" text="Delete" />
+               </children>
+            </HBox>
+            <TableView fx:id="samochodyTv" layoutX="236.0" layoutY="20.0" onMouseClicked="#handleMouseActionSamochody" prefHeight="269.0" prefWidth="681.0">
+              <columns>
+                <TableColumn fx:id="samochodyColNrVin" prefWidth="90.0" text="nr_vin" />
+                <TableColumn fx:id="samochodyColMarka" prefWidth="85.0" text="marka" />
+                  <TableColumn fx:id="samochodyColModel" prefWidth="85.0" text="model" />
+                  <TableColumn fx:id="samochodyColTyp" prefWidth="85.0" text="typ" />
+                  <TableColumn fx:id="samochodyColRokProdukcji" prefWidth="95.0" text="rok_produkcji" />
+                  <TableColumn fx:id="samochodyColKolor" text="kolor" />
+                  <TableColumn fx:id="samochodyColCena" prefWidth="85.0" text="cena" />
+                  <TableColumn fx:id="samochodyColIdSilnika" prefWidth="75.0" text="id_silnika" />
+              </columns>
+            </TableView>
          </children>
-      </VBox>
-      <VBox layoutX="109.0" layoutY="20.0" prefHeight="130.0" prefWidth="115.0" spacing="10.0">
+      </AnchorPane>
+      <AnchorPane layoutX="84.0" layoutY="559.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="292.0" prefWidth="600.0">
          <children>
-            <TextField fx:id="samochodyNrVinField" />
-            <TextField fx:id="samochodyMarkaField" />
-            <TextField fx:id="samochodyModelField" />
-            <TextField fx:id="samochodyTypField" />
-            <TextField fx:id="samochodyRokProdukcjiField" />
-            <TextField fx:id="samochodyKolorField" layoutX="10.0" layoutY="150.0" />
-            <TextField fx:id="samochodyCenaField" />
-            <TextField fx:id="samochodyIdSilnikaField" />
-           
+            <VBox layoutX="15.0" layoutY="51.0" spacing="56.0">
+               <children>
+                  <Label text="id_silnika">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="pojemnosc_silnika">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="rodzaj_paliwa">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox layoutX="142.0" layoutY="49.0" prefHeight="130.0" prefWidth="115.0" spacing="50.0">
+               <children>
+                  <TextField fx:id="silnikIdSilnikaField" />
+                  <TextField fx:id="silnikPojemnoscSilnikaField" />
+                  <TextField fx:id="silnikRodzajPaliwaField" />
+               </children>
+            </VBox>
+            <HBox layoutX="37.0" layoutY="245.0" spacing="10.0">
+               <children>
+                  <Button fx:id="silnikUpdateButton" mnemonicParsing="false" onAction="#updateButtonSilniki" prefHeight="30.0" prefWidth="60.0" text="Update" />
+                  <Button fx:id="silnikDeleteButton" mnemonicParsing="false" onAction="#deleteButtonSilniki" prefHeight="30.0" prefWidth="60.0" text="Delete" />
+               </children>
+            </HBox>
+            <TableView fx:id="silnikTv" layoutX="275.0" layoutY="31.0" onMouseClicked="#handleMouseActionSilniki" prefHeight="204.0" prefWidth="296.0">
+               <columns>
+                  <TableColumn fx:id="silnikColIdSilnika" prefWidth="85.0" text="id_silnika" />
+                  <TableColumn fx:id="silnikColPojemnoscSilnika" prefWidth="115.0" text="pojemnosc_silnika" />
+                  <TableColumn fx:id="silnikColRodzajPaliwa" prefWidth="95.0" text="rodzaj_paliwa" />
+               </columns>
+            </TableView>
          </children>
-      </VBox>
-      <HBox layoutX="20.0" layoutY="304.0" spacing="10.0">
-         <children>
-            <Button fx:id="samochodyInsertButton" mnemonicParsing="false" onAction="#insertButton" prefHeight="30.0" prefWidth="60.0" text="Insert" />
-            <Button fx:id="samochodyUpdateButton" mnemonicParsing="false" onAction="#updateButton" prefHeight="30.0" prefWidth="60.0" text="Update" />
-            <Button fx:id="samochodyDeleteButton" mnemonicParsing="false" onAction="#deleteButton" prefHeight="30.0" prefWidth="60.0" text="Delete" />
-         </children>
-      </HBox>
-      <TableView fx:id="samochodyTv" layoutX="236.0" layoutY="20.0" onMouseClicked="#handleMouseAction" prefHeight="269.0" prefWidth="681.0">
-        <columns>
-          <TableColumn fx:id="samochodyColNrVin" prefWidth="90.0" text="nr_vin" />
-          <TableColumn fx:id="samochodyColMarka" prefWidth="85.0" text="marka" />
-            <TableColumn fx:id="samochodyColModel" prefWidth="85.0" text="model" />
-            <TableColumn fx:id="samochodyColTyp" prefWidth="85.0" text="typ" />
-            <TableColumn fx:id="samochodyColRokProdukcji" prefWidth="95.0" text="rok_produkcji" />
-            <TableColumn fx:id="samochodyColKolor" text="kolor" />
-            <TableColumn fx:id="samochodyColCena" prefWidth="85.0" text="cena" />
-            <TableColumn fx:id="samochodyColIdSilnika" prefWidth="75.0" text="id_silnika" />
-        </columns>
-      </TableView>
+      </AnchorPane>
+      <TextArea fx:id="samochodyTextArea" layoutX="236.0" layoutY="288.0" prefHeight="130.0" prefWidth="200.0" />
    </children>
 </AnchorPane>
