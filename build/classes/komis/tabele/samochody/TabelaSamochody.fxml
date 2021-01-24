@@ -96,6 +96,7 @@
                   <TableColumn fx:id="samochodyColIdSilnika" prefWidth="75.0" text="id_silnika" />
               </columns>
             </TableView>
+            <TextArea fx:id="samochodyTextArea" layoutX="236.0" layoutY="290.0" prefHeight="77.0" prefWidth="200.0" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="84.0" layoutY="559.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="292.0" prefWidth="600.0">
@@ -142,6 +143,5 @@
             </TableView>
          </children>
       </AnchorPane>
-      <TextArea fx:id="samochodyTextArea" layoutX="236.0" layoutY="290.0" prefHeight="77.0" prefWidth="200.0" />
    </children>
 </AnchorPane>
