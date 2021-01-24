@@ -32,11 +32,11 @@ public class Samochody implements Serializable {
     @Column(name = "cena", nullable = true, columnDefinition = "bigint(100) default '0'")
     private long cena;
 
-    @ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_silnika", nullable = true)
     private Silniki silniki;
 
-    @OneToMany(cascade={CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "vin")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "vin")
     private List<Transakcje> transakcje;
 
     public Samochody() { }

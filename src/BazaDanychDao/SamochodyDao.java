@@ -32,7 +32,6 @@ public class SamochodyDao {
     
     public List<Samochody> getSamochody() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            System.out.println("WYNIK: " + session.createQuery("from Samochody", Samochody.class).list());
             return session.createQuery("from Samochody", Samochody.class).list();
         }
     }         

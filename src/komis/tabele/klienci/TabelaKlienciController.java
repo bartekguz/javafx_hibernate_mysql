@@ -113,7 +113,13 @@ public class TabelaKlienciController implements Initializable {
         showAdresy();
     }    
     
-    public void showKlienci() {
+    //Wszystko działa oprócz tego, że jak się usunie adres to usuwa wszystkich użytkowników którzy go mają.
+    //Wszystko działa oprócz tego, że jak się usunie adres to usuwa wszystkich użytkowników którzy go mają.
+    //Wszystko działa oprócz tego, że jak się usunie adres to usuwa wszystkich użytkowników którzy go mają.
+    //Wszystko działa oprócz tego, że jak się usunie adres to usuwa wszystkich użytkowników którzy go mają.
+    //Wszystko działa oprócz tego, że jak się usunie adres to usuwa wszystkich użytkowników którzy go mają
+    
+    private void showKlienci() {
         ObservableList<Klienci> list = FXCollections.observableArrayList(klienciDao.getKlienci());
 
     	klienciColIdKlienta.setCellValueFactory(new PropertyValueFactory<>("id_klienta"));
@@ -130,7 +136,7 @@ public class TabelaKlienciController implements Initializable {
     	klienciTv.setItems(list);
     }
     
-    public void showAdresy() {
+    private void showAdresy() {
         ObservableList<Adresy> list = FXCollections.observableArrayList(adresyDao.getAdresy());
         
     	adresColIdAdresu.setCellValueFactory(new PropertyValueFactory<>("id_adresu"));
@@ -183,19 +189,31 @@ public class TabelaKlienciController implements Initializable {
                 Long.parseLong(klienciNrTelefonuField.getText())
             );
 
-            Adresy adres = new Adresy(
+            if (klienciIdAdresuField.getText().length() == 0) {
+                
+                Adresy adres = new Adresy(
                 adresNazwaMiejscowosciField.getText(), 
                 adresKodPocztowyField.getText(), 
                 adresNazwaWojewodztwaField.getText(), 
                 adresNazwaUlicyField.getText(), 
                 adresNumerDomuField.getText()
-            );
+                );
+                
+                klient.setAdresy(adres);
+                klienciDao.saveKlienci(klient);
+            } else {
+                List adres = session.createQuery("FROM Adresy E WHERE E.id_adresu = " + klienciIdAdresuField.getText()).list();
+                ObservableList<Adresy> adresy = FXCollections.observableArrayList(adres);
+                
+                klient.setAdresy(adresy.get(0));
+                session.save(klient);
+            }
             
-            klient.setAdresy(adres);
-            klienciDao.saveKlienci(klient);
-        }
-        showKlienci();
-        showAdresy();
+            session.getTransaction().commit();
+            
+            showKlienci();
+            showAdresy();
+        } 
     }
     
     
@@ -217,25 +235,29 @@ public class TabelaKlienciController implements Initializable {
             ObservableList<Adresy> adresy = FXCollections.observableArrayList(adres);
             
             long oldIdAdress = klient.getAdresy().getId_adresu();
+            System.out.println("\nold adress id: " + oldIdAdress);
+            System.out.println("\nnew adress id: " + adresy.get(0).getId_adresu());
             klient.setAdresy(adresy.get(0));
             
             session.save(klient);
             
-            //NIE DZIALA USUWANIE ADRESU KTORY NIE NALEZY DO ZADNEGO KLIENTA
-//            if (oldIdAdress != Long.parseLong(klienciIdAdresuField.getText())) {
-//                List listAdres = session.createQuery("FROM Adresy E WHERE E.id_adresu = " + oldIdAdress).list();
-//                ObservableList<Adresy> obsAdres = FXCollections.observableArrayList(listAdres);
-//                    
-//                System.out.println("TEGO SZUKASZ: " + obsAdres);
-//                System.out.println("TEGO SZUKASZ: " + obsAdres.get(0));
-//                System.out.println("TEGO SZUKASZ: " + obsAdres.get(0).getKlienci());
-//                System.out.println("TEGO SZUKASZ: " + obsAdres.get(0).getKlienci().size());
-//                
-//                if (obsAdres.get(0).getKlienci().size() == 0) {
-//                    Adresy adresToDelete = session.load(Adresy.class, oldIdAdress);  
-//                    session.delete(adresToDelete);
-//                }
-//            }
+            if (oldIdAdress != adresy.get(0).getId_adresu()) {
+                List listAdres = session.createQuery("FROM Adresy E WHERE E.id_adresu = " + oldIdAdress).list();
+                ObservableList<Adresy> obsAdres = FXCollections.observableArrayList(listAdres);
+                
+                System.out.println("\n\nLISTA: " + listAdres);
+                System.out.println("\n\nOBSLISTA: " + obsAdres);
+                System.out.println("\n\nOBSLISTA.(0).getKl: " + obsAdres.get(0).getKlienci());
+                
+                if (obsAdres.get(0).getKlienci().size() == 1) {
+                    obsAdres.get(0).getKlienci().clear();
+                    
+                    System.out.println("LISTA PO WYCZYSZCZENIU: " + obsAdres.get(0));
+                    
+                    Adresy adresToDelete = session.load(Adresy.class, oldIdAdress);  
+                    session.delete(adresToDelete);
+                }
+            }
 
             session.getTransaction().commit();
             
@@ -292,5 +314,26 @@ public class TabelaKlienciController implements Initializable {
             showAdresy();
             showKlienci();
         }
+    }
+    
+    @FXML
+    private void clearKlienci() {
+    	klienciIdKlientaField.setText("");
+        klienciImieField.setText("");
+        klienciNazwiskoField.setText("");
+        klienciNipField.setText("");
+        klienciNrTelefonuField.setText("");
+        klienciPeselField.setText("");
+        klienciIdAdresuField.setText("");
+    }
+    
+    @FXML
+    private void clearAdresy() { 
+        adresIdAdresuField.setText("");
+        adresKodPocztowyField.setText("");
+        adresNazwaMiejscowosciField.setText("");
+        adresNazwaUlicyField.setText("");
+        adresNazwaWojewodztwaField.setText("");
+        adresNumerDomuField.setText("");
     }
 }

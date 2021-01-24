@@ -66,11 +66,12 @@
                  
                </children>
             </VBox>
-            <HBox layoutX="46.0" layoutY="276.0" spacing="10.0">
+            <HBox layoutX="22.0" layoutY="275.0" spacing="10.0">
                <children>
                   <Button fx:id="klienciInsertButton" mnemonicParsing="false" onAction="#insertButtonKlienci" prefHeight="30.0" prefWidth="60.0" text="Insert" />
                   <Button fx:id="klienciUpdateButton" mnemonicParsing="false" onAction="#updateButtonKlienci" prefHeight="30.0" prefWidth="60.0" text="Update" />
                   <Button fx:id="klienciDeleteButton" mnemonicParsing="false" onAction="#deleteButtonKlienci" prefHeight="30.0" prefWidth="60.0" text="Delete" />
+                  <Button fx:id="clearKlienci" mnemonicParsing="false" onAction="#clearKlienci" prefHeight="30.0" prefWidth="60.0" text="CLEAR" />
                </children>
             </HBox>
             <TableView fx:id="klienciTv" layoutX="308.0" layoutY="22.0" onMouseClicked="#handleMouseActionKlienci" prefHeight="234.0" prefWidth="684.0">
@@ -133,10 +134,11 @@
                   <TextField fx:id="adresNumerDomuField" layoutX="10.0" layoutY="150.0" />
                </children>
             </VBox>
-            <HBox layoutX="79.0" layoutY="236.0" spacing="10.0">
+            <HBox layoutX="50.0" layoutY="235.0" spacing="10.0">
                <children>
                   <Button fx:id="adresUpdateButton" mnemonicParsing="false" onAction="#updateButtonAdresy" prefHeight="30.0" prefWidth="60.0" text="Update" />
                   <Button fx:id="adresDeleteButton" mnemonicParsing="false" onAction="#deleteButtonAdresy" prefHeight="30.0" prefWidth="60.0" text="Delete" />
+                  <Button fx:id="clearAdresy" mnemonicParsing="false" onAction="#clearAdresy" prefHeight="30.0" prefWidth="60.0" text="CLEAR" />
                </children>
             </HBox>
             <TableView fx:id="adresTv" layoutX="308.0" layoutY="22.0" onMouseClicked="#handleMouseActionAdresy" prefHeight="200.0" prefWidth="580.0">

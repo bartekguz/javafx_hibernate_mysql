@@ -21,7 +21,7 @@ public class Silniki implements Serializable {
     @Column(name = "rodzaj_paliwa", nullable = false, columnDefinition = "varchar(100)")
     private String rodzaj_paliwa;
 
-    @OneToMany(cascade={CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "silniki")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "silniki")
     private List<Samochody> samochody;
 
     public Silniki() { }
@@ -71,10 +71,8 @@ public class Silniki implements Serializable {
 
     @Override
     public String toString() {
-        return "Silniki{" +
-                "id_silnika=" + id_silnika +
-                ", pojemnosc_silnika='" + pojemnosc_silnika + '\'' +
-                ", rodzaj_paliwa='" + rodzaj_paliwa + '\'' +
-                '}';
+        return " id_silnika=" + id_silnika 
+                + "\n pojemnosc_silnika=" + pojemnosc_silnika 
+                + "\n rodzaj_paliwa=" + rodzaj_paliwa;
     }
 }

@@ -11,6 +11,7 @@ import BazaDanych.Samochody;
 import BazaDanych.Silniki;
 import BazaDanychDao.SamochodyDao;
 import BazaDanychDao.SilnikiDao;
+import java.util.List;
 
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleLongProperty;
@@ -58,6 +59,8 @@ public class TabelaSamochodyController implements Initializable {
     @FXML
     private TableView<Samochody> samochodyTv;
     @FXML
+    private TextArea samochodyTextArea;
+    @FXML
     private TableColumn<Samochody, String> samochodyColNrVin;
     @FXML
     private TableColumn<Samochody, String> samochodyColMarka;
@@ -104,6 +107,12 @@ public class TabelaSamochodyController implements Initializable {
         showSilniki();
     }    
     
+    //Wszystko działa oprócz tego, że jak się usunie adres to usuwa wszystkich użytkowników którzy go mają.
+    //Wszystko działa oprócz tego, że jak się usunie adres to usuwa wszystkich użytkowników którzy go mają.
+    //Wszystko działa oprócz tego, że jak się usunie adres to usuwa wszystkich użytkowników którzy go mają.
+    //Wszystko działa oprócz tego, że jak się usunie adres to usuwa wszystkich użytkowników którzy go mają.
+    //Wszystko działa oprócz tego, że jak się usunie adres to usuwa wszystkich użytkowników którzy go mają
+    
     public void showSamochody() {
         ObservableList<Samochody> list = FXCollections.observableArrayList(samochodyDao.getSamochody());
         
@@ -134,15 +143,18 @@ public class TabelaSamochodyController implements Initializable {
     
     @FXML
     private void handleMouseActionSamochody(MouseEvent event) { 
-        Samochody samochod = samochodyTv.getSelectionModel().getSelectedItem();
-        samochodyNrVinField.setText(samochod.getNr_vin());
-        samochodyCenaField.setText("" + samochod.getCena());
-        samochodyKolorField.setText(samochod.getKolor());
-        samochodyMarkaField.setText(samochod.getMarka());
-        samochodyModelField.setText(samochod.getModel());
-        samochodyRokProdukcjiField.setText("" + samochod.getRok_produkcji());
-        samochodyTypField.setText(samochod.getTyp());
-        samochodyIdSilnikaField.setText("" + samochod.getSilniki());
+            
+            Samochody samochod = samochodyTv.getSelectionModel().getSelectedItem();
+            samochodyNrVinField.setText(samochod.getNr_vin());
+            samochodyCenaField.setText("" + samochod.getCena());
+            samochodyKolorField.setText(samochod.getKolor());
+            samochodyMarkaField.setText(samochod.getMarka());
+            samochodyModelField.setText(samochod.getModel());
+            samochodyRokProdukcjiField.setText("" + samochod.getRok_produkcji());
+            samochodyTypField.setText(samochod.getTyp());
+            samochodyIdSilnikaField.setText("" + samochod.getSilniki().getId_silnika());
+        
+            samochodyTextArea.setText("" + samochod.getSilniki().toString());
     }
     
     @FXML
@@ -167,17 +179,30 @@ public class TabelaSamochodyController implements Initializable {
                 samochodyKolorField.getText(),
                 Long.parseLong(samochodyCenaField.getText())
             );  
-
-            Silniki silnik = new Silniki(
-                silnikPojemnoscSilnikaField.getText(), 
-                silnikRodzajPaliwaField.getText()
-            );
             
-            samochod.setSilniki(silnik);
-            samochodyDao.saveSamochody(samochod);
+            if (samochodyIdSilnikaField.getText().length() == 0) {
+                
+                Silniki silnik = new Silniki(
+                silnikPojemnoscSilnikaField.getText(), 
+                silnikRodzajPaliwaField.getText());
+                        
+                samochod.setSilniki(silnik);
+                samochodyDao.saveSamochody(samochod);
+                
+            } else {
+                List silnik = session.createQuery("FROM Silniki E WHERE E.id_silnika = " + samochodyIdSilnikaField.getText()).list();            
+                ObservableList<Silniki> silniki = FXCollections.observableArrayList(silnik);
+                
+                
+                samochod.setSilniki(silniki.get(0));
+                session.save(samochod);
+            }
+            
+            session.getTransaction().commit();
+            
+            showSamochody();
+            showSilniki();
         }
-        showSamochody();
-        showSilniki();
     }
     
     
@@ -186,13 +211,33 @@ public class TabelaSamochodyController implements Initializable {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             
-            Samochody samochod = session.get(Samochody.class, Long.parseLong(samochodyNrVinField.getText()));
+            Samochody samochod = session.get(Samochody.class, samochodyNrVinField.getText());
             
             samochod.setCena(Long.parseLong(samochodyCenaField.getText()));
             samochod.setKolor(samochodyKolorField.getText());
             samochod.setMarka(samochodyMarkaField.getText());
             samochod.setModel(samochodyModelField.getText());
             samochod.setRok_produkcji(Long.parseLong(samochodyRokProdukcjiField.getText()));
+            
+            List silnik = session.createQuery("FROM Silniki E WHERE E.id_silnika = " + samochodyIdSilnikaField.getText()).list();            
+            ObservableList<Silniki> silniki = FXCollections.observableArrayList(silnik);
+            
+            long oldIdSilnika = samochod.getSilniki().getId_silnika();
+            samochod.setSilniki(silniki.get(0));
+            
+            session.save(samochod);
+            
+            if (oldIdSilnika != silniki.get(0).getId_silnika()) {
+                List listSilnik = session.createQuery("FROM Silniki E WHERE E.id_silnika= " + oldIdSilnika).list();
+                ObservableList<Silniki> obsSilnik = FXCollections.observableArrayList(listSilnik);
+                
+                if (obsSilnik.get(0).getSamochody().size() == 1) {
+                    obsSilnik.get(0).getSamochody().clear();
+                    
+                    Silniki silnikToDelete = session.load(Silniki.class, oldIdSilnika);
+                    session.delete(silnikToDelete);
+                }
+            }
             
             session.getTransaction().commit();
             
@@ -247,6 +292,25 @@ public class TabelaSamochodyController implements Initializable {
             showSamochody();
             showSilniki();
         }
+    }
+    
+    @FXML
+    private void clearSamochody() {
+        samochodyNrVinField.setText("");
+        samochodyCenaField.setText("");
+        samochodyKolorField.setText("");
+        samochodyMarkaField.setText("");
+        samochodyModelField.setText("");
+        samochodyRokProdukcjiField.setText("");
+        samochodyTypField.setText("");
+        samochodyIdSilnikaField.setText("");
+    }
+    
+    @FXML
+    private void clearSilniki() {
+        silnikIdSilnikaField.setText("");
+        silnikPojemnoscSilnikaField.setText("");
+        silnikRodzajPaliwaField.setText("");
     }
     
 }

@@ -20,6 +20,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import komis.HibernateUtil;
+import org.hibernate.Session;
 
 
 /**
@@ -69,7 +71,7 @@ public class TabelaPracownicyController implements Initializable {
             
     }    
     
-    public void showPracownicy() {
+    private void showPracownicy() {
         ObservableList<Pracownicy> list = FXCollections.observableArrayList(pracownicyDao.getPracownicy());
     	
     	pracownicyColIdPracownika.setCellValueFactory(new PropertyValueFactory<>("id_pracownika"));
@@ -84,18 +86,57 @@ public class TabelaPracownicyController implements Initializable {
     
     @FXML
     private void insertButton() {
-
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+        
+            Pracownicy pracownik = new Pracownicy(
+                pracownicyImieField.getText(), 
+                pracownicyNazwiskoField.getText(), 
+                pracownicyDataZatrudnieniaField.getText(), 
+                Long.parseLong(pracownicyZarobkiField.getText()), 
+                Long.parseLong(pracownicyNumerTelefonuField.getText())
+            );
+            
+            pracownicyDao.savePracownicy(pracownik);
+            session.getTransaction().commit();
+            
+            showPracownicy();
+        }
     }
     
     
     @FXML 
     private void updateButton() {
-
+         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            
+            Pracownicy pracownik = session.get(Pracownicy.class, Long.parseLong(pracownicyIdPracownikaField.getText()));
+            
+            pracownik.setImie(pracownicyImieField.getText());
+            pracownik.setNazwisko(pracownicyNazwiskoField.getText());
+            pracownik.setData_zatrudnienia(pracownicyDataZatrudnieniaField.getText());
+            pracownik.setZarobki(Long.parseLong(pracownicyZarobkiField.getText()));
+            pracownik.setNumer_telefonu(Long.parseLong(pracownicyNumerTelefonuField.getText()));
+            
+            session.save(pracownik);
+            session.getTransaction().commit();
+            
+            showPracownicy();
+        }
     }
     
     @FXML
     private void deleteButton() {
- 
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            
+            Pracownicy pracownik = session.get(Pracownicy.class, Long.parseLong(pracownicyIdPracownikaField.getText()));
+            session.delete(pracownik);
+            
+            session.getTransaction().commit();
+            
+            showPracownicy();
+        }
     }
 
     @FXML
@@ -107,6 +148,16 @@ public class TabelaPracownicyController implements Initializable {
         pracownicyDataZatrudnieniaField.setText(pracownik.getData_zatrudnienia());
         pracownicyZarobkiField.setText("" + pracownik.getZarobki());
         pracownicyNumerTelefonuField.setText("" + pracownik.getNumer_telefonu());
+    }
+    
+    @FXML
+    private void clearKlienci() {
+    	pracownicyIdPracownikaField.setText("");
+        pracownicyImieField.setText("");
+        pracownicyNazwiskoField.setText("");
+        pracownicyDataZatrudnieniaField.setText("");
+        pracownicyZarobkiField.setText("");
+        pracownicyNumerTelefonuField.setText("");
     }
     
 }

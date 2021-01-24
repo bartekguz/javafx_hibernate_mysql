@@ -22,22 +22,7 @@
                   <Font name="Tahoma Bold" size="36.0" />
                </font>
             </Text>
-            <Button alignment="CENTER" contentDisplay="TOP" graphicTextGap="0.0" layoutX="40.0" layoutY="195.0" mnemonicParsing="false" onAction="#goSilniki" prefHeight="92.0" prefWidth="120.0" style="-fx-background-color: #eeeeee; -fx-background-radius: 4;" text="Silniki">
-               <font>
-                  <Font name="Tahoma Bold" size="14.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="64.0" fitWidth="64.0">
-                     <image>
-                        <Image url="@../zdjecia/engine.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button alignment="CENTER" contentDisplay="TOP" graphicTextGap="0.0" layoutX="190.0" layoutY="85.0" mnemonicParsing="false" onAction="#goPracownicy" prefHeight="50.0" prefWidth="120.0" style="-fx-background-color: #eeeeee; -fx-background-radius: 4;" text="Pracownicy">
+            <Button alignment="CENTER" contentDisplay="TOP" graphicTextGap="0.0" layoutX="31.0" layoutY="195.0" mnemonicParsing="false" onAction="#goPracownicy" prefHeight="92.0" prefWidth="130.0" style="-fx-background-color: #eeeeee; -fx-background-radius: 4;" text="Pracownicy">
                <font>
                   <Font name="Tahoma Bold" size="14.0" />
                </font>
@@ -51,7 +36,7 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-            <Button alignment="CENTER" contentDisplay="TOP" graphicTextGap="0.0" layoutX="190.0" layoutY="195.0" mnemonicParsing="false" onAction="#goTransakcje" prefHeight="50.0" prefWidth="120.0" style="-fx-background-color: #eeeeee; -fx-background-radius: 4;" text="Transakcje">
+            <Button alignment="CENTER" contentDisplay="TOP" graphicTextGap="0.0" layoutX="181.0" layoutY="195.0" mnemonicParsing="false" onAction="#goTransakcje" prefHeight="92.0" prefWidth="290.0" style="-fx-background-color: #eeeeee; -fx-background-radius: 4;" text="Transakcje" wrapText="true">
                <font>
                   <Font name="Tahoma Bold" size="14.0" />
                </font>
@@ -65,7 +50,7 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-            <Button alignment="CENTER" contentDisplay="TOP" graphicTextGap="0.0" layoutX="40.0" layoutY="85.0" mnemonicParsing="false" onAction="#goSamochody" prefHeight="92.0" prefWidth="120.0" style="-fx-background-color: #eeeeee; -fx-background-radius: 4;" text="Samochody" textAlignment="CENTER">
+            <Button alignment="CENTER" contentDisplay="TOP" graphicTextGap="0.0" layoutX="31.0" layoutY="85.0" mnemonicParsing="false" onAction="#goSamochody" prefHeight="92.0" prefWidth="210.0" style="-fx-background-color: #eeeeee; -fx-background-radius: 4;" text="Samochody - Silniki" textAlignment="CENTER">
                <font>
                   <Font name="Tahoma Bold" size="14.0" />
                </font>
@@ -79,34 +64,20 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-            <Button alignment="CENTER" contentDisplay="TOP" graphicTextGap="0.0" layoutX="340.0" layoutY="85.0" mnemonicParsing="false" onAction="#goKlienci" prefHeight="50.0" prefWidth="120.0" style="-fx-background-color: #eeeeee; -fx-background-radius: 4;" text="Klienci">
+            <Button alignment="CENTER" contentDisplay="TOP" graphicTextGap="0.0" layoutX="259.0" layoutY="85.0" mnemonicParsing="false" onAction="#goKlienci" prefHeight="92.0" prefWidth="210.0" style="-fx-background-color: #eeeeee; -fx-background-radius: 4;" text="Klienci - Adresy">
                <font>
                   <Font name="Tahoma Bold" size="14.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                <graphic>
                   <ImageView>
                      <image>
                         <Image url="@../zdjecia/customer.png" />
                      </image>
                   </ImageView>
-               </graphic>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
-            <Button alignment="CENTER" contentDisplay="TOP" disable="true" graphicTextGap="0.0" layoutX="340.0" layoutY="195.0" mnemonicParsing="false" onAction="#goAdresy" prefHeight="50.0" prefWidth="120.0" style="-fx-background-color: #eeeeee; -fx-background-radius: 4;" text="Adresy">
-               <font>
-                  <Font name="Tahoma Bold" size="14.0" />
-               </font>
-               <graphic>
-                  <ImageView>
-                     <image>
-                        <Image url="@../zdjecia/adress.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
+               </graphic></Button>
          </children>
       </AnchorPane>
    </children>
