@@ -6,55 +6,64 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="697.0" prefWidth="1009.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="komis.tabele.klienci.TabelaKlienciController">
+<AnchorPane maxHeight="721.0" maxWidth="1120.0" minHeight="697.0" minWidth="1092.0" prefHeight="721.0" prefWidth="1120.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="komis.tabele.klienci.TabelaKlienciController">
    <children>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="313.0" prefWidth="1013.0">
+      <ImageView fitHeight="721.0" fitWidth="1120.0">
+         <image>
+            <Image url="@../../../zdjecia/bg.jpg" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutX="14.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="1092.0">
          <children>
-            <VBox layoutX="15.0" layoutY="24.0" spacing="15.0">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b5b5b5" height="255.0" layoutX="5.0" layoutY="19.0" opacity="0.7" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="143.0" />
+            <VBox layoutX="14.0" layoutY="34.0" spacing="16.0">
                <children>
                   <Label text="id_klienta">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Tahoma Bold" size="15.0" />
                      </font>
                   </Label>
                   <Label text="imie">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Tahoma Bold" size="15.0" />
                      </font>
                   </Label>
                   <Label text="nazwisko">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Tahoma Bold" size="15.0" />
                      </font>
                   </Label>
                   <Label text="PESEL">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Tahoma Bold" size="15.0" />
                      </font>
                   </Label>
                   <Label text="NIP">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Tahoma Bold" size="15.0" />
                      </font>
                   </Label>
                   <Label layoutX="10.0" layoutY="150.0" text="numer_telefonu">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Tahoma Bold" size="15.0" />
                      </font>
                   </Label>
                   <Label text="id_adresu">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Tahoma Bold" size="15.0" />
                      </font>
                   </Label>
                </children>
             </VBox>
-            <VBox layoutX="153.0" layoutY="24.0" prefHeight="130.0" prefWidth="115.0" spacing="10.0">
+            <VBox layoutX="192.0" layoutY="31.0" prefHeight="130.0" prefWidth="115.0" spacing="10.0">
                <children>
                   <TextField fx:id="klienciIdKlientaField" disable="true" editable="false" />
                   <TextField fx:id="klienciImieField" />
@@ -66,65 +75,78 @@
                  
                </children>
             </VBox>
-            <HBox layoutX="22.0" layoutY="275.0" spacing="10.0">
+            <HBox layoutY="289.0" spacing="1.0">
                <children>
-                  <Button fx:id="klienciInsertButton" mnemonicParsing="false" onAction="#insertButtonKlienci" prefHeight="30.0" prefWidth="60.0" text="Insert" />
-                  <Button fx:id="klienciUpdateButton" mnemonicParsing="false" onAction="#updateButtonKlienci" prefHeight="30.0" prefWidth="60.0" text="Update" />
-                  <Button fx:id="klienciDeleteButton" mnemonicParsing="false" onAction="#deleteButtonKlienci" prefHeight="30.0" prefWidth="60.0" text="Delete" />
-                  <Button fx:id="clearKlienci" mnemonicParsing="false" onAction="#clearKlienci" prefHeight="30.0" prefWidth="60.0" text="CLEAR" />
+                  <Button fx:id="klienciInsertButton" mnemonicParsing="false" onAction="#insertButtonKlienci" prefHeight="50.0" prefWidth="77.0" text="Wpisz klienta" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font name="Tahoma Bold" size="12.0" />
+                     </font></Button>
+                  <Button fx:id="klienciUpdateButton" mnemonicParsing="false" onAction="#updateButtonKlienci" prefHeight="50.0" prefWidth="77.0" text="Aktualizuj klienta" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font name="Tahoma Bold" size="12.0" />
+                     </font></Button>
+                  <Button fx:id="klienciDeleteButton" mnemonicParsing="false" onAction="#deleteButtonKlienci" prefHeight="50.0" prefWidth="77.0" text="Usuń klienta" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font name="Tahoma Bold" size="12.0" />
+                     </font></Button>
+                  <Button fx:id="clearKlienci" mnemonicParsing="false" onAction="#clearKlienci" prefHeight="50.0" prefWidth="77.0" text="Wyczyść pola" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font name="Tahoma Bold" size="12.0" />
+                     </font></Button>
                </children>
             </HBox>
-            <TableView fx:id="klienciTv" layoutX="308.0" layoutY="22.0" onMouseClicked="#handleMouseActionKlienci" prefHeight="234.0" prefWidth="684.0">
+            <TableView fx:id="klienciTv" layoutX="382.0" layoutY="22.0" onMouseClicked="#handleMouseActionKlienci" prefHeight="234.0" prefWidth="684.0">
               <columns>
-                <TableColumn fx:id="klienciColIdKlienta" prefWidth="70.0" text="id_klienta" />
-                <TableColumn fx:id="klienciColImie" prefWidth="100.0" text="imie" />
-                  <TableColumn fx:id="klienciColNazwisko" prefWidth="100.0" text="nazwisko" />
-                  <TableColumn fx:id="klienciColPesel" prefWidth="110.0" text="PESEL" />
-                  <TableColumn fx:id="klienciColNip" prefWidth="123.0" text="NIP" />
-                  <TableColumn fx:id="klienciColNrTelefonu" prefWidth="104.0" text="numer_telefonu" />
-                  <TableColumn fx:id="klienciColIdAdresu" prefWidth="75.0" text="id_adresu" />
+                <TableColumn fx:id="klienciColIdKlienta" prefWidth="70.0" resizable="false" text="id_klienta" />
+                <TableColumn fx:id="klienciColImie" prefWidth="100.0" resizable="false" text="imie" />
+                  <TableColumn fx:id="klienciColNazwisko" prefWidth="100.0" resizable="false" text="nazwisko" />
+                  <TableColumn fx:id="klienciColPesel" prefWidth="110.0" resizable="false" text="PESEL" />
+                  <TableColumn fx:id="klienciColNip" prefWidth="123.0" resizable="false" text="NIP" />
+                  <TableColumn fx:id="klienciColNrTelefonu" prefWidth="104.0" resizable="false" text="numer_telefonu" />
+                  <TableColumn fx:id="klienciColIdAdresu" prefWidth="75.0" resizable="false" text="id_adresu" />
               </columns>
             </TableView>
-            <TextArea fx:id="klienciTextArea" editable="false" layoutX="308.0" layoutY="257.0" prefHeight="115.0" prefWidth="330.0" wrapText="true" />
+            <TextArea fx:id="klienciTextArea" editable="false" layoutX="382.0" layoutY="256.0" prefHeight="115.0" prefWidth="330.0" wrapText="true" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutY="410.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="287.0" prefWidth="905.0">
+      <AnchorPane layoutX="14.0" layoutY="409.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="299.0" prefWidth="1092.0">
          <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b5b5b5" height="209.0" layoutX="5.0" layoutY="13.0" opacity="0.7" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="179.0" />
             <VBox layoutX="15.0" layoutY="24.0" spacing="15.0">
                <children>
                   <Label text="id_adresu">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Tahoma Bold" size="15.0" />
                      </font>
                   </Label>
                   <Label text="nazwa_miejscowosci">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Tahoma Bold" size="15.0" />
                      </font>
                   </Label>
                   <Label text="kod_pocztowy">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Tahoma Bold" size="15.0" />
                      </font>
                   </Label>
                   <Label text="nazwa_wojewodztwa">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Tahoma Bold" size="15.0" />
                      </font>
                   </Label>
                   <Label text="nazwa_ulicy">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Tahoma Bold" size="15.0" />
                      </font>
                   </Label>
                   <Label layoutX="10.0" layoutY="150.0" text="numer_domu">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Tahoma Bold" size="15.0" />
                      </font>
                   </Label>
                </children>
             </VBox>
-            <VBox layoutX="150.0" layoutY="22.0" prefHeight="130.0" prefWidth="115.0" spacing="10.0">
+            <VBox layoutX="192.0" layoutY="22.0" prefHeight="130.0" prefWidth="115.0" spacing="10.0">
                <children>
                   <TextField fx:id="adresIdAdresuField" disable="true" editable="false" />
                   <TextField fx:id="adresNazwaMiejscowosciField" />
@@ -134,21 +156,30 @@
                   <TextField fx:id="adresNumerDomuField" layoutX="10.0" layoutY="150.0" />
                </children>
             </VBox>
-            <HBox layoutX="50.0" layoutY="235.0" spacing="10.0">
+            <HBox layoutX="39.0" layoutY="235.0" spacing="10.0">
                <children>
-                  <Button fx:id="adresUpdateButton" mnemonicParsing="false" onAction="#updateButtonAdresy" prefHeight="30.0" prefWidth="60.0" text="Update" />
-                  <Button fx:id="adresDeleteButton" mnemonicParsing="false" onAction="#deleteButtonAdresy" prefHeight="30.0" prefWidth="60.0" text="Delete" />
-                  <Button fx:id="clearAdresy" mnemonicParsing="false" onAction="#clearAdresy" prefHeight="30.0" prefWidth="60.0" text="CLEAR" />
+                  <Button mnemonicParsing="false" onAction="#insertButtonAdresy" prefHeight="50.0" prefWidth="77.0" text="Wpisz adres" textAlignment="CENTER" wrapText="true">
+                    <font>
+                        <Font name="Tahoma Bold" size="12.0" />
+                     </font></Button>
+                  <Button fx:id="adresUpdateButton" mnemonicParsing="false" onAction="#updateButtonAdresy" prefHeight="50.0" prefWidth="77.0" text="Aktualizuj adres" textAlignment="CENTER" wrapText="true">
+                      <font>
+                        <Font name="Tahoma Bold" size="12.0" />
+                     </font></Button>
+                  <Button fx:id="clearAdresy" mnemonicParsing="false" onAction="#clearAdresy" prefHeight="50.0" prefWidth="77.0" text="Wyczyść pola" textAlignment="CENTER" wrapText="true">
+                      <font>
+                        <Font name="Tahoma Bold" size="12.0" />
+                     </font></Button>
                </children>
             </HBox>
-            <TableView fx:id="adresTv" layoutX="308.0" layoutY="22.0" onMouseClicked="#handleMouseActionAdresy" prefHeight="200.0" prefWidth="580.0">
+            <TableView fx:id="adresTv" layoutX="382.0" layoutY="22.0" onMouseClicked="#handleMouseActionAdresy" prefHeight="200.0" prefWidth="581.0">
                <columns>
-                  <TableColumn fx:id="adresColIdAdresu" prefWidth="65.0" text="id_adresu" />
-                  <TableColumn fx:id="adresColNazwaMiejscowosci" prefWidth="124.0" text="nazwa_miejscowosci" />
-                  <TableColumn fx:id="adresColKodPocztowy" prefWidth="93.0" text="kod_pocztowy" />
-                  <TableColumn fx:id="adresColNazwaWojewodztwa" prefWidth="135.0" text="nazwa_wojewodztwa" />
-                  <TableColumn fx:id="adresColNazwaUlicy" prefWidth="76.0" text="nazwa_ulicy" />
-                  <TableColumn fx:id="adresColNumerDomu" prefWidth="86.0" text="numer_domu" />
+                  <TableColumn fx:id="adresColIdAdresu" prefWidth="65.0" resizable="false" text="id_adresu" />
+                  <TableColumn fx:id="adresColNazwaMiejscowosci" prefWidth="124.0" resizable="false" text="nazwa_miejscowosci" />
+                  <TableColumn fx:id="adresColKodPocztowy" prefWidth="93.0" resizable="false" text="kod_pocztowy" />
+                  <TableColumn fx:id="adresColNazwaWojewodztwa" prefWidth="135.0" resizable="false" text="nazwa_wojewodztwa" />
+                  <TableColumn fx:id="adresColNazwaUlicy" prefWidth="76.0" resizable="false" text="nazwa_ulicy" />
+                  <TableColumn fx:id="adresColNumerDomu" prefWidth="86.0" resizable="false" text="numer_domu" />
                </columns>
             </TableView>
          </children>

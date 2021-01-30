@@ -16,6 +16,7 @@ import BazaDanychDao.KlienciDao;
 import BazaDanychDao.PracownicyDao;
 import BazaDanychDao.SamochodyDao;
 import BazaDanychDao.TransakcjeDao;
+import java.util.List;
 
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
@@ -23,7 +24,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -31,6 +31,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javax.transaction.Transactional;
+import komis.HibernateUtil;
+import org.hibernate.Session;
 
 /**
  * FXML Controller class
@@ -39,6 +42,7 @@ import javafx.scene.input.MouseEvent;
  */
 public class TabelaTransakcjeController implements Initializable {
 
+    //TRANSAKCJE
     @FXML
     private TextField transakcjeIdTransakcjiField;
     @FXML
@@ -56,11 +60,11 @@ public class TabelaTransakcjeController implements Initializable {
     @FXML
     private TableColumn<Transakcje, Long> transakcjeColIdTransakcji;
     @FXML
-    private TableColumn<Transakcje, Long> transakcjeColIdKlienta;
+    private TableColumn<Transakcje, String> transakcjeColIdKlienta;
     @FXML
     private TableColumn<Transakcje, String> transakcjeColNrVin;
     @FXML
-    private TableColumn<Transakcje, Long> transakcjeColIdPracownika;
+    private TableColumn<Transakcje, String> transakcjeColIdPracownika;
     @FXML
     private TableColumn<Transakcje, String> transakcjeColDataTransakcji;
     @FXML
@@ -139,7 +143,7 @@ public class TabelaTransakcjeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         transakcjeRodzajTransakcjiField.getItems().removeAll(transakcjeRodzajTransakcjiField.getItems());
-        transakcjeRodzajTransakcjiField.getItems().addAll("Sprzedaż", "Kupno");
+        transakcjeRodzajTransakcjiField.getItems().addAll("Sprzedaż");
         transakcjeRodzajTransakcjiField.getSelectionModel().select("Sprzedaż");
         showTransakcje();
         showKlienci();
@@ -153,9 +157,19 @@ public class TabelaTransakcjeController implements Initializable {
     	transakcjeColIdTransakcji.setCellValueFactory(new PropertyValueFactory<>("id_transakcji"));
     	transakcjeColDataTransakcji.setCellValueFactory(new PropertyValueFactory<>("data_transakcji"));
     	transakcjeColRodzajTransakcji.setCellValueFactory(new PropertyValueFactory<>("rodzaj_transakcji"));
-    	transakcjeColIdKlienta.setCellValueFactory(new PropertyValueFactory<>("id_klienta"));
-    	transakcjeColIdPracownika.setCellValueFactory(new PropertyValueFactory<>("id_pracownika"));
-        transakcjeColNrVin.setCellValueFactory(new PropertyValueFactory<>("nr_vin"));
+    	transakcjeColIdKlienta.setCellValueFactory((cell) -> {
+            SimpleStringProperty id = new SimpleStringProperty(Long.toString(cell.getValue().getKlienci().getId_klienta()));
+            return id;
+        });
+    	transakcjeColIdPracownika.setCellValueFactory((cell) -> {
+            SimpleStringProperty id = new SimpleStringProperty(Long.toString(cell.getValue().getPracownicy().getId_pracownika()));
+            return id;
+        });
+        transakcjeColNrVin.setCellValueFactory((cell) -> {
+            SimpleStringProperty id = new SimpleStringProperty(cell.getValue().getVin().getNr_vin());
+            return id;
+        });
+        
     	
     	transakcjeTv.setItems(list);
     }
@@ -209,18 +223,40 @@ public class TabelaTransakcjeController implements Initializable {
     }
     
     @FXML
-    private void insertButton() {
-       
-    }
-    
-    @FXML 
-    private void updateButton() {
+    private void insertButton() throws Exception {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            
+            List klient = session.createQuery("FROM Klienci E WHERE E.id_klienta = " + transakcjeIdKlientaField.getText()).list();            
+            ObservableList<Klienci> klienci = FXCollections.observableArrayList(klient);
+            Klienci klientToSet = klienci.get(0);
+            
+            List samochod = session.createQuery("FROM Samochody E WHERE E.nr_vin = '" + transakcjeNrVinField.getText() + "'").list();            
+            ObservableList<Samochody> samochody = FXCollections.observableArrayList(samochod);
+            Samochody samochodToSet = samochody.get(0);
+            
+            List pracownik = session.createQuery("FROM Pracownicy E WHERE E.id_pracownika = " + transakcjeIdPracownikaField.getText()).list();            
+            ObservableList<Pracownicy> pracownicy = FXCollections.observableArrayList(pracownik);
+            Pracownicy pracownikToSet = pracownicy.get(0);
 
-    }
-    
-    @FXML
-    private void deleteButton() {
+            Transakcje transakcja = new Transakcje(
+                klientToSet,
+                samochodToSet,
+                pracownikToSet,
+                transakcjeDataTransakcjiField.getText(),
+                transakcjeRodzajTransakcjiField.getSelectionModel().getSelectedItem().toString()
+                );
+                
+            session.delete(samochodToSet);
+            
+            transakcjeDao.saveTransakcje(transakcja);
+            session.getTransaction().commit();
+            
 
+            showSamochody();
+            showTransakcje();
+            
+        }  
     }
     
     @FXML
@@ -234,6 +270,7 @@ public class TabelaTransakcjeController implements Initializable {
     }
     
     @FXML
+    @Transactional
     private void handleMouseAction(MouseEvent event) {
         Transakcje transakcja = transakcjeTv.getSelectionModel().getSelectedItem();
         transakcjeIdTransakcjiField.setText("" + transakcja.getId_transakcji());
@@ -254,5 +291,20 @@ public class TabelaTransakcjeController implements Initializable {
     private void handleMouseActionKlienci(MouseEvent event) {
         Klienci klient = klienciTv.getSelectionModel().getSelectedItem();
         klienciTextArea.setText("" + klient.getAdresy().toString() + "\n\n id_klienta = " + klient.getId_klienta());
+    }
+    
+    @FXML
+    private void odswiezSamochody() {
+        showSamochody();
+    }
+    
+    @FXML
+    private void odswiezPracownicy() {
+        showPracownicy();
+    }
+    
+    @FXML
+    private void odswiezKlienci() {
+        showKlienci();
     }
 }

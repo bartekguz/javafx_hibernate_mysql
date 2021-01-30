@@ -29,9 +29,9 @@ public class StronaGlownaController {
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.setTitle("Tabela klienci");
+        stage.setResizable(false);
         stage.setScene(scene);
-        stage.show();  
-        
+        stage.show();
     }
     
     @FXML
@@ -41,9 +41,9 @@ public class StronaGlownaController {
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.setTitle("Tabela transakcje");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();  
-        
     }
     
     @FXML
@@ -53,21 +53,24 @@ public class StronaGlownaController {
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.setTitle("Tabela pracownicy");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();  
     }
     
     @FXML
-    private void goSamochody() throws Exception {
+    public void goSamochody() throws Exception {
         Parent root;
         root = FXMLLoader.load(getClass().getResource("tabele/samochody/TabelaSamochody.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.setTitle("Tabela samochody");
+        stage.setResizable(false);
         stage.setScene(scene);
-        stage.show();  
-         
+        stage.show();   
     }
+    
+    
 
     
 }

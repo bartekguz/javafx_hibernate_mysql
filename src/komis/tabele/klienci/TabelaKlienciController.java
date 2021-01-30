@@ -113,11 +113,7 @@ public class TabelaKlienciController implements Initializable {
         showAdresy();
     }    
     
-    //Wszystko działa oprócz tego, że jak się usunie adres to usuwa wszystkich użytkowników którzy go mają.
-    //Wszystko działa oprócz tego, że jak się usunie adres to usuwa wszystkich użytkowników którzy go mają.
-    //Wszystko działa oprócz tego, że jak się usunie adres to usuwa wszystkich użytkowników którzy go mają.
-    //Wszystko działa oprócz tego, że jak się usunie adres to usuwa wszystkich użytkowników którzy go mają.
-    //Wszystko działa oprócz tego, że jak się usunie adres to usuwa wszystkich użytkowników którzy go mają
+
     
     private void showKlienci() {
         ObservableList<Klienci> list = FXCollections.observableArrayList(klienciDao.getKlienci());
@@ -200,6 +196,7 @@ public class TabelaKlienciController implements Initializable {
                 );
                 
                 klient.setAdresy(adres);
+                adresyDao.saveAdresy(adres);
                 klienciDao.saveKlienci(klient);
             } else {
                 List adres = session.createQuery("FROM Adresy E WHERE E.id_adresu = " + klienciIdAdresuField.getText()).list();
@@ -234,9 +231,7 @@ public class TabelaKlienciController implements Initializable {
             List adres = session.createQuery("FROM Adresy E WHERE E.id_adresu = " + klienciIdAdresuField.getText()).list();
             ObservableList<Adresy> adresy = FXCollections.observableArrayList(adres);
             
-            long oldIdAdress = klient.getAdresy().getId_adresu();
-            System.out.println("\nold adress id: " + oldIdAdress);
-            System.out.println("\nnew adress id: " + adresy.get(0).getId_adresu());
+            Long oldIdAdress = klient.getAdresy().getId_adresu();
             klient.setAdresy(adresy.get(0));
             
             session.save(klient);
@@ -245,14 +240,8 @@ public class TabelaKlienciController implements Initializable {
                 List listAdres = session.createQuery("FROM Adresy E WHERE E.id_adresu = " + oldIdAdress).list();
                 ObservableList<Adresy> obsAdres = FXCollections.observableArrayList(listAdres);
                 
-                System.out.println("\n\nLISTA: " + listAdres);
-                System.out.println("\n\nOBSLISTA: " + obsAdres);
-                System.out.println("\n\nOBSLISTA.(0).getKl: " + obsAdres.get(0).getKlienci());
-                
                 if (obsAdres.get(0).getKlienci().size() == 1) {
                     obsAdres.get(0).getKlienci().clear();
-                    
-                    System.out.println("LISTA PO WYCZYSZCZENIU: " + obsAdres.get(0));
                     
                     Adresy adresToDelete = session.load(Adresy.class, oldIdAdress);  
                     session.delete(adresToDelete);
@@ -302,12 +291,19 @@ public class TabelaKlienciController implements Initializable {
     }
     
     @FXML
-    private void deleteButtonAdresy() {
+    private void insertButtonAdresy() {
     	try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             
-            Adresy adres = session.load(Adresy.class, Long.parseLong(adresIdAdresuField.getText()));  
-            session.delete(adres);
+            Adresy adres = new Adresy(
+                adresNazwaMiejscowosciField.getText(), 
+                adresKodPocztowyField.getText(), 
+                adresNazwaWojewodztwaField.getText(), 
+                adresNazwaUlicyField.getText(), 
+                adresNumerDomuField.getText()
+                );
+
+            adresyDao.saveAdresy(adres);
             
             session.getTransaction().commit();
             

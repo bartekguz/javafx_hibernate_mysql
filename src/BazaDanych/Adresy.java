@@ -29,7 +29,7 @@ public class Adresy implements Serializable {
 
     @Column(name = "numer_domu", nullable = false, columnDefinition = "varchar(100)")
     private String numer_domu;
-
+    
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "adresy") 
     private List<Klienci> klienci;
 

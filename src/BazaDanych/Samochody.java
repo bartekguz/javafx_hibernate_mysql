@@ -8,7 +8,7 @@ import java.util.List;
 @Table(name = "samochody")
 public class Samochody implements Serializable {
 
-    private static final long serialVersionUID = -300010L;
+    private static final Long serialVersionUID = -300010L;
 
     @Column(name = "nr_vin", unique = true, nullable = false, columnDefinition = "varchar(100)")
     @Id
@@ -24,15 +24,15 @@ public class Samochody implements Serializable {
     private String typ;
 
     @Column(name = "rok_produkcji", nullable = true, columnDefinition = "int(100) default '0'")
-    private long rok_produkcji;
+    private Long rok_produkcji;
 
     @Column(name = "kolor", nullable = true, columnDefinition = "varchar(100) default ' '")
     private String kolor;
 
     @Column(name = "cena", nullable = true, columnDefinition = "bigint(100) default '0'")
-    private long cena;
+    private Long cena;
 
-    @ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_silnika", nullable = true)
     private Silniki silniki;
 
@@ -41,7 +41,7 @@ public class Samochody implements Serializable {
 
     public Samochody() { }
 
-    public Samochody(String nr_vin, String marka, String model, String typ, long rok_produkcji, String kolor, long cena, Silniki silniki, List<Transakcje> transakcje) {
+    public Samochody(String nr_vin, String marka, String model, String typ, Long rok_produkcji, String kolor, Long cena, Silniki silniki, List<Transakcje> transakcje) {
         this.nr_vin = nr_vin;
         this.marka = marka;
         this.model = model;
@@ -53,7 +53,7 @@ public class Samochody implements Serializable {
         this.transakcje = transakcje;
     }
     
-    public Samochody(String nr_vin, String marka, String model, String typ, long rok_produkcji, String kolor, long cena, Silniki silniki) {
+    public Samochody(String nr_vin, String marka, String model, String typ, Long rok_produkcji, String kolor, Long cena, Silniki silniki) {
         this.nr_vin = nr_vin;
         this.marka = marka;
         this.model = model;
@@ -64,7 +64,7 @@ public class Samochody implements Serializable {
         this.silniki = silniki;
     }
 
-    public Samochody(String nr_vin, String marka, String model, String typ, long rok_produkcji, String kolor, long cena) {
+    public Samochody(String nr_vin, String marka, String model, String typ, Long rok_produkcji, String kolor, Long cena) {
         this.nr_vin = nr_vin;
         this.marka = marka;
         this.model = model;
@@ -112,7 +112,7 @@ public class Samochody implements Serializable {
         return rok_produkcji;
     }
 
-    public void setRok_produkcji(long rok_produkcji) {
+    public void setRok_produkcji(Long rok_produkcji) {
         this.rok_produkcji = rok_produkcji;
     }
 
@@ -128,7 +128,7 @@ public class Samochody implements Serializable {
         return cena;
     }
 
-    public void setCena(long cena) {
+    public void setCena(Long cena) {
         this.cena = cena;
     }
 

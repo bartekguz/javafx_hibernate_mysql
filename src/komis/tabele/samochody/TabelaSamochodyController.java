@@ -14,14 +14,11 @@ import BazaDanychDao.SilnikiDao;
 import java.util.List;
 
 import java.util.ResourceBundle;
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -107,12 +104,6 @@ public class TabelaSamochodyController implements Initializable {
         showSilniki();
     }    
     
-    //Wszystko działa oprócz tego, że jak się usunie adres to usuwa wszystkich użytkowników którzy go mają.
-    //Wszystko działa oprócz tego, że jak się usunie adres to usuwa wszystkich użytkowników którzy go mają.
-    //Wszystko działa oprócz tego, że jak się usunie adres to usuwa wszystkich użytkowników którzy go mają.
-    //Wszystko działa oprócz tego, że jak się usunie adres to usuwa wszystkich użytkowników którzy go mają.
-    //Wszystko działa oprócz tego, że jak się usunie adres to usuwa wszystkich użytkowników którzy go mają
-    
     public void showSamochody() {
         ObservableList<Samochody> list = FXCollections.observableArrayList(samochodyDao.getSamochody());
         
@@ -187,7 +178,9 @@ public class TabelaSamochodyController implements Initializable {
                 silnikRodzajPaliwaField.getText());
                         
                 samochod.setSilniki(silnik);
+                silnikiDao.saveSilniki(silnik);
                 samochodyDao.saveSamochody(samochod);
+                
                 
             } else {
                 List silnik = session.createQuery("FROM Silniki E WHERE E.id_silnika = " + samochodyIdSilnikaField.getText()).list();            
@@ -251,7 +244,7 @@ public class TabelaSamochodyController implements Initializable {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             
-            Samochody samochod = session.get(Samochody.class, Long.parseLong(samochodyNrVinField.getText()));
+            Samochody samochod = session.get(Samochody.class, samochodyNrVinField.getText());
             session.delete(samochod);
             
             session.getTransaction().commit();
@@ -280,12 +273,15 @@ public class TabelaSamochodyController implements Initializable {
     }
     
     @FXML
-    private void deleteButtonSilniki() {
+    private void insertButtonSilniki() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             
-            Silniki silnik = session.get(Silniki.class, Long.parseLong(silnikIdSilnikaField.getText()));
-            session.delete(silnik);
+            Silniki silnik = new Silniki(
+            silnikPojemnoscSilnikaField.getText(), 
+            silnikRodzajPaliwaField.getText());
+
+            silnikiDao.saveSilniki(silnik);
             
             session.getTransaction().commit();
             

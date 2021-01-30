@@ -5,48 +5,57 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="283.0" prefWidth="885.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="komis.tabele.pracownicy.TabelaPracownicyController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="komis.tabele.pracownicy.TabelaPracownicyController">
    <children>
-      <VBox layoutX="15.0" layoutY="24.0" spacing="15.0">
+      <ImageView fitHeight="500.0" fitWidth="900.0">
+         <image>
+            <Image url="@../../../zdjecia/bg.jpg" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b5b5b5" height="217.0" layoutX="14.0" layoutY="107.0" opacity="0.7" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="151.0" />
+      <VBox layoutX="21.0" layoutY="121.0" spacing="16.0">
          <children>
             <Label text="id_pracownika">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Tahoma Bold" size="15.0" />
                </font>
             </Label>
             <Label text="imie">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Tahoma Bold" size="15.0" />
                </font>
             </Label>
             <Label text="nazwisko">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Tahoma Bold" size="15.0" />
                </font>
             </Label>
             <Label text="data_zatrudnienia">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Tahoma Bold" size="15.0" />
                </font>
             </Label>
             <Label text="zarobki">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Tahoma Bold" size="15.0" />
                </font>
             </Label>
             <Label layoutX="10.0" layoutY="150.0" text="numer_telefonu">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Tahoma Bold" size="15.0" />
                </font>
             </Label>
          </children>
       </VBox>
-      <VBox layoutX="133.0" layoutY="22.0" prefHeight="130.0" prefWidth="115.0" spacing="10.0">
+      <VBox layoutX="173.0" layoutY="118.0" prefHeight="130.0" prefWidth="115.0" spacing="10.0">
          <children>
             <TextField fx:id="pracownicyIdPracownikaField" disable="true" editable="false" />
             <TextField fx:id="pracownicyImieField" />
@@ -57,21 +66,30 @@
            
          </children>
       </VBox>
-      <HBox layoutX="34.0" layoutY="238.0" spacing="10.0">
+      <HBox layoutX="11.0" layoutY="341.0" spacing="5.0">
          <children>
-            <Button fx:id="pracownicyInsertButton" mnemonicParsing="false" onAction="#insertButton" prefHeight="30.0" prefWidth="60.0" text="Insert" />
-            <Button fx:id="pracownicyUpdateButton" mnemonicParsing="false" onAction="#updateButton" prefHeight="30.0" prefWidth="60.0" text="Update" />
-            <Button fx:id="pracownicyDeleteButton" mnemonicParsing="false" onAction="#deleteButton" prefHeight="30.0" prefWidth="60.0" text="Delete" />
+            <Button fx:id="pracownicyInsertButton" mnemonicParsing="false" onAction="#insertButton" prefHeight="50.0" prefWidth="90.0" text="Wpisz pracownika" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="Tahoma Bold" size="12.0" />
+               </font></Button>
+            <Button fx:id="pracownicyUpdateButton" mnemonicParsing="false" onAction="#updateButton" prefHeight="50.0" prefWidth="90.0" text="Aktualizuj pracownika" textAlignment="CENTER" wrapText="true">
+                <font>
+                  <Font name="Tahoma Bold" size="12.0" />
+               </font></Button>
+            <Button fx:id="pracownicyDeleteButton" mnemonicParsing="false" onAction="#clearKlienci" prefHeight="50.0" prefWidth="90.0" text="Wyczyść pola" textAlignment="CENTER" wrapText="true">
+                <font>
+                  <Font name="Tahoma Bold" size="12.0" />
+               </font></Button>
          </children>
       </HBox>
-      <TableView fx:id="pracownicyTv" layoutX="266.0" layoutY="21.0" onMouseClicked="#handleMouseAction" prefHeight="200.0" prefWidth="601.0">
+      <TableView fx:id="pracownicyTv" layoutX="304.0" layoutY="118.0" onMouseClicked="#handleMouseAction" prefHeight="200.0" prefWidth="576.0">
         <columns>
-          <TableColumn fx:id="pracownicyColIdPracownika" prefWidth="95.0" text="id_pracownika" />
-          <TableColumn fx:id="pracownicyColImie" prefWidth="100.0" text="imie" />
-            <TableColumn fx:id="pracownicyColNazwisko" prefWidth="100.0" text="nazwisko" />
-            <TableColumn fx:id="pracownicyColDataZatrudnienia" prefWidth="115.0" text="data_zatrudnienia" />
-            <TableColumn fx:id="pracownicyColZarobki" prefWidth="85.0" text="zarobki" />
-            <TableColumn fx:id="pracownicyColNumerTelefonu" prefWidth="105.0" text="numer_telefonu" />
+          <TableColumn fx:id="pracownicyColIdPracownika" prefWidth="95.0" resizable="false" text="id_pracownika" />
+          <TableColumn fx:id="pracownicyColImie" resizable="false" text="imie" />
+            <TableColumn fx:id="pracownicyColNazwisko" prefWidth="98.0" resizable="false" text="nazwisko" />
+            <TableColumn fx:id="pracownicyColDataZatrudnienia" prefWidth="137.0" resizable="false" text="data_zatrudnienia" />
+            <TableColumn fx:id="pracownicyColZarobki" prefWidth="73.0" resizable="false" text="zarobki" />
+            <TableColumn fx:id="pracownicyColNumerTelefonu" prefWidth="92.0" resizable="false" text="numer_telefonu" />
         </columns>
       </TableView>
    </children>

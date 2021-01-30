@@ -13,7 +13,7 @@ public class Silniki implements Serializable {
     @Column(name = "id_silnika", unique = true, nullable = false, columnDefinition = "bigint(6)")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id_silnika;
+    private Long id_silnika;
 
     @Column(name = "pojemnosc_silnika", nullable = false, columnDefinition = "varchar(100)")
     private String pojemnosc_silnika;
@@ -41,7 +41,7 @@ public class Silniki implements Serializable {
         return id_silnika;
     }
 
-    public void setId_silnika(long id_silnika) {
+    public void setId_silnika(Long id_silnika) {
         this.id_silnika = id_silnika;
     }
 

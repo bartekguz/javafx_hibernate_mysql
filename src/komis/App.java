@@ -5,13 +5,6 @@
  */
 package komis;
 
-import BazaDanych.Adresy;
-import BazaDanych.Klienci;
-import BazaDanychDao.AdresyDao;
-import BazaDanychDao.KlienciDao;
-import java.util.Arrays;
-
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -37,12 +30,6 @@ public class App extends Application {
     
     public static void main(String[] args) {
             
-       
-//        List<Adresy> adresy = adresyDao.getAdresy();
-//        adresy.forEach(s -> System.out.println(s.getNazwa_miejscowosci()));
-
-        
-        
         HibernateUtil.getSessionFactory().openSession().close();
         launch(args);
         HibernateUtil.close();

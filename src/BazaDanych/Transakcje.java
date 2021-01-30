@@ -12,9 +12,9 @@ public class Transakcje implements Serializable {
     @Column(name = "id_transakcji", unique = true, nullable = false, columnDefinition = "bigint(6)")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id_transakcji;
+    private Long id_transakcji;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_klienta", nullable = false)
     private Klienci klienci;
 
@@ -22,7 +22,7 @@ public class Transakcje implements Serializable {
     @JoinColumn(name = "nr_vin", nullable = false)
     private Samochody vin;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_pracownika", nullable = false)
     private Pracownicy pracownicy;
 
@@ -47,7 +47,7 @@ public class Transakcje implements Serializable {
         return id_transakcji;
     }
 
-    public void setId_transakcji(long id_transakcji) {
+    public void setId_transakcji(Long id_transakcji) {
         this.id_transakcji = id_transakcji;
     }
 

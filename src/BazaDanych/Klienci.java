@@ -13,7 +13,7 @@ public class Klienci implements Serializable {
     @Column(name = "id_klienta", unique = true, nullable = false, columnDefinition = "bigint(6)")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id_klienta;
+    private Long id_klienta;
 
     @Column(name = "imie", nullable = false, columnDefinition = "varchar(100)")
     private String imie;
@@ -22,19 +22,19 @@ public class Klienci implements Serializable {
     private String nazwisko;
 
     @Column(name = "pesel", columnDefinition = "bigint(100)")
-    private long pesel;
+    private Long pesel;
 
     @Column(name = "nip", columnDefinition = "bigint(100)")
-    private long nip;
+    private Long nip;
 
     @Column(name = "numer_telefonu", nullable = false, columnDefinition = "bigint(100)")
-    private long numer_telefonu;
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Long numer_telefonu;
+    
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_adresu", nullable = false)
     private Adresy adresy;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "klienci")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "klienci")
     private List<Transakcje> transakcje;
     
     public Klienci() {
@@ -72,7 +72,7 @@ public class Klienci implements Serializable {
         return id_klienta;
     }
 
-    public void setId_klienta(long id_klienta) {
+    public void setId_klienta(Long id_klienta) {
         this.id_klienta = id_klienta;
     }
 
@@ -96,7 +96,7 @@ public class Klienci implements Serializable {
         return pesel;
     }
 
-    public void setPesel(long pesel) {
+    public void setPesel(Long pesel) {
         this.pesel = pesel;
     }
 
@@ -104,7 +104,7 @@ public class Klienci implements Serializable {
         return nip;
     }
 
-    public void setNip(long nip) {
+    public void setNip(Long nip) {
         this.nip = nip;
     }
 
@@ -112,7 +112,7 @@ public class Klienci implements Serializable {
         return numer_telefonu;
     }
 
-    public void setNumer_telefonu(long numer_telefonu) {
+    public void setNumer_telefonu(Long numer_telefonu) {
         this.numer_telefonu = numer_telefonu;
     }
 
