@@ -15,6 +15,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -44,6 +47,8 @@ public class TabelaPracownicyController implements Initializable {
     @FXML
     private TextField pracownicyNumerTelefonuField;
     @FXML
+    private ComboBox pracownicyZatrudnionyField;
+    @FXML
     private TableView<Pracownicy> pracownicyTv;
     @FXML
     private TableColumn<Pracownicy, Long> pracownicyColIdPracownika;
@@ -57,6 +62,8 @@ public class TabelaPracownicyController implements Initializable {
     private TableColumn<Pracownicy, Long> pracownicyColNumerTelefonu;
     @FXML
     private TableColumn<Pracownicy, Long> pracownicyColZarobki;
+    @FXML
+    private TableColumn<Pracownicy, String> pracownicyColZatrudniony;
     
     PracownicyDao pracownicyDao = new PracownicyDao();
     
@@ -65,10 +72,13 @@ public class TabelaPracownicyController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        showPracownicy();
         
-
-            
+        pracownicyZatrudnionyField.getItems().removeAll(pracownicyZatrudnionyField.getItems());
+        pracownicyZatrudnionyField.getItems().addAll("tak");
+        pracownicyZatrudnionyField.getItems().addAll("nie");
+        pracownicyZatrudnionyField.getSelectionModel().select("tak");
+        
+        showPracownicy();    
     }    
     
     private void showPracownicy() {
@@ -80,6 +90,7 @@ public class TabelaPracownicyController implements Initializable {
     	pracownicyColDataZatrudnienia.setCellValueFactory(new PropertyValueFactory<>("data_zatrudnienia"));
     	pracownicyColZarobki.setCellValueFactory(new PropertyValueFactory<>("zarobki"));
     	pracownicyColNumerTelefonu.setCellValueFactory(new PropertyValueFactory<>("numer_telefonu"));
+        pracownicyColZatrudniony.setCellValueFactory(new PropertyValueFactory<>("zatrudniony"));
         
     	pracownicyTv.setItems(list);
     }
@@ -94,13 +105,20 @@ public class TabelaPracownicyController implements Initializable {
                 pracownicyNazwiskoField.getText(), 
                 pracownicyDataZatrudnieniaField.getText(), 
                 Long.parseLong(pracownicyZarobkiField.getText()), 
-                Long.parseLong(pracownicyNumerTelefonuField.getText())
+                Long.parseLong(pracownicyNumerTelefonuField.getText()),
+                pracownicyZatrudnionyField.getSelectionModel().getSelectedItem().toString()
             );
             
             pracownicyDao.savePracownicy(pracownik);
+            
+            clearPracownicy();
+            
             session.getTransaction().commit();
             
             showPracownicy();
+        } catch (Exception e) {
+            Alert alert = new Alert(AlertType.ERROR, "Wpisane wartości do pól nie są odpowiedniego typu!");
+                    alert.show();
         }
     }
     
@@ -117,47 +135,46 @@ public class TabelaPracownicyController implements Initializable {
             pracownik.setData_zatrudnienia(pracownicyDataZatrudnieniaField.getText());
             pracownik.setZarobki(Long.parseLong(pracownicyZarobkiField.getText()));
             pracownik.setNumer_telefonu(Long.parseLong(pracownicyNumerTelefonuField.getText()));
+            pracownik.setZatrudniony(pracownicyZatrudnionyField.getSelectionModel().getSelectedItem().toString());            
             
             session.save(pracownik);
+            
+            clearPracownicy();
+            
             session.getTransaction().commit();
             
             showPracownicy();
+        } catch (Exception e) {
+            Alert alert = new Alert(AlertType.ERROR, "Wpisane wartości do pól nie są odpowiedniego typu!");
+                    alert.show();
         }
     }
     
-    @FXML
-    private void deleteButton() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            session.beginTransaction();
-            
-            Pracownicy pracownik = session.get(Pracownicy.class, Long.parseLong(pracownicyIdPracownikaField.getText()));
-            session.delete(pracownik);
-            
-            session.getTransaction().commit();
-            
-            showPracownicy();
-        }
-    }
-
     @FXML
     private void handleMouseAction(MouseEvent event) {
-        Pracownicy pracownik = pracownicyTv.getSelectionModel().getSelectedItem();
-        pracownicyIdPracownikaField.setText("" + pracownik.getId_pracownika());
-        pracownicyImieField.setText(pracownik.getImie());
-        pracownicyNazwiskoField.setText(pracownik.getNazwisko());
-        pracownicyDataZatrudnieniaField.setText(pracownik.getData_zatrudnienia());
-        pracownicyZarobkiField.setText("" + pracownik.getZarobki());
-        pracownicyNumerTelefonuField.setText("" + pracownik.getNumer_telefonu());
+        try {
+            Pracownicy pracownik = pracownicyTv.getSelectionModel().getSelectedItem();
+            pracownicyIdPracownikaField.setText("" + pracownik.getId_pracownika());
+            pracownicyImieField.setText(pracownik.getImie());
+            pracownicyNazwiskoField.setText(pracownik.getNazwisko());
+            pracownicyDataZatrudnieniaField.setText(pracownik.getData_zatrudnienia());
+            pracownicyZarobkiField.setText("" + pracownik.getZarobki());
+            pracownicyNumerTelefonuField.setText("" + pracownik.getNumer_telefonu());
+            pracownicyZatrudnionyField.getSelectionModel().select(pracownik.getZatrudniony());
+        } catch (Exception e) {
+            System.out.print("");
+        }
     }
     
     @FXML
-    private void clearKlienci() {
+    private void clearPracownicy() {
     	pracownicyIdPracownikaField.setText("");
         pracownicyImieField.setText("");
         pracownicyNazwiskoField.setText("");
         pracownicyDataZatrudnieniaField.setText("");
         pracownicyZarobkiField.setText("");
         pracownicyNumerTelefonuField.setText("");
+        pracownicyZatrudnionyField.getSelectionModel().select("tak");
     }
     
 }

@@ -12,6 +12,7 @@ import BazaDanych.Silniki;
 import BazaDanychDao.SamochodyDao;
 import BazaDanychDao.SilnikiDao;
 import java.util.List;
+import java.util.Optional;
 
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
@@ -19,6 +20,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -54,6 +59,8 @@ public class TabelaSamochodyController implements Initializable {
     @FXML
     private TextField samochodyIdSilnikaField;
     @FXML
+    private ComboBox samochodySprzedanyField;
+    @FXML
     private TableView<Samochody> samochodyTv;
     @FXML
     private TextArea samochodyTextArea;
@@ -73,6 +80,8 @@ public class TabelaSamochodyController implements Initializable {
     private TableColumn<Samochody, Long> samochodyColCena;
     @FXML
     private TableColumn<Samochody, String> samochodyColIdSilnika;
+    @FXML
+    private TableColumn<Samochody, String> samochodyColSprzedany;
 
     SamochodyDao samochodyDao = new SamochodyDao();
     
@@ -100,6 +109,11 @@ public class TabelaSamochodyController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        samochodySprzedanyField.getItems().removeAll(samochodySprzedanyField.getItems());
+        samochodySprzedanyField.getItems().addAll("tak");
+        samochodySprzedanyField.getItems().addAll("nie");
+        samochodySprzedanyField.getSelectionModel().select("nie");
+        
         showSamochody();
         showSilniki();
     }    
@@ -118,6 +132,7 @@ public class TabelaSamochodyController implements Initializable {
             SimpleStringProperty id = new SimpleStringProperty(Long.toString(cell.getValue().getSilniki().getId_silnika()));
             return id;
         });
+        samochodyColSprzedany.setCellValueFactory(new PropertyValueFactory<>("sprzedany"));
     	
     	samochodyTv.setItems(list);
     }
@@ -134,7 +149,7 @@ public class TabelaSamochodyController implements Initializable {
     
     @FXML
     private void handleMouseActionSamochody(MouseEvent event) { 
-            
+        try {
             Samochody samochod = samochodyTv.getSelectionModel().getSelectedItem();
             samochodyNrVinField.setText(samochod.getNr_vin());
             samochodyCenaField.setText("" + samochod.getCena());
@@ -144,20 +159,28 @@ public class TabelaSamochodyController implements Initializable {
             samochodyRokProdukcjiField.setText("" + samochod.getRok_produkcji());
             samochodyTypField.setText(samochod.getTyp());
             samochodyIdSilnikaField.setText("" + samochod.getSilniki().getId_silnika());
+            samochodySprzedanyField.getSelectionModel().getSelectedItem().toString();
         
             samochodyTextArea.setText("" + samochod.getSilniki().toString());
+            } catch (Exception e) {
+                System.out.print("");
+        }
     }
     
     @FXML
     private void handleMouseActionSilniki(MouseEvent event) {
-        Silniki silnik = silnikTv.getSelectionModel().getSelectedItem();
-        silnikIdSilnikaField.setText("" + silnik.getId_silnika());
-        silnikPojemnoscSilnikaField.setText(silnik.getPojemnosc_silnika());
-        silnikRodzajPaliwaField.setText(silnik.getRodzaj_paliwa());
+        try {
+            Silniki silnik = silnikTv.getSelectionModel().getSelectedItem();
+            silnikIdSilnikaField.setText("" + silnik.getId_silnika());
+            silnikPojemnoscSilnikaField.setText(silnik.getPojemnosc_silnika());
+            silnikRodzajPaliwaField.setText(silnik.getRodzaj_paliwa());
+        } catch (Exception e) {
+            System.out.print("");
+        }
     }
     
     @FXML
-    private void insertButtonSamochody() throws Exception {
+    private void insertButtonSamochody(){
     	try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
 
@@ -168,7 +191,8 @@ public class TabelaSamochodyController implements Initializable {
                 samochodyTypField.getText(),
                 Long.parseLong(samochodyRokProdukcjiField.getText()),
                 samochodyKolorField.getText(),
-                Long.parseLong(samochodyCenaField.getText())
+                Long.parseLong(samochodyCenaField.getText()),
+                samochodySprzedanyField.getSelectionModel().getSelectedItem().toString()
             );  
             
             if (samochodyIdSilnikaField.getText().length() == 0) {
@@ -183,18 +207,30 @@ public class TabelaSamochodyController implements Initializable {
                 
                 
             } else {
+                try {
                 List silnik = session.createQuery("FROM Silniki E WHERE E.id_silnika = " + samochodyIdSilnikaField.getText()).list();            
                 ObservableList<Silniki> silniki = FXCollections.observableArrayList(silnik);
                 
                 
                 samochod.setSilniki(silniki.get(0));
                 session.save(samochod);
+                } catch (Exception e) {
+                    Alert alert = new Alert(AlertType.ERROR, "Wpisano nieznane id_silnika w polu id_silnika!"
+                            + "\nJeśli chcesz wpisać samochod z nowym typem silnika, pole id_silnika musi pozostać puste ponieważ uzupełni się automatycznie!");
+                    alert.show();
+                }
             }
+            
+            clearSamochody();
+            clearSilniki();
             
             session.getTransaction().commit();
             
             showSamochody();
             showSilniki();
+        } catch (Exception e) {
+            Alert alert = new Alert(AlertType.ERROR, "Wszystkie pola muszą posiadać odpowiedni typ!");
+                    alert.show();
         }
     }
     
@@ -211,11 +247,12 @@ public class TabelaSamochodyController implements Initializable {
             samochod.setMarka(samochodyMarkaField.getText());
             samochod.setModel(samochodyModelField.getText());
             samochod.setRok_produkcji(Long.parseLong(samochodyRokProdukcjiField.getText()));
+            samochod.setSprzedany(samochodySprzedanyField.getSelectionModel().getSelectedItem().toString());
             
             List silnik = session.createQuery("FROM Silniki E WHERE E.id_silnika = " + samochodyIdSilnikaField.getText()).list();            
             ObservableList<Silniki> silniki = FXCollections.observableArrayList(silnik);
             
-            long oldIdSilnika = samochod.getSilniki().getId_silnika();
+            Long oldIdSilnika = samochod.getSilniki().getId_silnika();
             samochod.setSilniki(silniki.get(0));
             
             session.save(samochod);
@@ -232,10 +269,15 @@ public class TabelaSamochodyController implements Initializable {
                 }
             }
             
+            clearSamochody();
+            
             session.getTransaction().commit();
             
             showSamochody();
             showSilniki();
+        } catch (Exception e) {
+            Alert alert = new Alert(AlertType.ERROR, "Wpisano nieznane id_silnika w polu id_silnika lub pola nie posiadają odpowiedniego typu!");
+                    alert.show();
         }
     }
     
@@ -244,13 +286,38 @@ public class TabelaSamochodyController implements Initializable {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             
-            Samochody samochod = session.get(Samochody.class, samochodyNrVinField.getText());
-            session.delete(samochod);
+            Samochody samochod = session.load(Samochody.class, samochodyNrVinField.getText());
+            Silniki silnik = session.load(Silniki.class, samochod.getSilniki().getId_silnika());
+            
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Potwierdzenie");
+            alert.setHeaderText("Potwierdź usunięcie samochodu");
+            alert.setContentText("Czy na pewno chcesz usunąć samochód?");
+            
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                if (samochod.getSprzedany().equals("nie")) {
+                    silnik.removeSamochod(samochod);
+                    session.delete(samochod);
+            
+                    if (silnik.getSamochody().isEmpty()) {
+                        session.delete(silnik);
+                    }
+                } else {
+                    Alert alert1 = new Alert(AlertType.ERROR, "Nie można usunąć samochodu ponieważ został sprzedany!");
+                    alert1.show();
+                }
+            } else {
+         
+            }
             
             session.getTransaction().commit();
             
             showSamochody();
             showSilniki();
+        } catch (Exception e) {
+            Alert alert = new Alert(AlertType.ERROR, "Samochód który chcesz usunąć nie istnieje!");   
+                    alert.show();
         }
     }
     
@@ -264,6 +331,7 @@ public class TabelaSamochodyController implements Initializable {
             silnik.setPojemnosc_silnika(silnikPojemnoscSilnikaField.getText());
             silnik.setRodzaj_paliwa(silnikRodzajPaliwaField.getText());
             
+            clearSilniki();
             
             session.getTransaction().commit();
             
@@ -272,23 +340,6 @@ public class TabelaSamochodyController implements Initializable {
         }
     }
     
-    @FXML
-    private void insertButtonSilniki() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            session.beginTransaction();
-            
-            Silniki silnik = new Silniki(
-            silnikPojemnoscSilnikaField.getText(), 
-            silnikRodzajPaliwaField.getText());
-
-            silnikiDao.saveSilniki(silnik);
-            
-            session.getTransaction().commit();
-            
-            showSamochody();
-            showSilniki();
-        }
-    }
     
     @FXML
     private void clearSamochody() {
@@ -300,6 +351,7 @@ public class TabelaSamochodyController implements Initializable {
         samochodyRokProdukcjiField.setText("");
         samochodyTypField.setText("");
         samochodyIdSilnikaField.setText("");
+        samochodySprzedanyField.getSelectionModel().select("nie");
     }
     
     @FXML

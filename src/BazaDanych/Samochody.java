@@ -32,16 +32,19 @@ public class Samochody implements Serializable {
     @Column(name = "cena", nullable = true, columnDefinition = "bigint(100) default '0'")
     private Long cena;
 
-    @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "id_silnika", nullable = true)
     private Silniki silniki;
+    
+    @Column(name = "sprzedany", nullable = true, columnDefinition = "varchar(100)")
+    private String sprzedany;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "vin")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "vin")
     private List<Transakcje> transakcje;
 
     public Samochody() { }
 
-    public Samochody(String nr_vin, String marka, String model, String typ, Long rok_produkcji, String kolor, Long cena, Silniki silniki, List<Transakcje> transakcje) {
+    public Samochody(String nr_vin, String marka, String model, String typ, Long rok_produkcji, String kolor, Long cena, Silniki silniki, String sprzedany, List<Transakcje> transakcje) {
         this.nr_vin = nr_vin;
         this.marka = marka;
         this.model = model;
@@ -50,10 +53,11 @@ public class Samochody implements Serializable {
         this.kolor = kolor;
         this.cena = cena;
         this.silniki = silniki;
+        this.sprzedany = sprzedany;
         this.transakcje = transakcje;
     }
     
-    public Samochody(String nr_vin, String marka, String model, String typ, Long rok_produkcji, String kolor, Long cena, Silniki silniki) {
+    public Samochody(String nr_vin, String marka, String model, String typ, Long rok_produkcji, String kolor, Long cena, Silniki silniki, String sprzedany) {
         this.nr_vin = nr_vin;
         this.marka = marka;
         this.model = model;
@@ -62,9 +66,10 @@ public class Samochody implements Serializable {
         this.kolor = kolor;
         this.cena = cena;
         this.silniki = silniki;
+        this.sprzedany = sprzedany;
     }
 
-    public Samochody(String nr_vin, String marka, String model, String typ, Long rok_produkcji, String kolor, Long cena) {
+    public Samochody(String nr_vin, String marka, String model, String typ, Long rok_produkcji, String kolor, Long cena, String sprzedany) {
         this.nr_vin = nr_vin;
         this.marka = marka;
         this.model = model;
@@ -72,9 +77,18 @@ public class Samochody implements Serializable {
         this.rok_produkcji = rok_produkcji;
         this.kolor = kolor;
         this.cena = cena;
+        this.sprzedany = sprzedany;
     }
     
+    public void addTransakcja(Transakcje transakcja) {
+        transakcje.add(transakcja);
+        transakcja.setVin(this);
+    }
     
+    public void removeTransakcja(Transakcje transakcja) {
+        transakcje.remove(transakcja);
+        transakcja.setVin(null);
+    }
 
     public String getNr_vin() {
         return nr_vin;
@@ -140,6 +154,14 @@ public class Samochody implements Serializable {
         this.silniki = silniki;
     }
 
+    public String getSprzedany() {
+        return sprzedany;
+    }
+
+    public void setSprzedany(String sprzedany) {
+        this.sprzedany = sprzedany;
+    }
+
     public List<Transakcje> getTransakcje() {
         return transakcje;
     }
@@ -160,6 +182,7 @@ public class Samochody implements Serializable {
                 ", kolor='" + kolor + '\'' +
                 ", cena='" + cena + '\'' +
                 ", silniki=" + silniki +
+                ", sprzedany=" + sprzedany +
                 '}';
     }
 

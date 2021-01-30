@@ -12,17 +12,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="900.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="komis.tabele.transakcje.TabelaTransakcjeController">
    <children>
       <ImageView fitHeight="958.0" fitWidth="1100.0">
          <image>
-            <Image url="@../../../zdjecia/bg.jpg" />
+            <Image url="@../../../zdjecia/background.jpg" />
          </image>
       </ImageView>
       <AnchorPane layoutX="143.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="292.0" prefWidth="899.0">
          <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b5b5b5" height="219.0" layoutX="-7.0" layoutY="16.0" opacity="0.7" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="152.0" />
             <VBox layoutX="3.0" layoutY="28.0" spacing="16.0">
                <children>
                   <Label text="id_transakcji">
@@ -68,7 +70,7 @@
                  
                </children>
             </VBox>
-            <HBox layoutX="69.0" layoutY="240.0" spacing="10.0">
+            <HBox layoutX="40.0" layoutY="242.0" spacing="10.0">
                <children>
                   <Button fx:id="transakcjeInsertButton" mnemonicParsing="false" onAction="#insertButton" prefHeight="50.0" prefWidth="90.0" text="Wprowadź transakcję" textAlignment="CENTER" wrapText="true">
                      <font>
@@ -80,7 +82,7 @@
                      </font></Button>
                </children>
             </HBox>
-            <TableView fx:id="transakcjeTv" layoutX="287.0" layoutY="25.0" onMouseClicked="#handleMouseAction" prefHeight="200.0" prefWidth="543.0">
+            <TableView fx:id="transakcjeTv" layoutX="287.0" layoutY="25.0" onMouseClicked="#handleMouseAction" prefHeight="200.0" prefWidth="545.0">
               <columns>
                 <TableColumn fx:id="transakcjeColIdTransakcji" prefWidth="85.0" resizable="false" text="id_transakcji" />
                 <TableColumn fx:id="transakcjeColIdKlienta" prefWidth="65.0" resizable="false" text="id_klienta" />
@@ -94,7 +96,7 @@
       </AnchorPane>
       <AnchorPane layoutX="54.0" layoutY="502.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="219.0" prefWidth="993.0">
          <children>
-            <TableView fx:id="klienciTv" layoutY="14.0" onMouseClicked="#handleMouseActionKlienci" prefHeight="175.0" prefWidth="673.0">
+            <TableView fx:id="klienciTv" layoutY="14.0" onMouseClicked="#handleMouseActionKlienci" prefHeight="175.0" prefWidth="675.0">
                <columns>
                   <TableColumn fx:id="klienciColIdKlienta" prefWidth="64.0" resizable="false" text="id_klienta" />
                   <TableColumn fx:id="klienciColImie" prefWidth="106.0" resizable="false" text="imie" />
@@ -105,44 +107,46 @@
                   <TableColumn fx:id="klienciColIdAdresu" prefWidth="66.0" resizable="false" text="id_adresu" />
                </columns>
             </TableView>
-            <TextArea fx:id="klienciTextArea" editable="false" layoutX="674.0" layoutY="39.0" prefHeight="149.0" prefWidth="313.0" wrapText="true" />
+            <TextArea fx:id="klienciTextArea" editable="false" layoutX="676.0" layoutY="40.0" prefHeight="149.0" prefWidth="313.0" wrapText="true" />
             <Button layoutY="189.0" mnemonicParsing="false" onAction="#odswiezKlienci" text="Odśwież">
                 <font>
                         <Font name="Tahoma Bold" size="12.0" />
                      </font></Button>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="51.0" layoutY="288.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="219.0" prefWidth="1000.0">
+      <AnchorPane layoutX="27.0" layoutY="292.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="219.0" prefWidth="1048.0">
          <children>
-            <TableView fx:id="samochodyTv" layoutX="4.0" layoutY="12.0" onMouseClicked="#handleMouseActionSamochody" prefHeight="175.0" prefWidth="681.0">
+            <TableView fx:id="samochodyTv" layoutX="4.0" layoutY="12.0" onMouseClicked="#handleMouseActionSamochody" prefHeight="175.0" prefWidth="728.0">
                <columns>
                   <TableColumn fx:id="samochodyColNrVin" prefWidth="114.0" resizable="false" text="nr_vin" />
-                  <TableColumn fx:id="samochodyColMarka" prefWidth="92.0" resizable="false" text="marka" />
-                  <TableColumn fx:id="samochodyColModel" prefWidth="87.0" resizable="false" text="model" />
-                  <TableColumn fx:id="samochodyColTyp" prefWidth="84.0" resizable="false" text="typ" />
-                  <TableColumn fx:id="samochodyColRokProdukcji" prefWidth="92.0" resizable="false" text="rok_produkcji" />
-                  <TableColumn fx:id="samochodyColKolor" prefWidth="84.0" resizable="false" text="kolor" />
-                  <TableColumn fx:id="samochodyColCena" prefWidth="67.0" resizable="false" text="cena" />
-                  <TableColumn fx:id="samochodyColIdSilnika" prefWidth="60.0" resizable="false" text="id_silnika" />
+                  <TableColumn fx:id="samochodyColMarka" prefWidth="79.0" resizable="false" text="marka" />
+                  <TableColumn fx:id="samochodyColModel" prefWidth="78.0" resizable="false" text="model" />
+                  <TableColumn fx:id="samochodyColTyp" prefWidth="78.0" resizable="false" text="typ" />
+                  <TableColumn fx:id="samochodyColRokProdukcji" prefWidth="93.0" resizable="false" text="rok_produkcji" />
+                  <TableColumn fx:id="samochodyColKolor" resizable="false" text="kolor" />
+                  <TableColumn fx:id="samochodyColCena" prefWidth="71.0" resizable="false" text="cena" />
+                  <TableColumn fx:id="samochodyColIdSilnika" prefWidth="64.0" resizable="false" text="id_silnika" />
+                  <TableColumn fx:id="samochodyColSprzedany" prefWidth="69.0" text="sprzedany" />
                </columns>
             </TableView>
-            <TextArea fx:id="samochodyTextArea" layoutX="686.0" layoutY="37.0" prefHeight="149.0" prefWidth="306.0" />
+            <TextArea fx:id="samochodyTextArea" layoutX="733.0" layoutY="38.0" prefHeight="149.0" prefWidth="306.0" />
             <Button layoutX="4.0" layoutY="186.0" mnemonicParsing="false" onAction="#odswiezSamochody" text="Odśwież">
                 <font>
                         <Font name="Tahoma Bold" size="12.0" />
                      </font></Button>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="281.0" layoutY="705.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="648.0">
+      <AnchorPane layoutX="230.0" layoutY="704.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="726.0">
          <children>
-            <TableView fx:id="pracownicyTv" layoutX="24.0" layoutY="14.0" onMouseClicked="#handleMouseAction" prefHeight="200.0" prefWidth="601.0">
+            <TableView fx:id="pracownicyTv" layoutX="24.0" layoutY="14.0" onMouseClicked="#handleMouseAction" prefHeight="200.0" prefWidth="682.0">
                <columns>
                   <TableColumn fx:id="pracownicyColIdPracownika" prefWidth="95.0" resizable="false" text="id_pracownika" />
-                  <TableColumn fx:id="pracownicyColImie" prefWidth="100.0" resizable="false" text="imie" />
-                  <TableColumn fx:id="pracownicyColNazwisko" prefWidth="100.0" resizable="false" text="nazwisko" />
+                  <TableColumn fx:id="pracownicyColImie" prefWidth="85.0" resizable="false" text="imie" />
+                  <TableColumn fx:id="pracownicyColNazwisko" prefWidth="115.0" resizable="false" text="nazwisko" />
                   <TableColumn fx:id="pracownicyColDataZatrudnienia" prefWidth="115.0" resizable="false" text="data_zatrudnienia" />
-                  <TableColumn fx:id="pracownicyColZarobki" prefWidth="85.0" resizable="false" text="zarobki" />
-                  <TableColumn fx:id="pracownicyColNumerTelefonu" prefWidth="105.0" resizable="false" text="numer_telefonu" />
+                  <TableColumn fx:id="pracownicyColZarobki" prefWidth="71.0" resizable="false" text="zarobki" />
+                  <TableColumn fx:id="pracownicyColNumerTelefonu" prefWidth="114.0" resizable="false" text="numer_telefonu" />
+                  <TableColumn fx:id="pracownicyColZatrudniony" prefWidth="85.0" text="zatrudniony" />
                </columns>
             </TableView>
             <Button layoutX="24.0" layoutY="214.0" mnemonicParsing="false" onAction="#odswiezPracownicy" text="Odśwież">

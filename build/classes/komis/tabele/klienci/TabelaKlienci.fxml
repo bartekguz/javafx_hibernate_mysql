@@ -18,7 +18,7 @@
    <children>
       <ImageView fitHeight="721.0" fitWidth="1120.0">
          <image>
-            <Image url="@../../../zdjecia/bg.jpg" />
+            <Image url="@../../../zdjecia/background.jpg" />
          </image>
       </ImageView>
       <AnchorPane layoutX="14.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="1092.0">
@@ -95,7 +95,7 @@
                      </font></Button>
                </children>
             </HBox>
-            <TableView fx:id="klienciTv" layoutX="382.0" layoutY="22.0" onMouseClicked="#handleMouseActionKlienci" prefHeight="234.0" prefWidth="684.0">
+            <TableView fx:id="klienciTv" layoutX="382.0" layoutY="22.0" onMouseClicked="#handleMouseActionKlienci" prefHeight="234.0" prefWidth="685.0">
               <columns>
                 <TableColumn fx:id="klienciColIdKlienta" prefWidth="70.0" resizable="false" text="id_klienta" />
                 <TableColumn fx:id="klienciColImie" prefWidth="100.0" resizable="false" text="imie" />
@@ -156,12 +156,8 @@
                   <TextField fx:id="adresNumerDomuField" layoutX="10.0" layoutY="150.0" />
                </children>
             </VBox>
-            <HBox layoutX="39.0" layoutY="235.0" spacing="10.0">
+            <HBox layoutX="86.0" layoutY="235.0" spacing="10.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#insertButtonAdresy" prefHeight="50.0" prefWidth="77.0" text="Wpisz adres" textAlignment="CENTER" wrapText="true">
-                    <font>
-                        <Font name="Tahoma Bold" size="12.0" />
-                     </font></Button>
                   <Button fx:id="adresUpdateButton" mnemonicParsing="false" onAction="#updateButtonAdresy" prefHeight="50.0" prefWidth="77.0" text="Aktualizuj adres" textAlignment="CENTER" wrapText="true">
                       <font>
                         <Font name="Tahoma Bold" size="12.0" />
@@ -172,14 +168,14 @@
                      </font></Button>
                </children>
             </HBox>
-            <TableView fx:id="adresTv" layoutX="382.0" layoutY="22.0" onMouseClicked="#handleMouseActionAdresy" prefHeight="200.0" prefWidth="581.0">
+            <TableView fx:id="adresTv" layoutX="382.0" layoutY="22.0" onMouseClicked="#handleMouseActionAdresy" prefHeight="200.0" prefWidth="611.0">
                <columns>
-                  <TableColumn fx:id="adresColIdAdresu" prefWidth="65.0" resizable="false" text="id_adresu" />
-                  <TableColumn fx:id="adresColNazwaMiejscowosci" prefWidth="124.0" resizable="false" text="nazwa_miejscowosci" />
-                  <TableColumn fx:id="adresColKodPocztowy" prefWidth="93.0" resizable="false" text="kod_pocztowy" />
-                  <TableColumn fx:id="adresColNazwaWojewodztwa" prefWidth="135.0" resizable="false" text="nazwa_wojewodztwa" />
-                  <TableColumn fx:id="adresColNazwaUlicy" prefWidth="76.0" resizable="false" text="nazwa_ulicy" />
-                  <TableColumn fx:id="adresColNumerDomu" prefWidth="86.0" resizable="false" text="numer_domu" />
+                  <TableColumn fx:id="adresColIdAdresu" prefWidth="63.0" resizable="false" text="id_adresu" />
+                  <TableColumn fx:id="adresColNazwaMiejscowosci" prefWidth="126.0" resizable="false" text="nazwa_miejscowosci" />
+                  <TableColumn fx:id="adresColKodPocztowy" prefWidth="87.0" resizable="false" text="kod_pocztowy" />
+                  <TableColumn fx:id="adresColNazwaWojewodztwa" prefWidth="132.0" resizable="false" text="nazwa_wojewodztwa" />
+                  <TableColumn fx:id="adresColNazwaUlicy" prefWidth="116.0" resizable="false" text="nazwa_ulicy" />
+                  <TableColumn fx:id="adresColNumerDomu" prefWidth="85.0" resizable="false" text="numer_domu" />
                </columns>
             </TableView>
          </children>

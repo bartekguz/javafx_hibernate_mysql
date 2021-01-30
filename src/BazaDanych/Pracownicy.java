@@ -3,7 +3,6 @@ package BazaDanych;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "pracownicy")
@@ -30,30 +29,45 @@ public class Pracownicy implements Serializable {
 
     @Column(name = "numer_telefonu", nullable = false, columnDefinition = "bigint(100)")
     private Long numer_telefonu;
+    
+    @Column(name = "zatrudniony", nullable = false, columnDefinition = "varchar(100)")
+    private String zatrudniony;
 
-    @OneToMany(cascade={CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "pracownicy")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pracownicy")
     private List<Transakcje> transakcje;
 
     public Pracownicy() {
     }
 
-    public Pracownicy(String imie, String nazwisko, String data_zatrudnienia, Long zarobki, Long numer_telefonu) {
+    public Pracownicy(String imie, String nazwisko, String data_zatrudnienia, Long zarobki, Long numer_telefonu, String zatrudniony) {
         this.imie = imie;
         this.nazwisko = nazwisko;
         this.data_zatrudnienia = data_zatrudnienia;
         this.zarobki = zarobki;
         this.numer_telefonu = numer_telefonu;
+        this.zatrudniony = zatrudniony;
     }
 
-    public Pracownicy(String imie, String nazwisko, String data_zatrudnienia, Long zarobki, Long numer_telefonu, List<Transakcje> transakcje) {
+    public Pracownicy(String imie, String nazwisko, String data_zatrudnienia, Long zarobki, Long numer_telefonu, String zatrudniony, List<Transakcje> transakcje) {
         this.imie = imie;
         this.nazwisko = nazwisko;
         this.data_zatrudnienia = data_zatrudnienia;
         this.zarobki = zarobki;
         this.numer_telefonu = numer_telefonu;
+        this.zatrudniony = zatrudniony;
         this.transakcje = transakcje;
     }
 
+    public void addTransakcja(Transakcje transakcja) {
+        transakcje.add(transakcja);
+        transakcja.setPracownicy(this);
+    }
+    
+    public void removeTransakcja(Transakcje transakcja) {
+        transakcje.remove(transakcja);
+        transakcja.setPracownicy(null);
+    }
+    
     public long getId_pracownika() {
         return id_pracownika;
     }
@@ -102,6 +116,14 @@ public class Pracownicy implements Serializable {
         this.numer_telefonu = numer_telefonu;
     }
 
+    public String getZatrudniony() {
+        return zatrudniony;
+    }
+
+    public void setZatrudniony(String zatrudniony) {
+        this.zatrudniony = zatrudniony;
+    }
+
     public List<Transakcje> getTransakcje() {
         return transakcje;
     }
@@ -109,8 +131,6 @@ public class Pracownicy implements Serializable {
     public void setTransakcje(List<Transakcje> transakcje) {
         this.transakcje = transakcje;
     }
-
-    
 
     @Override
     public String toString() {
@@ -121,6 +141,7 @@ public class Pracownicy implements Serializable {
                 ", data_zatrudnienia=" + data_zatrudnienia +
                 ", zarobki=" + zarobki +
                 ", numer_telefonu='" + numer_telefonu + '\'' +
+                ", zatrudniony='" + zatrudniony + '\'' +
                 ", transakcje=" + transakcje +
                 '}';
     }

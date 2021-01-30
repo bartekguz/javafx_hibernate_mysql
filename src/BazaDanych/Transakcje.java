@@ -14,15 +14,15 @@ public class Transakcje implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_transakcji;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "id_klienta", nullable = false)
     private Klienci klienci;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "nr_vin", nullable = false)
     private Samochody vin;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "id_pracownika", nullable = false)
     private Pracownicy pracownicy;
 

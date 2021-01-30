@@ -12,6 +12,7 @@ import BazaDanych.Klienci;
 import BazaDanychDao.AdresyDao;
 import BazaDanychDao.KlienciDao;
 import java.util.List;
+import java.util.Optional;
 
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
@@ -19,6 +20,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -148,6 +152,7 @@ public class TabelaKlienciController implements Initializable {
 
     @FXML
     private void handleMouseActionKlienci(MouseEvent event) {
+        try {
         Klienci klient = klienciTv.getSelectionModel().getSelectedItem();
         klienciIdKlientaField.setText("" + klient.getId_klienta());
         klienciImieField.setText(klient.getImie());
@@ -158,17 +163,24 @@ public class TabelaKlienciController implements Initializable {
         klienciIdAdresuField.setText("" + klient.getAdresy().getId_adresu());
         
         klienciTextArea.setText("" + klient.getAdresy().toString());
+        } catch (Exception e) {
+            System.out.print("");
+        }
     }
     
     @FXML
     private void handleMouseActionAdresy(MouseEvent event) {
-        Adresy adres = adresTv.getSelectionModel().getSelectedItem();
-        adresIdAdresuField.setText("" + adres.getId_adresu());
-        adresKodPocztowyField.setText(adres.getKod_pocztowy());
-        adresNazwaMiejscowosciField.setText("" + adres.getNazwa_miejscowosci());
-        adresNazwaUlicyField.setText(adres.getNazwa_ulicy());
-        adresNazwaWojewodztwaField.setText("" + adres.getNazwa_wojewodztwa());
-        adresNumerDomuField.setText(adres.getNumer_domu());
+        try {
+            Adresy adres = adresTv.getSelectionModel().getSelectedItem();
+            adresIdAdresuField.setText("" + adres.getId_adresu());
+            adresKodPocztowyField.setText(adres.getKod_pocztowy());
+            adresNazwaMiejscowosciField.setText("" + adres.getNazwa_miejscowosci());
+            adresNazwaUlicyField.setText(adres.getNazwa_ulicy());
+            adresNazwaWojewodztwaField.setText("" + adres.getNazwa_wojewodztwa());
+            adresNumerDomuField.setText(adres.getNumer_domu());
+        } catch (Exception e) {
+            System.out.print("");
+        }
     }
     
     
@@ -199,20 +211,32 @@ public class TabelaKlienciController implements Initializable {
                 adresyDao.saveAdresy(adres);
                 klienciDao.saveKlienci(klient);
             } else {
+                try {
                 List adres = session.createQuery("FROM Adresy E WHERE E.id_adresu = " + klienciIdAdresuField.getText()).list();
                 ObservableList<Adresy> adresy = FXCollections.observableArrayList(adres);
                 
                 klient.setAdresy(adresy.get(0));
                 session.save(klient);
+                } catch (Exception e) {
+                    Alert alert = new Alert(AlertType.ERROR, "Wpisano nieznane id_adresu w polu id_adresu!"
+                            + "\nJeśli chcesz wpisać użytkownika z nowym adresem, pole id_adresu musi pozostać puste ponieważ uzupełni się automatycznie!");
+                    alert.show();
+                }
             }
+            
+            clearKlienci();
+            clearAdresy();
             
             session.getTransaction().commit();
             
             showKlienci();
             showAdresy();
-        } 
+        } catch (Exception e) {
+            Alert alert = new Alert(AlertType.ERROR, "Wszystkie pola muszą posiadać odpowiedni typ!");
+                    alert.show();
+        }
     }
-    
+   
     
     @FXML 
     private void updateButtonKlienci() {
@@ -247,11 +271,15 @@ public class TabelaKlienciController implements Initializable {
                     session.delete(adresToDelete);
                 }
             }
-
+            
+            clearKlienci();
             session.getTransaction().commit();
             
             showKlienci();
             showAdresy();
+        } catch (Exception e) {
+            Alert alert = new Alert(AlertType.ERROR, "Wpisano nieznane id_adresu w polu id_adresu lub pola nie posiadają odpowiedniego typu!");
+                    alert.show();
         }
     }
     
@@ -260,8 +288,31 @@ public class TabelaKlienciController implements Initializable {
     	try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             
-            Klienci klient = session.load(Klienci.class, Long.parseLong(klienciIdKlientaField.getText()));  
-            session.delete(klient);
+            Klienci klient = session.load(Klienci.class, Long.parseLong(klienciIdKlientaField.getText()));
+            Adresy adres = session.load(Adresy.class, klient.getAdresy().getId_adresu());
+            
+            
+            
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Potwierdzenie");
+            alert.setHeaderText("Potwierdź usunięcie klienta");
+            alert.setContentText("Czy na pewno chcesz usunąć klienta?");
+            
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                if (klient.getTransakcje().isEmpty()) {
+                    adres.removeKlient(klient);
+                    session.delete(klient);
+                        if (adres.getKlienci().isEmpty()) {
+                            session.delete(adres);
+                        } 
+                } else {
+                    Alert alert1 = new Alert(AlertType.ERROR, "Nie można usunąć klienta ponieważ posiada on transakcje!");
+                    alert1.show();
+                }
+            } else {
+                
+            }
             
             session.getTransaction().commit();
             
@@ -283,28 +334,7 @@ public class TabelaKlienciController implements Initializable {
             adres.setNazwa_ulicy(adresNazwaUlicyField.getText());
             adres.setNumer_domu(adresNumerDomuField.getText());
             
-            session.getTransaction().commit();
-            
-            showAdresy();
-            showKlienci();
-        }
-    }
-    
-    @FXML
-    private void insertButtonAdresy() {
-    	try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            session.beginTransaction();
-            
-            Adresy adres = new Adresy(
-                adresNazwaMiejscowosciField.getText(), 
-                adresKodPocztowyField.getText(), 
-                adresNazwaWojewodztwaField.getText(), 
-                adresNazwaUlicyField.getText(), 
-                adresNumerDomuField.getText()
-                );
-
-            adresyDao.saveAdresy(adres);
-            
+            clearAdresy();
             session.getTransaction().commit();
             
             showAdresy();

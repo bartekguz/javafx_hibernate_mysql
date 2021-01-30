@@ -30,7 +30,7 @@ public class Adresy implements Serializable {
     @Column(name = "numer_domu", nullable = false, columnDefinition = "varchar(100)")
     private String numer_domu;
     
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "adresy") 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "adresy") 
     private List<Klienci> klienci;
 
     public Adresy() {
@@ -53,6 +53,15 @@ public class Adresy implements Serializable {
         this.klienci = klienci;
     }
     
+    public void addKlient(Klienci klient) {
+        klienci.add(klient);
+        klient.setAdresy(this);
+    }
+    
+    public void removeKlient(Klienci klient) {
+        klienci.remove(klient);
+        klient.setAdresy(null);
+    }
 
     public Long getId_adresu() {
         return id_adresu;

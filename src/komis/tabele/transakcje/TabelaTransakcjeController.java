@@ -24,6 +24,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -116,6 +118,8 @@ public class TabelaTransakcjeController implements Initializable {
     private TableColumn<Samochody, Long> samochodyColCena;
     @FXML
     private TableColumn<Samochody, String> samochodyColIdSilnika;
+    @FXML
+    private TableColumn<Samochody, String> samochodyColSprzedany;
 
     SamochodyDao samochodyDao = new SamochodyDao();
     
@@ -134,6 +138,8 @@ public class TabelaTransakcjeController implements Initializable {
     private TableColumn<Pracownicy, Long> pracownicyColNumerTelefonu;
     @FXML
     private TableColumn<Pracownicy, Long> pracownicyColZarobki;
+    @FXML
+    private TableColumn<Pracownicy, String> pracownicyColZatrudniony;
     
     PracownicyDao pracownicyDao = new PracownicyDao();
     
@@ -152,78 +158,96 @@ public class TabelaTransakcjeController implements Initializable {
     }    
     
     public void showTransakcje() {
-        ObservableList<Transakcje> list = FXCollections.observableArrayList(transakcjeDao.getTransakcje());
+        try {
+            ObservableList<Transakcje> list = FXCollections.observableArrayList(transakcjeDao.getTransakcje());
     	
-    	transakcjeColIdTransakcji.setCellValueFactory(new PropertyValueFactory<>("id_transakcji"));
-    	transakcjeColDataTransakcji.setCellValueFactory(new PropertyValueFactory<>("data_transakcji"));
-    	transakcjeColRodzajTransakcji.setCellValueFactory(new PropertyValueFactory<>("rodzaj_transakcji"));
-    	transakcjeColIdKlienta.setCellValueFactory((cell) -> {
-            SimpleStringProperty id = new SimpleStringProperty(Long.toString(cell.getValue().getKlienci().getId_klienta()));
-            return id;
-        });
-    	transakcjeColIdPracownika.setCellValueFactory((cell) -> {
-            SimpleStringProperty id = new SimpleStringProperty(Long.toString(cell.getValue().getPracownicy().getId_pracownika()));
-            return id;
-        });
-        transakcjeColNrVin.setCellValueFactory((cell) -> {
-            SimpleStringProperty id = new SimpleStringProperty(cell.getValue().getVin().getNr_vin());
-            return id;
-        });
+            transakcjeColIdTransakcji.setCellValueFactory(new PropertyValueFactory<>("id_transakcji"));
+            transakcjeColDataTransakcji.setCellValueFactory(new PropertyValueFactory<>("data_transakcji"));
+            transakcjeColRodzajTransakcji.setCellValueFactory(new PropertyValueFactory<>("rodzaj_transakcji"));
+            transakcjeColIdKlienta.setCellValueFactory((cell) -> {
+                SimpleStringProperty id = new SimpleStringProperty(Long.toString(cell.getValue().getKlienci().getId_klienta()));
+                return id;
+            });
+            transakcjeColIdPracownika.setCellValueFactory((cell) -> {
+                SimpleStringProperty id = new SimpleStringProperty(Long.toString(cell.getValue().getPracownicy().getId_pracownika()));
+                return id;
+            });
+            transakcjeColNrVin.setCellValueFactory((cell) -> {
+                SimpleStringProperty id = new SimpleStringProperty(cell.getValue().getVin().getNr_vin());
+                return id;
+            });
         
     	
-    	transakcjeTv.setItems(list);
+            transakcjeTv.setItems(list);
+        } catch (Exception e) {
+            System.out.println("Błąd [TabelaTransakcjeController] - showTransakcje() " + e);
+        }
     }
     
     private void showKlienci() {
-        ObservableList<Klienci> list = FXCollections.observableArrayList(klienciDao.getKlienci());
+        try {
+            ObservableList<Klienci> list = FXCollections.observableArrayList(klienciDao.getKlienci());
 
-    	klienciColIdKlienta.setCellValueFactory(new PropertyValueFactory<>("id_klienta"));
-    	klienciColImie.setCellValueFactory(new PropertyValueFactory<>("imie"));
-    	klienciColNazwisko.setCellValueFactory(new PropertyValueFactory<>("nazwisko"));
-    	klienciColNip.setCellValueFactory(new PropertyValueFactory<>("nip"));
-    	klienciColNrTelefonu.setCellValueFactory(new PropertyValueFactory<>("numer_telefonu"));
-        klienciColPesel.setCellValueFactory(new PropertyValueFactory<>("pesel"));
-        klienciColIdAdresu.setCellValueFactory((cell) -> {
+            klienciColIdKlienta.setCellValueFactory(new PropertyValueFactory<>("id_klienta"));
+            klienciColImie.setCellValueFactory(new PropertyValueFactory<>("imie"));
+            klienciColNazwisko.setCellValueFactory(new PropertyValueFactory<>("nazwisko"));
+            klienciColNip.setCellValueFactory(new PropertyValueFactory<>("nip"));
+            klienciColNrTelefonu.setCellValueFactory(new PropertyValueFactory<>("numer_telefonu"));
+            klienciColPesel.setCellValueFactory(new PropertyValueFactory<>("pesel"));
+            klienciColIdAdresu.setCellValueFactory((cell) -> {
             SimpleStringProperty id = new SimpleStringProperty(Long.toString(cell.getValue().getAdresy().getId_adresu()));
             return id;
-        });
-    	
-    	klienciTv.setItems(list);
+            });
+            
+            klienciTv.setItems(list);
+        } catch (Exception e) {
+            System.out.println("Błąd [TabelaTransakcjeController] - showKlienci() " + e);
+        }
     }
     
     private void showPracownicy() {
-        ObservableList<Pracownicy> list = FXCollections.observableArrayList(pracownicyDao.getPracownicy());
+        try {
+            ObservableList<Pracownicy> list = FXCollections.observableArrayList(pracownicyDao.getPracownicy());
     	
-    	pracownicyColIdPracownika.setCellValueFactory(new PropertyValueFactory<>("id_pracownika"));
-        pracownicyColImie.setCellValueFactory(new PropertyValueFactory<>("imie"));
-        pracownicyColNazwisko.setCellValueFactory(new PropertyValueFactory<>("nazwisko"));
-    	pracownicyColDataZatrudnienia.setCellValueFactory(new PropertyValueFactory<>("data_zatrudnienia"));
-    	pracownicyColZarobki.setCellValueFactory(new PropertyValueFactory<>("zarobki"));
-    	pracownicyColNumerTelefonu.setCellValueFactory(new PropertyValueFactory<>("numer_telefonu"));
+            pracownicyColIdPracownika.setCellValueFactory(new PropertyValueFactory<>("id_pracownika"));
+            pracownicyColImie.setCellValueFactory(new PropertyValueFactory<>("imie"));
+            pracownicyColNazwisko.setCellValueFactory(new PropertyValueFactory<>("nazwisko"));
+            pracownicyColDataZatrudnienia.setCellValueFactory(new PropertyValueFactory<>("data_zatrudnienia"));
+            pracownicyColZarobki.setCellValueFactory(new PropertyValueFactory<>("zarobki"));
+            pracownicyColNumerTelefonu.setCellValueFactory(new PropertyValueFactory<>("numer_telefonu"));
+            pracownicyColZatrudniony.setCellValueFactory(new PropertyValueFactory<>("zatrudniony"));
         
-    	pracownicyTv.setItems(list);
+            pracownicyTv.setItems(list);
+        } catch (Exception e) {
+            System.out.println("Błąd [TabelaTransakcjeController] - showPracownicy() " + e);
+        }
     }
     
     public void showSamochody() {
+        try {
         ObservableList<Samochody> list = FXCollections.observableArrayList(samochodyDao.getSamochody());
         
-    	samochodyColNrVin.setCellValueFactory(new PropertyValueFactory<>("nr_vin"));
-    	samochodyColCena.setCellValueFactory(new PropertyValueFactory<>("cena"));
-    	samochodyColKolor.setCellValueFactory(new PropertyValueFactory<>("kolor"));
-    	samochodyColMarka.setCellValueFactory(new PropertyValueFactory<>("marka"));
-    	samochodyColModel.setCellValueFactory(new PropertyValueFactory<>("model"));
-        samochodyColRokProdukcji.setCellValueFactory(new PropertyValueFactory<>("rok_produkcji"));
-        samochodyColTyp.setCellValueFactory(new PropertyValueFactory<>("typ"));
-        samochodyColIdSilnika.setCellValueFactory((cell) -> {
-            SimpleStringProperty id = new SimpleStringProperty(Long.toString(cell.getValue().getSilniki().getId_silnika()));
-            return id;
-        });
+            samochodyColNrVin.setCellValueFactory(new PropertyValueFactory<>("nr_vin"));
+            samochodyColCena.setCellValueFactory(new PropertyValueFactory<>("cena"));
+            samochodyColKolor.setCellValueFactory(new PropertyValueFactory<>("kolor"));
+            samochodyColMarka.setCellValueFactory(new PropertyValueFactory<>("marka"));
+            samochodyColModel.setCellValueFactory(new PropertyValueFactory<>("model"));
+            samochodyColRokProdukcji.setCellValueFactory(new PropertyValueFactory<>("rok_produkcji"));
+            samochodyColTyp.setCellValueFactory(new PropertyValueFactory<>("typ"));
+            samochodyColIdSilnika.setCellValueFactory((cell) -> {
+                SimpleStringProperty id = new SimpleStringProperty(Long.toString(cell.getValue().getSilniki().getId_silnika()));
+                return id;
+            });
+            samochodyColSprzedany.setCellValueFactory(new PropertyValueFactory<>("sprzedany"));
     	
-    	samochodyTv.setItems(list);
+            samochodyTv.setItems(list);
+        } catch (Exception e) {
+            System.out.println("Błąd [TabelaTransakcjeController] - showSamochody() " + e);
+        }
     }
     
     @FXML
-    private void insertButton() throws Exception {
+    private void insertButton() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             
@@ -239,7 +263,8 @@ public class TabelaTransakcjeController implements Initializable {
             ObservableList<Pracownicy> pracownicy = FXCollections.observableArrayList(pracownik);
             Pracownicy pracownikToSet = pracownicy.get(0);
 
-            Transakcje transakcja = new Transakcje(
+            if (samochodToSet.getSprzedany().equals("nie")) {
+                Transakcje transakcja = new Transakcje(
                 klientToSet,
                 samochodToSet,
                 pracownikToSet,
@@ -247,16 +272,25 @@ public class TabelaTransakcjeController implements Initializable {
                 transakcjeRodzajTransakcjiField.getSelectionModel().getSelectedItem().toString()
                 );
                 
-            session.delete(samochodToSet);
+                samochodToSet.setSprzedany("tak");
+                
+                transakcjeDao.saveTransakcje(transakcja);
+            } else {
+                Alert alert = new Alert(AlertType.ERROR, "Ten samochód nie jest dostępny!");
+                alert.show();
+            }
             
-            transakcjeDao.saveTransakcje(transakcja);
+            clearTransakcje();
+
             session.getTransaction().commit();
             
 
             showSamochody();
             showTransakcje();
-            
-        }  
+        }  catch (Exception e) {
+             Alert alert = new Alert(AlertType.ERROR, "Wpisano nieznane id w polu lub wpisano w pole nieodpowiedni typ!");
+                    alert.show();
+        }
     }
     
     @FXML
@@ -272,25 +306,37 @@ public class TabelaTransakcjeController implements Initializable {
     @FXML
     @Transactional
     private void handleMouseAction(MouseEvent event) {
-        Transakcje transakcja = transakcjeTv.getSelectionModel().getSelectedItem();
-        transakcjeIdTransakcjiField.setText("" + transakcja.getId_transakcji());
-        transakcjeDataTransakcjiField.setText("" + transakcja.getData_transakcji());
-        transakcjeRodzajTransakcjiField.getSelectionModel().select(transakcja.getRodzaj_transakcji());
-        transakcjeIdKlientaField.setText("" + transakcja.getKlienci());
-        transakcjeIdPracownikaField.setText("" + transakcja.getPracownicy());
-        transakcjeNrVinField.setText("" + transakcja.getVin());
+        try {
+            Transakcje transakcja = transakcjeTv.getSelectionModel().getSelectedItem();
+            transakcjeIdTransakcjiField.setText("" + transakcja.getId_transakcji());
+            transakcjeDataTransakcjiField.setText("" + transakcja.getData_transakcji());
+            transakcjeRodzajTransakcjiField.getSelectionModel().select(transakcja.getRodzaj_transakcji());
+            transakcjeIdKlientaField.setText("" + transakcja.getKlienci());
+            transakcjeIdPracownikaField.setText("" + transakcja.getPracownicy());
+            transakcjeNrVinField.setText("" + transakcja.getVin());
+        } catch (Exception e) {
+            System.out.print("");
+        }
     }
     
     @FXML
     private void handleMouseActionSamochody(MouseEvent event) { 
-        Samochody samochod = samochodyTv.getSelectionModel().getSelectedItem();
-        samochodyTextArea.setText("" + samochod.getSilniki().toString() + "\n\n nr_vin = " + samochod.getNr_vin());
+        try {
+            Samochody samochod = samochodyTv.getSelectionModel().getSelectedItem();
+            samochodyTextArea.setText("" + samochod.getSilniki().toString() + "\n\n nr_vin = " + samochod.getNr_vin());
+        } catch (Exception e) {
+            System.out.print("");
+        }
     }
 
     @FXML
     private void handleMouseActionKlienci(MouseEvent event) {
-        Klienci klient = klienciTv.getSelectionModel().getSelectedItem();
-        klienciTextArea.setText("" + klient.getAdresy().toString() + "\n\n id_klienta = " + klient.getId_klienta());
+        try {
+            Klienci klient = klienciTv.getSelectionModel().getSelectedItem();
+            klienciTextArea.setText("" + klient.getAdresy().toString() + "\n\n id_klienta = " + klient.getId_klienta());
+        } catch (Exception e) {
+            System.out.print("");
+        }
     }
     
     @FXML

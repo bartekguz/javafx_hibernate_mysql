@@ -30,11 +30,11 @@ public class Klienci implements Serializable {
     @Column(name = "numer_telefonu", nullable = false, columnDefinition = "bigint(100)")
     private Long numer_telefonu;
     
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_adresu", nullable = false)
     private Adresy adresy;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "klienci")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "klienci")
     private List<Transakcje> transakcje;
     
     public Klienci() {
@@ -67,7 +67,16 @@ public class Klienci implements Serializable {
         this.numer_telefonu = numer_telefonu;
     }
 
-
+    public void addTransakcja(Transakcje transakcja) {
+        transakcje.add(transakcja);
+        transakcja.setKlienci(this);
+    }
+    
+    public void removeTransakcja(Transakcje transakcja) {
+        transakcje.remove(transakcja);
+        transakcja.setKlienci(null);
+    }
+    
     public long getId_klienta() {
         return id_klienta;
     }
